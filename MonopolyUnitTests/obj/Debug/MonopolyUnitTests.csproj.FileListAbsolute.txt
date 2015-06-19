@@ -1,0 +1,9 @@
+C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\MonopolyUnitTests.dll
+C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\MonopolyUnitTests.pdb
+C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Monopoly.exe
+C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\nunit.framework.dll
+C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Monopoly.pdb
+C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\nunit.framework.xml
+C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\MonopolyUnitTests\obj\Debug\MonopolyUnitTests.csprojResolveAssemblyReference.cache
+C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\MonopolyUnitTests\obj\Debug\MonopolyUnitTests.dll
+C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\MonopolyUnitTests\obj\Debug\MonopolyUnitTests.pdb
