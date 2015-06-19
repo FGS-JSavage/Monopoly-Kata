@@ -6,8 +6,23 @@ using System.Threading.Tasks;
 
 namespace Monopoly
 {
-    public class Player
+    public class Player : IPlayer
     {
+        private ILocation location;
+        
+        public Player(ILocation location)
+        {
+            this.location = location;
+        }
 
+        public void MoveDistance(int distance)
+        {
+            location.MoveFowrard(distance);
+        }
+
+        public ILocation GetLocation()
+        {
+            return location;
+        }
     }
 }

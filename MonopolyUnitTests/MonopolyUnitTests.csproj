@@ -59,7 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiceUnitTests.cs" />
-    <Compile Include="PlayerTests.cs" />
+    <Compile Include="GameUnitTests.cs" />
+    <Compile Include="LocationUnitTests.cs" />
+    <Compile Include="PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

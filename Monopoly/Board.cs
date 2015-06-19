@@ -8,5 +8,6 @@ namespace Monopoly
 {
     class Board
     {
+
     }
 }
