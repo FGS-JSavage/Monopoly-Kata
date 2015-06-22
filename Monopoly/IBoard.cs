@@ -9,7 +9,7 @@ namespace Monopoly
 {
     public interface IBoard
     {
-
+        
     }
 
 

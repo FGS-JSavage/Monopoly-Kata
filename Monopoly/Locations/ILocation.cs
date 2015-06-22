@@ -11,8 +11,8 @@ namespace Monopoly
     {
         void MoveFowrard(int disatnce);
         int GetSpaceNumber();
-        void Land();
-        void Exit();
+        void Land(IPlayer player);
+        void Exit(IPlayer player);
     }
 
 }

@@ -9,17 +9,23 @@ namespace Monopoly
 {
     public class Board
     {
-
         private LocationFactory locationFactory;
+        private const int NUMBER_OF_SPACES = 40;
 
         public Board()
         {
             locationFactory = new LocationFactory();
         }
 
-        public ILocation MoveForward(ILocation location, int distance)
+        public ILocation MoveToSpace(int spaceNumber)
         {
-            return locationFactory.GetLocationForSpaceNumber(location.GetSpaceNumber());
+            return locationFactory.GetLocationForSpaceNumber(spaceNumber);
         }
+
+        public int GetNextSpaceNumber(int distance, int spaceNumber)
+        {
+            return (spaceNumber + distance) % NUMBER_OF_SPACES;
+        }
+
     }
 }

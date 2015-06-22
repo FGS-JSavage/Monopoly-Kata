@@ -12,6 +12,8 @@ namespace Monopoly
         private const int DEFAULT_TOTAL_SPACES = 40;
         protected int spaceNumber;
         private int totalSpaces;
+        protected List<IPlayerTask> OnLandTasks = new List<IPlayerTask>();
+        protected List<IPlayerTask> OnExitTasks = new List<IPlayerTask>();
 
         public Location(int spaceNumber = DEFAULT_STARTING_SPACE_NUMBER, int totalSpaces = DEFAULT_TOTAL_SPACES)
         {
@@ -34,14 +36,14 @@ namespace Monopoly
             this.spaceNumber = spaceNumber >= -1 && spaceNumber < totalSpaces ? spaceNumber : this.spaceNumber;
         }
 
-        public void Land()
+        public void Land(IPlayer player)
         {
-            // TODO
+            OnLandTasks.ForEach(x => x.Complete(player));
         }
 
-        public void Exit()
+        public void Exit(IPlayer player)
         {
-            // TODO
+            OnExitTasks.ForEach(x => x.Complete(player));
         }
     }
 }

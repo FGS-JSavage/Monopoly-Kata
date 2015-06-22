@@ -11,16 +11,12 @@ namespace Monopoly
         public GoLocation()
         {
             base.spaceNumber = 0;
+            OnLandTasks.Add(new LandOnGoTask());
         }
 
         new public void MoveFowrard(int disatnce)
         {
             throw new NotImplementedException();
-        }
-
-        new public void Land()
-        {
-            // Add 200    
         }
     }
 }

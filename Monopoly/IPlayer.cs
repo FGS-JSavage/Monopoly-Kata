@@ -11,7 +11,8 @@ namespace Monopoly
     {
         void MoveDistance(int distance);
 
-        ILocation Location { get; set; }
-        int Balance        { get; set; }
+        ILocation PlayerLocation { get; set; }
+        int Balance              { get; set; }
+        int SpaceNumber          { get; set; }
     }
 }

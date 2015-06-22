@@ -18,12 +18,12 @@ namespace Monopoly.Locations
             throw new NotImplementedException();
         }
 
-        public void Land()
+        public void Land(IPlayer player)
         {
             // TODO
         }
 
-        public void Exit()
+        public void Exit(IPlayer player)
         {
             // TODO
         }

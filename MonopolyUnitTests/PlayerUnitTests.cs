@@ -13,38 +13,39 @@ namespace MonopolyUnitTests
     public class PlayerUnitTests
     {
         private IPlayer player;
-        private ILocation startingLocation = new Location();
+        private Board board;
+        private ILocation startingLocation;
+
+        [SetUp]
+        public void Init()
+        {
+            board = new Board();
+            startingLocation = new Location();
+            player = new Player(startingLocation, board);
+        }
 
         [Test]
         public void Initialize_Player_To_Location_Zero()
         {
-            player = new Player(startingLocation);
-
-            Assert.AreEqual(player.GetLocation().GetSpaceNumber(), 0);
+            Assert.AreEqual(player.PlayerLocation.GetSpaceNumber(), 0);
         }
 
         [Test]
         public void Move_Player_Correctly_Adjusts_Players_Location()
         {
-            player = new Player(startingLocation);
-
             player.MoveDistance(5);
 
-            Assert.AreEqual(player.GetLocation().GetSpaceNumber(), 5);
+            Assert.AreEqual(5, player.SpaceNumber);
         }
 
         [Test]
         public void Move_Player_Multiple_Times_Correctly_Adjusts_Players_Location()
         {
-            player = new Player(startingLocation);
-
-            player.MoveDistance(5);
             player.MoveDistance(10);
             player.MoveDistance(15);
             player.MoveDistance(10);
 
-            Assert.AreEqual(player.GetLocation().GetSpaceNumber(), 5);
+            Assert.AreEqual(35, player.SpaceNumber);
         }
-
     }
 }

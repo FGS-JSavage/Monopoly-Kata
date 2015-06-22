@@ -44,6 +44,8 @@
     <Compile Include="Board.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Tasks\IPlayerTask.cs" />
+    <Compile Include="Tasks\LandOnGoTask.cs" />
     <Compile Include="Locations\GoLocation.cs" />
     <Compile Include="IBoard.cs" />
     <Compile Include="IGame.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\PayIncomeTaxTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

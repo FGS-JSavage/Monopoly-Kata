@@ -10,22 +10,27 @@ namespace Monopoly
     {
         private const int DEFAULT_STARTING_BALANCE = 0;
         
-        private int spaceNumber;
         private Board board;
 
-        public ILocation Location { get; set; }
-        public int Balance        { get; set; }
+        public ILocation PlayerLocation { get; set; }
+        public int Balance              { get; set; }
+        public int SpaceNumber          { get; set; }
 
-        public Player(ILocation location, Board board, int startingBalance = DEFAULT_STARTING_BALANCE)
+        public Player(ILocation playerLocation, Board board, int startingBalance = DEFAULT_STARTING_BALANCE)
         {
-            this.Location = location;
+            this.PlayerLocation = playerLocation;
             this.board    = board;
             this.Balance  = startingBalance;
         }
 
         public void MoveDistance(int distance)
         {
-            Location = board.MoveForward(Location, spaceNumber);
+            PlayerLocation.Exit(this);
+
+            SpaceNumber = board.GetNextSpaceNumber(distance, SpaceNumber);
+            PlayerLocation = board.MoveToSpace(SpaceNumber);
+            
+            PlayerLocation.Land(this);
         }
     }
 }

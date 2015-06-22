@@ -21,7 +21,7 @@ namespace Monopoly.Locations
         public ILocation GetLocationForSpaceNumber(int spaceNumber) 
         {
 
-            if (locationKeeper[spaceNumber] != null)
+            if (locationKeeper.ContainsKey(spaceNumber))
             {
                 return locationKeeper[spaceNumber];
             }

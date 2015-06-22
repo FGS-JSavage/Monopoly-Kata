@@ -13,34 +13,32 @@ namespace MonopolyUnitTests
     {
         private IGame game;
 
+        [SetUp]
+        public void Init()
+        {
+            game = new Game();
+        }
 
         // RELEASE 1 -----------------------------------------------------------------------
-
 
         [Test]
         public void Default_Game_Constructor_Initializes_Six_Players()
         {
-            game = new Game();
-
             Assert.AreEqual(game.GetPlayers().Count, 6);
         }
 
         [Test]
         public void Default_Game_Constructor_Initializes_All_Players_To_Space_Zero()
         {
-            game = new Game();
-
             foreach (var player in game.GetPlayers())
             {
-                Assert.AreEqual(player.GetLocation().GetSpaceNumber(), 0);    
+                Assert.AreEqual(player.PlayerLocation.GetSpaceNumber(), 0);    
             }
         }
 
         [Test]
         public void Move_Players_Twenty_Times()
         {
-            game = new Game();
-
             foreach (var i in Enumerable.Range(0,20))
             {
                 game.DoRound();
@@ -52,15 +50,25 @@ namespace MonopolyUnitTests
         [Test]
         public void Landing_On_Go_Balnce_Increases_By_200()
         {
-            game = new Game();
             IPlayer player = game.GetPlayers()[0];
 
-            Assert.AreEqual(player.Balance, 0); // Confirm starting balance
+            Assert.AreEqual(0, player.Balance); // Confirm starting balance
 
+            player.MoveDistance(40);
 
-            player.MoveDistance(39);
+            Assert.AreEqual(200, player.Balance); // Confirm increase due to landing on Go
+        }
 
-            Assert.AreEqual(player.Balance, 200); // Confirm increase due to landing on Go
+        [Test]
+        public void Landing_On_A_Normal_Location_Does_Not_Change_Ballance()
+        {
+            IPlayer player = game.GetPlayers()[0];
+
+            Assert.AreEqual(0, player.Balance); // Confirm starting balance
+
+            player.MoveDistance(5);
+
+            Assert.AreEqual(0, player.Balance); // Confirm increase due to landing on Go
         }
 
 
