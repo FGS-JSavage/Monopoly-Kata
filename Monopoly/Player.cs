@@ -27,8 +27,14 @@ namespace Monopoly
         {
             PlayerLocation.Exit(this);
 
+            var oldSpaceNumber = SpaceNumber;
             SpaceNumber = board.GetNextSpaceNumber(distance, SpaceNumber);
             PlayerLocation = board.MoveToSpace(SpaceNumber);
+
+            if (oldSpaceNumber > SpaceNumber) // Flying over Go
+            {
+                Balance += 200;
+            }
             
             PlayerLocation.Land(this);
         }

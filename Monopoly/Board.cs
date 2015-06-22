@@ -26,6 +26,5 @@ namespace Monopoly
         {
             return (spaceNumber + distance) % NUMBER_OF_SPACES;
         }
-
     }
 }

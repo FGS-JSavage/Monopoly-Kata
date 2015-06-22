@@ -60,7 +60,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void Landing_On_A_Normal_Location_Does_Not_Change_Ballance()
+        public void Landing_On_A_Normal_Location_Does_Not_Change_Balance()
         {
             IPlayer player = game.GetPlayers()[0];
 
@@ -70,6 +70,31 @@ namespace MonopolyUnitTests
 
             Assert.AreEqual(0, player.Balance); // Confirm increase due to landing on Go
         }
+
+        [Test]
+        public void Passing_Go_Without_Landing_On_Go_Increases_Balance_By_200()
+        {
+            IPlayer player = game.GetPlayers()[0];
+
+            player.MoveDistance(35);
+            Assert.AreEqual(0, player.Balance); // Confirm starting balance
+
+            player.MoveDistance(10);
+
+            Assert.AreEqual(200, player.Balance); // Confirm increase due to passing Go
+        }
+
+        [Test]
+        public void Passing_Go_Twice_In_One_Turn_Increases_Balance_By_400()
+        {
+            IPlayer player = game.GetPlayers()[0];
+
+            player.MoveDistance(85);
+
+            Assert.AreEqual(400, player.Balance); // Confirm increase due to passing Go
+        }
+
+
 
 
     }
