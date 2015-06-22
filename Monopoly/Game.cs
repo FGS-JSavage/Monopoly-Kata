@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Monopoly
+{
+    public class Game : IGame
+    {
+        private const int DEFAULT_NUMBER_OF_PLAYERS = 6;
+        private List<IPlayer> players;
+        private Dice dice; 
+
+        public Game(int numberOfPlayers = DEFAULT_NUMBER_OF_PLAYERS)
+        {
+            players = new List<IPlayer>();
+
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                players.Add(new Player(new Location()));
+            }
+
+            dice = new Dice();
+        }
+
+        public void DoTurn(IPlayer player)
+        {
+            player.MoveDistance(dice.Roll());
+        }
+
+        public void DoRound()
+        {
+            foreach (var player in players)
+            {
+                DoTurn(player);
+            }
+        }
+
+        public List<IPlayer> GetPlayers()
+        {
+            return players;
+        }
+    }
+}
