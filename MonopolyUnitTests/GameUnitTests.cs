@@ -13,6 +13,10 @@ namespace MonopolyUnitTests
     {
         private IGame game;
 
+
+        // RELEASE 1 -----------------------------------------------------------------------
+
+
         [Test]
         public void Default_Game_Constructor_Initializes_Six_Players()
         {
@@ -41,9 +45,24 @@ namespace MonopolyUnitTests
             {
                 game.DoRound();
             }
-
-            
         }
+
+        // RELEASE 2 -----------------------------------------------------------------------
+
+        [Test]
+        public void Landing_On_Go_Balnce_Increases_By_200()
+        {
+            game = new Game();
+            IPlayer player = game.GetPlayers()[0];
+
+            Assert.AreEqual(player.GetBalance(), 200); // Confirm starting balance
+
+
+            player.MoveDistance(39);
+
+            Assert.AreEqual(player.GetBalance(), 200); // Confirm increase due to landing on Go
+        }
+
 
     }
 }

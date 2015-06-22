@@ -11,5 +11,8 @@ namespace Monopoly
     {
         void MoveDistance(int distance);
         ILocation GetLocation();
+
+        ILocation Location { get; set; }
+        int Balance        { get; set; }
     }
 }

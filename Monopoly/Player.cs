@@ -8,21 +8,19 @@ namespace Monopoly
 {
     public class Player : IPlayer
     {
-        private ILocation location;
+        private const int DEFAULT_STARTING_BALANCE = 0;
         
-        public Player(ILocation location)
-        {
-            this.location = location;
-        }
+        private int spaceNumber;
+        private Board board;
 
-        public void MoveDistance(int distance)
-        {
-            location.MoveFowrard(distance);
-        }
+        private ILocation Location { get; set; }
+        public int Balance         { get; set; }
 
-        public ILocation GetLocation()
+        public Player(ILocation location, Board board, int startingBalance = DEFAULT_STARTING_BALANCE)
         {
-            return location;
+            this.Location = location;
+            this.board    = board;
+            this.Balance  = startingBalance;
         }
     }
 }

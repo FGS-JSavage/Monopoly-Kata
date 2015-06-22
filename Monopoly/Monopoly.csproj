@@ -44,11 +44,15 @@
     <Compile Include="Board.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Locations\GoLocation.cs" />
     <Compile Include="IBoard.cs" />
     <Compile Include="IGame.cs" />
-    <Compile Include="ILocation.cs" />
+    <Compile Include="Locations\ILocation.cs" />
     <Compile Include="IPlayer.cs" />
-    <Compile Include="Location.cs" />
+    <Compile Include="Locations\IRentableLocation.cs" />
+    <Compile Include="Locations\JailVisitingLocation.cs" />
+    <Compile Include="Locations\Location.cs" />
+    <Compile Include="Locations\LocationFactory.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
