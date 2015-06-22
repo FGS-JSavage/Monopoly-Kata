@@ -8,18 +8,27 @@ namespace Monopoly.Locations
 {
     public class LocationFactory
     {
-         List<KeyValuePair<int, ILocation>> locationKeeper;
+        Dictionary<int, ILocation> locationKeeper;
 
         public LocationFactory()
         {
-            locationKeeper = new List<KeyValuePair<int, ILocation>>();
-
-            locationKeeper.Add(new KeyValuePair<int, ILocation>(0, new ));
+            locationKeeper = new Dictionary<int, ILocation>()
+            {
+                { 0, new GoLocation() }
+            };
         }
 
         public ILocation GetLocationForSpaceNumber(int spaceNumber) 
         {
-            return 
+
+            if (locationKeeper[spaceNumber] != null)
+            {
+                return locationKeeper[spaceNumber];
+            }
+            else // Falls through to give generic non-rentable space TODO get rid of this
+            {
+                return new Location();
+            }
         }
     }
 }

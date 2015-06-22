@@ -17,5 +17,15 @@ namespace Monopoly.Locations
         {
             throw new NotImplementedException();
         }
+
+        public void Land()
+        {
+            // TODO
+        }
+
+        public void Exit()
+        {
+            // TODO
+        }
     }
 }

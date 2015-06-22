@@ -55,12 +55,12 @@ namespace MonopolyUnitTests
             game = new Game();
             IPlayer player = game.GetPlayers()[0];
 
-            Assert.AreEqual(player.GetBalance(), 200); // Confirm starting balance
+            Assert.AreEqual(player.Balance, 0); // Confirm starting balance
 
 
             player.MoveDistance(39);
 
-            Assert.AreEqual(player.GetBalance(), 200); // Confirm increase due to landing on Go
+            Assert.AreEqual(player.Balance, 200); // Confirm increase due to landing on Go
         }
 
 

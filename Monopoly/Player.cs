@@ -13,14 +13,19 @@ namespace Monopoly
         private int spaceNumber;
         private Board board;
 
-        private ILocation Location { get; set; }
-        public int Balance         { get; set; }
+        public ILocation Location { get; set; }
+        public int Balance        { get; set; }
 
         public Player(ILocation location, Board board, int startingBalance = DEFAULT_STARTING_BALANCE)
         {
             this.Location = location;
             this.board    = board;
             this.Balance  = startingBalance;
+        }
+
+        public void MoveDistance(int distance)
+        {
+            Location = board.MoveForward(Location, spaceNumber);
         }
     }
 }

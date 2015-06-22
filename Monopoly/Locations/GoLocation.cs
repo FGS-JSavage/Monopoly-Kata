@@ -18,5 +18,9 @@ namespace Monopoly
             throw new NotImplementedException();
         }
 
+        new public void Land()
+        {
+            // Add 200    
+        }
     }
 }
