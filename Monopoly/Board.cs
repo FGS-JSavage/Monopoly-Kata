@@ -9,22 +9,20 @@ namespace Monopoly
 {
     public class Board
     {
-        private LocationFactory locationFactory;
-        private const int NUMBER_OF_SPACES = 40;
+        private Dice dice;
+        public LocationManager locationManager { get; }
 
         public Board()
         {
-            locationFactory = new LocationFactory();
+            dice = new Dice();
+            locationManager = new LocationManager();
         }
 
-        public ILocation MoveToSpace(int spaceNumber)
+        public void DoTurn(IPlayer player)
         {
-            return locationFactory.GetLocationForSpaceNumber(spaceNumber);
-        }
-
-        public int GetNextSpaceNumber(int distance, int spaceNumber)
-        {
-            return (spaceNumber + distance) % NUMBER_OF_SPACES;
+            player.CompletePreMoveTasks();
+            locationManager.MovePlayer(player, dice.Roll());
+            player.CompletePostMoveTasks();
         }
     }
 }

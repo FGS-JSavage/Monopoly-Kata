@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Monopoly;
+using Monopoly.Locations;
 
 namespace MonopolyUnitTests
 {
@@ -27,25 +28,25 @@ namespace MonopolyUnitTests
         [Test]
         public void Initialize_Player_To_Location_Zero()
         {
-            Assert.AreEqual(player.PlayerLocation.GetSpaceNumber(), 0);
+            Assert.AreEqual(player.PlayerLocation.SpaceNumber, 0);
         }
 
         [Test]
         public void Move_Player_Correctly_Adjusts_Players_Location()
         {
-            player.MoveDistance(5);
+            board.locationManager.MovePlayer(player, 5);
 
-            Assert.AreEqual(5, player.SpaceNumber);
+            Assert.AreEqual(5, player.PlayerLocation.SpaceNumber);
         }
 
         [Test]
         public void Move_Player_Multiple_Times_Correctly_Adjusts_Players_Location()
         {
-            player.MoveDistance(10);
-            player.MoveDistance(15);
-            player.MoveDistance(10);
+            board.locationManager.MovePlayer(player, 10);
+            board.locationManager.MovePlayer(player, 15);
+            board.locationManager.MovePlayer(player, 10);
 
-            Assert.AreEqual(35, player.SpaceNumber);
+            Assert.AreEqual(35, player.PlayerLocation.SpaceNumber);
         }
     }
 }

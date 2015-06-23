@@ -28,7 +28,7 @@ namespace Monopoly
 
         public void DoTurn(IPlayer player)
         {
-            player.MoveDistance(dice.Roll());
+            board.DoTurn(player);
         }
 
         public void DoRound()

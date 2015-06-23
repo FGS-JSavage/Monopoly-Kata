@@ -93,10 +93,6 @@ namespace MonopolyUnitTests
 
             Assert.AreEqual(400, player.Balance); // Confirm increase due to passing Go
         }
-
-
-
-
     }
 }
     

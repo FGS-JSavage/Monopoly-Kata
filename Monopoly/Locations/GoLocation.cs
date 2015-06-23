@@ -8,15 +8,9 @@ namespace Monopoly
 {
     public class GoLocation : Location
     {
-        public GoLocation()
+        public GoLocation() : base(0)
         {
-            base.spaceNumber = 0;
             OnLandTasks.Add(new LandOnGoTask());
-        }
-
-        new public void MoveFowrard(int disatnce)
-        {
-            throw new NotImplementedException();
         }
     }
 }

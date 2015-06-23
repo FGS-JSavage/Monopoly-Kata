@@ -18,6 +18,12 @@ namespace Monopoly.Locations
             throw new NotImplementedException();
         }
 
+        public int SpaceNumber
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         public void Land(IPlayer player)
         {
             // TODO
@@ -26,6 +32,11 @@ namespace Monopoly.Locations
         public void Exit(IPlayer player)
         {
             // TODO
+        }
+
+        public void AddOnLandTask(IPlayerTask task)
+        {
+            throw new NotImplementedException();
         }
     }
 }
