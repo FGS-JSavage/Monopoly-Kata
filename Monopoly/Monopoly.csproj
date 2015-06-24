@@ -47,6 +47,8 @@
     <Compile Include="Locations\IncomeTaxLocation.cs" />
     <Compile Include="Locations\LocationManager.cs" />
     <Compile Include="Locations\LuxuryTaxLocation.cs" />
+    <Compile Include="Locations\RentableLocation.cs" />
+    <Compile Include="Realtor.cs" />
     <Compile Include="Tasks\IPlayerTask.cs" />
     <Compile Include="Tasks\LandOnGoTask.cs" />
     <Compile Include="Locations\GoLocation.cs" />

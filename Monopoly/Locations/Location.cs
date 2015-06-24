@@ -10,12 +10,13 @@ namespace Monopoly
     {
         protected List<IPlayerTask> OnLandTasks = new List<IPlayerTask>();
         protected List<IPlayerTask> OnExitTasks = new List<IPlayerTask>();
-
         public int SpaceNumber { get; set; }
+        public PropertyGroup Group { get; set; };
 
-        public Location(int spaceNumber)
+        public Location(int spaceNumber, PropertyGroup group)
         {
-            this.SpaceNumber = spaceNumber;
+            SpaceNumber = spaceNumber;
+            Group = group;
         }
 
         public void AddOnLandTask(IPlayerTask task)
