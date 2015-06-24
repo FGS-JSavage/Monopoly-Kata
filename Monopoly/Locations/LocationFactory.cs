@@ -21,20 +21,26 @@ namespace Monopoly.Locations
         public ILocation GetLocationForSpaceNumber(int spaceNumber) 
         {
 
-            //if (locationKeeper.ContainsKey(spaceNumber))
-            //{
-            //    return locationKeeper[spaceNumber];
-            //}
-            //else // Falls through to give generic non-rentable space TODO get rid of this
-            //{
-            //    return new Location(spaceNumber);
-            //}
-
             if (spaceNumber == 0)
             {
                 return new GoLocation();
             }
-            
+
+            if (spaceNumber == 4)
+            {
+                return new IncomeTaxLocation();
+            }
+
+            if (spaceNumber == 30)
+            {
+                return new JailVisitingLocation();
+            }
+
+            if (spaceNumber == 38)
+            {
+                return new LuxuryTaxLocation();
+            }
+
             return new Location(spaceNumber);
         }
     }

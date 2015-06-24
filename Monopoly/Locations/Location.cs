@@ -18,19 +18,19 @@ namespace Monopoly
             this.SpaceNumber = spaceNumber;
         }
 
-        public void Land(IPlayer player)
-        {
-            OnLandTasks.ForEach(x => x.Complete(player));
-        }
-
-        public void Exit(IPlayer player)
-        {
-            OnExitTasks.ForEach(x => x.Complete(player));
-        }
-
         public void AddOnLandTask(IPlayerTask task)
         {
             OnLandTasks.Add(task);
         }
+
+        public List<IPlayerTask> GetOnLandTasks()
+        {
+            return OnLandTasks;
+        }
+
+        public List<IPlayerTask> GetOnExitTasks()
+        {
+            return OnExitTasks;
+        } 
     }
 }

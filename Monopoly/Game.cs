@@ -43,5 +43,10 @@ namespace Monopoly
         {
             return players;
         }
+
+        public Board GetBoard()
+        {
+            return board;
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Monopoly
     public class Board
     {
         private Dice dice;
-        public LocationManager locationManager { get; }
+        private LocationManager locationManager;
 
         public Board()
         {
@@ -20,9 +20,14 @@ namespace Monopoly
 
         public void DoTurn(IPlayer player)
         {
-            player.CompletePreMoveTasks();
+            player.CompleteLandOnLocationTasks();
             locationManager.MovePlayer(player, dice.Roll());
-            player.CompletePostMoveTasks();
+            player.CompleteExitLocationTasks();
+        }
+
+        public LocationManager GetLocationManager()
+        {
+            return locationManager;
         }
     }
 }

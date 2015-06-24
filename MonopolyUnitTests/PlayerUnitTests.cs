@@ -21,7 +21,7 @@ namespace MonopolyUnitTests
         public void Init()
         {
             board = new Board();
-            startingLocation = new Location();
+            startingLocation = new GoLocation();
             player = new Player(startingLocation, board);
         }
 
@@ -34,7 +34,7 @@ namespace MonopolyUnitTests
         [Test]
         public void Move_Player_Correctly_Adjusts_Players_Location()
         {
-            board.locationManager.MovePlayer(player, 5);
+            board.GetLocationManager().MovePlayer(player, 5);
 
             Assert.AreEqual(5, player.PlayerLocation.SpaceNumber);
         }
@@ -42,9 +42,12 @@ namespace MonopolyUnitTests
         [Test]
         public void Move_Player_Multiple_Times_Correctly_Adjusts_Players_Location()
         {
-            board.locationManager.MovePlayer(player, 10);
-            board.locationManager.MovePlayer(player, 15);
-            board.locationManager.MovePlayer(player, 10);
+
+            
+
+            board.GetLocationManager().MovePlayer(player, 10);
+            board.GetLocationManager().MovePlayer(player, 15);
+            board.GetLocationManager().MovePlayer(player, 10);
 
             Assert.AreEqual(35, player.PlayerLocation.SpaceNumber);
         }

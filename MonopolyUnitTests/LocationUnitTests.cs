@@ -1,19 +1,31 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using Monopoly;
+using Monopoly.Locations;
 
 namespace MonopolyUnitTests
 {
     [TestFixture]
     class LocationUnitTests
     {
-        private Location location;
+        private Game game;
+        private Board board;
+        private List<IPlayer> players;
+        private LocationManager locationManager;
+
+        [SetUp]
+        public void Init()
+        {
+            game = new Game();
+            board = game.GetBoard();
+            players = game.GetPlayers();
+            locationManager = board.GetLocationManager();
+        }
 
         [Test]
         public void Location_Initializes_To_Space_Zero()
         {
-            location = new Location();
-
-            Assert.AreEqual(location.GetSpaceNumber(), 0);
+            Assert.AreEqual(players[0].PlayerLocation.SpaceNumber, 0);
         }
 
         [Test]
@@ -26,37 +38,21 @@ namespace MonopolyUnitTests
         [TestCase(85, Result = 5)]
         public int Location_Move_Forward_Correct_Distance(int distance)
         {
-            location = new Location();
 
-            location.MoveFowrard(distance);
+            locationManager.MovePlayer(players[0], distance);
 
-            return location.GetSpaceNumber();
+            return players[0].PlayerLocation.SpaceNumber;
         }
 
         [Test]
         public void Location_Move_Forward_Multiple_Times_Correct_Distance()
         {
-            location = new Location();
+            locationManager.MovePlayer(players[0], 5);
+            locationManager.MovePlayer(players[0], 10);
+            locationManager.MovePlayer(players[0], 20);
+            locationManager.MovePlayer(players[0], 10);
 
-            location.MoveFowrard(5);
-            location.MoveFowrard(10);
-            location.MoveFowrard(20);
-            location.MoveFowrard(10);
-
-            Assert.AreEqual(location.GetSpaceNumber(), 5);
-        }
-
-        [Test]
-        [TestCase(0, Result = 0)]
-        [TestCase(5, Result = 5)]
-        [TestCase(39, Result = 39)]
-        public int Jump_To_Space_Moves_To_Specified_Space_Number(int spaceNumber)
-        {
-            location = new Location();
-
-            location.JumpToSpaceNumber(spaceNumber);
-
-            return location.GetSpaceNumber();
+            Assert.AreEqual(5, players[0].PlayerLocation.SpaceNumber);
         }
     }
 }

@@ -9,10 +9,10 @@ namespace Monopoly
 {
     public interface IPlayer
     {
-        ILocation PlayerLocation { get; set; }
-        int Balance              { get; set; }
+        ILocation PlayerLocation    { get; set; }
+        double Balance              { get; set; }
 
-        void CompletePreMoveTasks();
-        void CompletePostMoveTasks();
+        void CompleteLandOnLocationTasks();
+        void CompleteExitLocationTasks();
     }
 }
