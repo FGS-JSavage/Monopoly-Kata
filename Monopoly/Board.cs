@@ -20,10 +20,19 @@ namespace Monopoly
 
         public void DoTurn(IPlayer player)
         {
-            player.CompleteLandOnLocationTasks();
-            locationManager.MovePlayer(player, dice.Roll());
-            player.CompleteExitLocationTasks();
+            DoTurn(player, dice.Roll());
         }
+
+        public void DoTurn(IPlayer player, int distance)
+        {
+            player.CompleteExitLocationTasks();
+            
+            player.PlayerLocation = locationManager.MovePlayer(player, distance);
+            
+            player.CompleteLandOnLocationTasks();
+        }
+
+
 
         public LocationManager GetLocationManager()
         {

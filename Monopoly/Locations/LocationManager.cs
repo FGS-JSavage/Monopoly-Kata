@@ -17,24 +17,17 @@ namespace Monopoly.Locations
             locationFactory = new LocationFactory();
         }
 
-        public void MovePlayer(IPlayer player, int distance)
+        public ILocation MovePlayer(IPlayer player, int distance)
         {
-
-            List<LandOnGoTask> onLandTasksToAdd = new List<LandOnGoTask>();
-
             int nextSpaceNumber = player.PlayerLocation.SpaceNumber + distance;
 
             while (nextSpaceNumber > 40) // Handles Flying over go
             {
-                onLandTasksToAdd.Add(new LandOnGoTask());
+                player.Balance += 200;
                 nextSpaceNumber -= NUMBER_OF_SPACES;
-    
             }
           
-            player.CompleteExitLocationTasks();
-            player.PlayerLocation = locationFactory.GetLocationForSpaceNumber(nextSpaceNumber % 40);
-            onLandTasksToAdd.ForEach(task => player.PlayerLocation.AddOnLandTask(task));
-            player.CompleteLandOnLocationTasks();
+            return locationFactory.GetLocationForSpaceNumber(nextSpaceNumber % 40);
         }
 
         public int ChompToBoardSize(int spaceNumber)

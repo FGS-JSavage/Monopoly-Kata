@@ -38,8 +38,7 @@ namespace MonopolyUnitTests
         [TestCase(85, Result = 5)]
         public int Location_Move_Forward_Correct_Distance(int distance)
         {
-
-            locationManager.MovePlayer(players[0], distance);
+            board.DoTurn(players[0], distance);
 
             return players[0].PlayerLocation.SpaceNumber;
         }
@@ -47,10 +46,10 @@ namespace MonopolyUnitTests
         [Test]
         public void Location_Move_Forward_Multiple_Times_Correct_Distance()
         {
-            locationManager.MovePlayer(players[0], 5);
-            locationManager.MovePlayer(players[0], 10);
-            locationManager.MovePlayer(players[0], 20);
-            locationManager.MovePlayer(players[0], 10);
+            board.DoTurn(players[0], 5);
+            board.DoTurn(players[0], 10);
+            board.DoTurn(players[0], 20);
+            board.DoTurn(players[0], 10);
 
             Assert.AreEqual(5, players[0].PlayerLocation.SpaceNumber);
         }

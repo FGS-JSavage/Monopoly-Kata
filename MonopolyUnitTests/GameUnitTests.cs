@@ -58,8 +58,7 @@ namespace MonopolyUnitTests
         public void Landing_On_Go_Balance_Increases_By_200()
         {
             Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
-
-            locationManager.MovePlayer(players[0], 40);
+            board.DoTurn(players[0], 40);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to landing on Go
         }
@@ -79,7 +78,7 @@ namespace MonopolyUnitTests
         {
             Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
 
-            locationManager.MovePlayer(players[0], 45);
+            board.DoTurn(players[0], 45);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
         }
@@ -87,7 +86,8 @@ namespace MonopolyUnitTests
         [Test]
         public void Passing_Go_Twice_In_One_Turn_Increases_Balance_By_400()
         {
-            locationManager.MovePlayer(players[0], 85);
+            board.DoTurn(players[0], 85);
+
 
             Assert.AreEqual(400, players[0].Balance); // Confirm increase due to passing Go
         }
@@ -95,7 +95,8 @@ namespace MonopolyUnitTests
         [Test]
         public void Player_Start_Near_End_Roll_Enough_To_Pass_Go_Balance_Increases_By_200()
         {
-            locationManager.MovePlayer(players[0], 39);
+            board.DoTurn(players[0], 39);
+
             board.DoTurn(players[0]);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
@@ -105,8 +106,7 @@ namespace MonopolyUnitTests
         public void Landing_On_Jail_Defaults_To_Just_Visiting()
         {
             // Jail is space # 30
-
-            locationManager.MovePlayer(players[0], 30);
+            board.DoTurn(players[0], 30);
 
             Assert.That(players[0].PlayerLocation, Is.TypeOf(typeof(JailVisitingLocation))); // Confirm increase due to passing Go
         }
@@ -135,7 +135,7 @@ namespace MonopolyUnitTests
 
             players[0].Balance = startingBalance; // set initial balance
 
-            locationManager.MovePlayer(players[0], 4); // move to income tax
+            board.DoTurn(players[0], 4); // move to income tax
 
             return players[0].Balance; 
         }
@@ -161,12 +161,10 @@ namespace MonopolyUnitTests
 
             players[0].Balance = startingBalance; // set initial balance
 
-            locationManager.MovePlayer(players[0], 38); // move to income tax
+            board.DoTurn(players[0], 38); // move to income tax
 
             return players[0].Balance;
         }
-
-
     }
 }
     

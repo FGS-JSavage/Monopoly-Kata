@@ -9,7 +9,6 @@ namespace Monopoly.Locations
 {
     public class IncomeTaxLocation : Location
     {
-
         public IncomeTaxLocation() : base(4)
         {
             OnLandTasks.Add(new PayIncomeTaxTask());

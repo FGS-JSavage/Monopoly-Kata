@@ -34,7 +34,7 @@ namespace MonopolyUnitTests
         [Test]
         public void Move_Player_Correctly_Adjusts_Players_Location()
         {
-            board.GetLocationManager().MovePlayer(player, 5);
+            board.DoTurn(player, 5);
 
             Assert.AreEqual(5, player.PlayerLocation.SpaceNumber);
         }
@@ -42,12 +42,9 @@ namespace MonopolyUnitTests
         [Test]
         public void Move_Player_Multiple_Times_Correctly_Adjusts_Players_Location()
         {
-
-            
-
-            board.GetLocationManager().MovePlayer(player, 10);
-            board.GetLocationManager().MovePlayer(player, 15);
-            board.GetLocationManager().MovePlayer(player, 10);
+            board.DoTurn(player, 10);
+            board.DoTurn(player, 15);
+            board.DoTurn(player, 10);
 
             Assert.AreEqual(35, player.PlayerLocation.SpaceNumber);
         }
