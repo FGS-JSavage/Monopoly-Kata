@@ -13,5 +13,6 @@ namespace Monopoly
         void AddOnLandTask(IPlayerTask task);
         List<IPlayerTask> GetOnLandTasks();
         List<IPlayerTask> GetOnExitTasks();
+        PropertyGroup Group { get; set; }
     }
 }

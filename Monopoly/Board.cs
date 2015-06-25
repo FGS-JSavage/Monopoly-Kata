@@ -11,11 +11,13 @@ namespace Monopoly
     {
         private Dice dice;
         private LocationManager locationManager;
+        private Realtor realtor;
 
         public Board()
         {
             dice = new Dice();
             locationManager = new LocationManager();
+            realtor = new Realtor();
         }
 
         public void DoTurn(IPlayer player)
@@ -30,9 +32,12 @@ namespace Monopoly
             player.PlayerLocation = locationManager.MovePlayer(player, distance);
             
             player.CompleteLandOnLocationTasks();
+
+            if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
+            {
+                realtor.MakePurchase(player, player.PlayerLocation.SpaceNumber);
+            }
         }
-
-
 
         public LocationManager GetLocationManager()
         {

@@ -8,7 +8,7 @@ namespace Monopoly
 {
     public class GoLocation : Location
     {
-        public GoLocation() : base(0)
+        public GoLocation() : base(0, PropertyGroup.Go)
         {
             OnLandTasks.Add(new LandOnGoTask());
         }

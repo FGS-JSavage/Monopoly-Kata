@@ -41,7 +41,7 @@ namespace Monopoly.Locations
                 return new LuxuryTaxLocation();
             }
 
-            return new Location(spaceNumber);
+            return new Location(spaceNumber, PropertyGroup.FreeParking);
         }
     }
 }

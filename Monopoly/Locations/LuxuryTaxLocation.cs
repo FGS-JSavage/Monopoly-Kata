@@ -9,7 +9,7 @@ namespace Monopoly.Locations
 {
    public  class LuxuryTaxLocation : Location
     {
-       public LuxuryTaxLocation() : base(38)
+       public LuxuryTaxLocation() : base(38, PropertyGroup.Tax)
        {
            OnLandTasks.Add(new PayLuxuryTaxTask());
        }

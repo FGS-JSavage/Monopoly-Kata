@@ -165,6 +165,24 @@ namespace MonopolyUnitTests
 
             return players[0].Balance;
         }
+
+        // Release 3 -------------------------------------------------------------------------------------------
+
+        [Test]
+        [TestCase(1000, Result = 925.0)]
+        [TestCase(75, Result = 0.0)]
+        [TestCase(50, Result = 0.0)]
+        [TestCase(0, Result = 0.0)]
+        public double Landing_On_Luxury_Tax_Decreases_Balance_By_75(int startingBalance)
+        {
+            // Income tax is space # 4
+
+            players[0].Balance = startingBalance; // set initial balance
+
+            board.DoTurn(players[0], 38); // move to income tax
+
+            return players[0].Balance;
+        }
     }
 }
     

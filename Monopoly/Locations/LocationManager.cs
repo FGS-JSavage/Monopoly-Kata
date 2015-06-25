@@ -33,6 +33,6 @@ namespace Monopoly.Locations
         public int ChompToBoardSize(int spaceNumber)
         {
             return spaceNumber % NUMBER_OF_SPACES;
-        } 
+        }
     }
 }
