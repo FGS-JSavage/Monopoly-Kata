@@ -12,9 +12,9 @@ namespace Monopoly.Locations
         private LocationFactory locationFactory;
         private const int NUMBER_OF_SPACES = 40;
 
-        public LocationManager()
+        public LocationManager(Realtor realtor)
         {
-            locationFactory = new LocationFactory();
+            locationFactory = new LocationFactory(realtor);
         }
 
         public ILocation MovePlayer(IPlayer player, int distance)

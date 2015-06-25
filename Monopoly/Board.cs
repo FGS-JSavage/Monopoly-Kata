@@ -16,8 +16,9 @@ namespace Monopoly
         public Board()
         {
             dice = new Dice();
-            locationManager = new LocationManager();
             realtor = new Realtor();
+            locationManager = new LocationManager(realtor);
+            
         }
 
         public void DoTurn(IPlayer player)

@@ -88,16 +88,18 @@ namespace MonopolyUnitTests
         {
             board.DoTurn(players[0], 85);
 
-
             Assert.AreEqual(400, players[0].Balance); // Confirm increase due to passing Go
         }
 
         [Test]
         public void Player_Start_Near_End_Roll_Enough_To_Pass_Go_Balance_Increases_By_200()
         {
+
+            players[0].Balance = 400;
+
             board.DoTurn(players[0], 39);
 
-            board.DoTurn(players[0]);
+            board.DoTurn(players[0], 1);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
         }
@@ -108,20 +110,7 @@ namespace MonopolyUnitTests
             // Jail is space # 30
             board.DoTurn(players[0], 30);
 
-            Assert.That(players[0].PlayerLocation, Is.TypeOf(typeof(JailVisitingLocation))); // Confirm increase due to passing Go
-        }
-
-        [Test]
-        public void Passing_Over_Jail_Without_Passing_Go_Does_Not_Change_Balance()
-        {
-            // Jail is space # 30
-
-            locationManager.MovePlayer(players[0], 29); // Move to space before Jail
-
-            board.DoTurn(players[0]); // Move by rolling Roll
-
-
-            Assert.AreEqual(players[0].Balance, 0); // Confirm no change in balance
+            Assert.That(players[0].PlayerLocation.Group == PropertyGroup.JailVisiting); // Confirm increase due to passing Go
         }
 
         [Test]
@@ -169,19 +158,15 @@ namespace MonopolyUnitTests
         // Release 3 -------------------------------------------------------------------------------------------
 
         [Test]
-        [TestCase(1000, Result = 925.0)]
-        [TestCase(75, Result = 0.0)]
-        [TestCase(50, Result = 0.0)]
-        [TestCase(0, Result = 0.0)]
-        public double Landing_On_Luxury_Tax_Decreases_Balance_By_75(int startingBalance)
+        public void Player_Landing_On_Unowned_Property_Automagically_Buys_It()
         {
-            // Income tax is space # 4
+            // Space 1 is unowned
 
-            players[0].Balance = startingBalance; // set initial balance
+            players[0].Balance = 100; // set initial balance
 
-            board.DoTurn(players[0], 38); // move to income tax
+            board.DoTurn(players[0], 1); // move to unowned property
 
-            return players[0].Balance;
+            Assert.AreEqual(40, players[0].Balance);
         }
     }
 }
