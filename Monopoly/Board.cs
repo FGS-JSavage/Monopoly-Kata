@@ -12,13 +12,15 @@ namespace Monopoly
         private Dice dice;
         private LocationManager locationManager;
         private Realtor realtor;
+        private Banker banker;
 
         public Board()
         {
             dice = new Dice();
             realtor = new Realtor();
             locationManager = new LocationManager(realtor);
-            
+            banker = new Banker(realtor);
+
         }
 
         public void DoTurn(IPlayer player)
@@ -38,11 +40,20 @@ namespace Monopoly
             {
                 realtor.MakePurchase(player, player.PlayerLocation.SpaceNumber);
             }
+            else if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber)) // then it must be owned
+            {
+                realtor.ChargeRent(realtor.GetOwnerForSpace(player.PlayerLocation.SpaceNumber), player);
+            }
         }
 
         public LocationManager GetLocationManager()
         {
             return locationManager;
+        }
+
+        public Realtor GetRealtor()
+        {
+            return realtor;
         }
     }
 }

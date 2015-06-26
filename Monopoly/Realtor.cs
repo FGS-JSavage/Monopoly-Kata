@@ -100,6 +100,48 @@ namespace Monopoly
             return propertyList[spaceNumber];
         }
 
+        public IPlayer GetOwnerForSpace(int spaceNumber)
+        {
+            return ownersBySpaceNumber[spaceNumber];
+        }
+
+        public void ChargeRent(IPlayer owner, IPlayer renter)
+        {
+            var rentalRate = CalculateRent(renter.PlayerLocation.SpaceNumber);
+            owner.Balance += rentalRate;
+            renter.Balance -= rentalRate;
+        }
+
+        public int CalculateRent(int spaceNumber)
+        {
+            var group = propertyList[spaceNumber].Group;
+            var owner = GetOwnerForSpace(spaceNumber);
+            var propertiesInGroupAlsoOwner = 0;
+
+            foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
+            {
+                if (SpaceIsOwned(i.SpaceNumber) && GetOwnerForSpace(i.SpaceNumber) == owner)
+                {
+                    propertiesInGroupAlsoOwner++;
+                }
+            }
+
+            if (propertyList[spaceNumber].Group == PropertyGroup.Railroad)
+            {
+                return 25 * propertiesInGroupAlsoOwner;
+            }
+
+            if (propertyList[spaceNumber].Group == PropertyGroup.Utility)
+            {
+                // TODO special case
+            }
+            return 0;
+        }
+
+        public bool SpaceIsOwned(int spaceNumber)
+        {
+            return ownersBySpaceNumber.ContainsKey(spaceNumber);
+        }
 
     }
 

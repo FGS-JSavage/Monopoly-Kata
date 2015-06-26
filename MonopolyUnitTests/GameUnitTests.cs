@@ -16,6 +16,7 @@ namespace MonopolyUnitTests
         private Board board;
         private List<IPlayer> players;
         private LocationManager locationManager;
+        private Realtor realtor;
             
         [SetUp]
         public void Init()
@@ -24,6 +25,7 @@ namespace MonopolyUnitTests
             board = game.GetBoard();
             players = game.GetPlayers();
             locationManager = board.GetLocationManager();
+            realtor = board.GetRealtor();
         }
 
         // RELEASE 1 -----------------------------------------------------------------------
@@ -168,6 +170,66 @@ namespace MonopolyUnitTests
 
             Assert.AreEqual(40, players[0].Balance);
         }
+
+        [Test]
+        public void Landing_On_Railroad_Charges_Correct_Rent_When_Only_One_Is_Owned()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 25;
+
+            realtor.SetOwnerForSpace(players[0], 5);
+
+            board.DoTurn(players[1], 5); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
+
+
+        [Test]
+        public void Landing_On_Railroad_Charges_Correct_Rent_When_2_Are_Owned()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 50;
+
+            realtor.SetOwnerForSpace(players[0], 5);
+            realtor.SetOwnerForSpace(players[0], 15);
+
+            board.DoTurn(players[1], 5); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
+
+        [Test]
+        public void Landing_On_Railroad_Charges_Correct_Rent_When_3_Are_Owned()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 75;
+
+            realtor.SetOwnerForSpace(players[0], 5);
+            realtor.SetOwnerForSpace(players[0], 15);
+            realtor.SetOwnerForSpace(players[0], 25);
+
+            board.DoTurn(players[1], 5); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
+
+        [Test]
+        public void Landing_On_Railroad_Charges_Correct_Rent_When_4_Are_Owned()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 100;
+
+            realtor.SetOwnerForSpace(players[0], 5);
+            realtor.SetOwnerForSpace(players[0], 15);
+            realtor.SetOwnerForSpace(players[0], 25);
+            realtor.SetOwnerForSpace(players[0], 35);
+
+            board.DoTurn(players[1], 5); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
+
     }
 }
     

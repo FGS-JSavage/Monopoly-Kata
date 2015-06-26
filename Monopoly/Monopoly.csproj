@@ -41,21 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Banker.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Locations\IncomeTaxLocation.cs" />
-    <Compile Include="Locations\LocationManager.cs" />
+    <Compile Include="LocationManager.cs" />
     <Compile Include="Locations\LuxuryTaxLocation.cs" />
     <Compile Include="Locations\RentableLocation.cs" />
     <Compile Include="Realtor.cs" />
     <Compile Include="Tasks\IPlayerTask.cs" />
     <Compile Include="Tasks\LandOnGoTask.cs" />
     <Compile Include="Locations\GoLocation.cs" />
-    <Compile Include="IBoard.cs" />
-    <Compile Include="IGame.cs" />
+    <Compile Include="Interfaces\IBoard.cs" />
+    <Compile Include="Interfaces\IGame.cs" />
     <Compile Include="Locations\ILocation.cs" />
-    <Compile Include="IPlayer.cs" />
+    <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Locations\IRentableLocation.cs" />
     <Compile Include="Locations\JailVisitingLocation.cs" />
     <Compile Include="Locations\Location.cs" />
@@ -69,6 +70,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
