@@ -82,9 +82,6 @@ namespace Monopoly
 
         public int GetRentOfSpace(IPlayer player, int spaceNumber)
         {
-            
-            
-            
    
             if (propertyList[spaceNumber].GetType() == typeof(IRentableLocation))
             {
