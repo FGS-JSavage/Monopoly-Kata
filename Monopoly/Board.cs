@@ -42,7 +42,7 @@ namespace Monopoly
             }
             else if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber)) // then it must be owned
             {
-                realtor.ChargeRent(realtor.GetOwnerForSpace(player.PlayerLocation.SpaceNumber), player);
+                realtor.ChargeRent(realtor.GetOwnerForSpace(player.PlayerLocation.SpaceNumber), player, distance);
             }
         }
 

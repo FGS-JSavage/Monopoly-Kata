@@ -230,6 +230,88 @@ namespace MonopolyUnitTests
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
 
+        [Test]
+        public void Landing_On_Utility_When_One_Is_Owned_Charges_4x_Roll()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 48;
+
+            realtor.SetOwnerForSpace(players[0], 12);
+
+            board.DoTurn(players[1], 12); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
+
+        [Test]
+        public void Landing_On_Utility_When_Two_Are_Owned_By_Same_Player_Charges_10x_Roll()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 120;
+
+            realtor.SetOwnerForSpace(players[0], 12);
+            realtor.SetOwnerForSpace(players[0], 28);
+
+            board.DoTurn(players[1], 12); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
+
+        [Test]
+        public void Landing_On_Utility_When_Two_Are_Owned_By_Different_Players_Charges_10x_Roll()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 120;
+
+            realtor.SetOwnerForSpace(players[0], 12);
+            realtor.SetOwnerForSpace(players[3], 28);
+
+            board.DoTurn(players[1], 12); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
+
+        [Test]
+        public void Landing_On_Real_Estate_When_Owned_Charges_Single_Rent()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 6;
+
+            realtor.SetOwnerForSpace(players[0], 6);
+
+            board.DoTurn(players[1], 6); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
+
+        [Test]
+        public void Landing_On_Real_Estate_When_2_Out_Of_Three_In_Group_Are_Owned_Charges_Single_Rent()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 6;
+
+            realtor.SetOwnerForSpace(players[0], 6);
+            realtor.SetOwnerForSpace(players[0], 8);
+
+            board.DoTurn(players[1], 6); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
+
+        [Test]
+        public void Landing_On_Real_Estate_When_All_In_Group_Are_Owned_Charges_Double_Rent()
+        {
+            var initalBalance = players[1].Balance;
+            var expectedRent = 12;
+
+            realtor.SetOwnerForSpace(players[0], 6);
+            realtor.SetOwnerForSpace(players[0], 8);
+            realtor.SetOwnerForSpace(players[0], 9);
+
+            board.DoTurn(players[1], 6); // move to owned property
+
+            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        }
     }
 }
     
