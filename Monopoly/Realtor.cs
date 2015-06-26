@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Monopoly.Locations;
 
 namespace Monopoly
@@ -70,6 +66,80 @@ namespace Monopoly
             SetOwnerForSpace(player, spaceNumber);
         }
 
+        public void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue)
+        {
+            var rentalRate = CalculateRent(renter.PlayerLocation.SpaceNumber, diceRollValue);
+            owner.Balance += rentalRate;
+            renter.Balance -= rentalRate;
+        }
+
+        public int CalculateRent(int spaceNumber, int diceRollValue)
+        {
+            var group = propertyList[spaceNumber].Group;
+
+            if (group == PropertyGroup.Railroad) // Railroad Rent
+            {
+                return 25 * CountOwnedPropertiesWithSameGroupAndOwner(spaceNumber);
+            }
+
+            if (group == PropertyGroup.Utility) // Utility Rent
+            {
+                return ( CountOwnedPropertiesWithSameGroup(spaceNumber) == 1 ? 4 : 10 ) * diceRollValue;
+            }
+
+            // Real Estate Rent
+            return ( IsWholeGroupOwned(group) ? 2 : 1 ) * ((RentableLocation)propertyList[spaceNumber]).Rent;
+        }
+
+        public bool SpaceIsOwned(int spaceNumber)
+        {
+            return ownersBySpaceNumber.ContainsKey(spaceNumber);
+        }
+
+        public int CountOwnedPropertiesWithSameGroupAndOwner(int spaceNumber)
+        {
+            var group = propertyList[spaceNumber].Group;
+            var owner = GetOwnerForSpace(spaceNumber);
+            int propertiesAlsoOwnedBySamePlayer = 0;
+            
+            foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
+            {
+                if (SpaceIsOwned(i.SpaceNumber) && GetOwnerForSpace(i.SpaceNumber) == owner)
+                {
+                    propertiesAlsoOwnedBySamePlayer++;
+                }
+
+            }
+            return propertiesAlsoOwnedBySamePlayer;
+        }
+
+        public int CountOwnedPropertiesWithSameGroup(int spaceNumber)
+        {
+            var group = propertyList[spaceNumber].Group;
+
+            int propertiesAlsoOwned = 0;
+
+            foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
+            {
+                if (SpaceIsOwned(i.SpaceNumber))
+                {
+                    propertiesAlsoOwned++;
+                }
+
+            }
+            return propertiesAlsoOwned;
+        }
+
+        public bool IsWholeGroupOwned(PropertyGroup group)
+        {
+            bool AllAreOwned = true;
+            foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
+            {
+                AllAreOwned &= SpaceIsOwned(i.SpaceNumber);
+            }
+            return AllAreOwned;
+        }
+
         public bool SpaceIsForSale(int spaceNumber)
         {
             return propertyList[spaceNumber] is RentableLocation &&
@@ -78,12 +148,12 @@ namespace Monopoly
 
         public int GetPriceOfSpace(int spaceNumber)
         {
-            return ((RentableLocation) propertyList[spaceNumber]).Price;
+            return ((RentableLocation)propertyList[spaceNumber]).Price;
         }
 
         public int GetRentOfSpace(IPlayer player, int spaceNumber)
         {
-   
+
             if (propertyList[spaceNumber].GetType() == typeof(IRentableLocation))
             {
                 return ((IRentableLocation)propertyList[spaceNumber]).Rent;
@@ -104,65 +174,6 @@ namespace Monopoly
         public IPlayer GetOwnerForSpace(int spaceNumber)
         {
             return ownersBySpaceNumber[spaceNumber];
-        }
-
-        public void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue)
-        {
-            var rentalRate = CalculateRent(renter.PlayerLocation.SpaceNumber, diceRollValue);
-            owner.Balance += rentalRate;
-            renter.Balance -= rentalRate;
-        }
-
-        public int CalculateRent(int spaceNumber, int diceRollValue)
-        {
-            var group = propertyList[spaceNumber].Group;
-            var owner = GetOwnerForSpace(spaceNumber);
-
-            // Railroad Rent
-            if (propertyList[spaceNumber].Group == PropertyGroup.Railroad)
-            {
-                var propertiesAlsoOwnedBySamePlayer = 0;
-                foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
-                {
-                    if (SpaceIsOwned(i.SpaceNumber) && GetOwnerForSpace(i.SpaceNumber) == owner)
-                    {
-                        propertiesAlsoOwnedBySamePlayer++;
-                    }
-                
-                }
-                return 25 * propertiesAlsoOwnedBySamePlayer;
-            }
-
-            // Utility Rent
-            if (propertyList[spaceNumber].Group == PropertyGroup.Utility)
-            {
-                var propertiesAlsoOwned = 0;
-
-                foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
-                {
-                    if (SpaceIsOwned(i.SpaceNumber))
-                    {
-                        propertiesAlsoOwned++;
-                    }
-                }
-
-                return propertiesAlsoOwned == 1 ? diceRollValue * 4 : diceRollValue * 10;
-            }
-
-            bool AllAreOwned = true;
-
-            // Real Estate Rent
-            foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
-            {
-                AllAreOwned &= SpaceIsOwned(i.SpaceNumber);
-            }
-
-            return ( AllAreOwned ? 2 : 1 ) * ((RentableLocation)propertyList[spaceNumber]).Rent;
-        }
-
-        public bool SpaceIsOwned(int spaceNumber)
-        {
-            return ownersBySpaceNumber.ContainsKey(spaceNumber);
         }
     }
 
