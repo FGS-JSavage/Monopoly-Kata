@@ -57,11 +57,8 @@ namespace Monopoly
             };
         }
 
-
-
         public void MakePurchase(IPlayer player, int spaceNumber)
         {
-
             player.Balance -= GetPriceOfSpace(spaceNumber);
             SetOwnerForSpace(player, spaceNumber);
         }
@@ -96,6 +93,16 @@ namespace Monopoly
             return ownersBySpaceNumber.ContainsKey(spaceNumber);
         }
 
+        public bool IsWholeGroupOwned(PropertyGroup group)
+        {
+            bool AllAreOwned = true;
+            foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
+            {
+                AllAreOwned &= SpaceIsOwned(i.SpaceNumber);
+            }
+            return AllAreOwned;
+        }
+
         public int CountOwnedPropertiesWithSameGroupAndOwner(int spaceNumber)
         {
             var group = propertyList[spaceNumber].Group;
@@ -125,25 +132,13 @@ namespace Monopoly
                 {
                     propertiesAlsoOwned++;
                 }
-
             }
             return propertiesAlsoOwned;
         }
 
-        public bool IsWholeGroupOwned(PropertyGroup group)
-        {
-            bool AllAreOwned = true;
-            foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
-            {
-                AllAreOwned &= SpaceIsOwned(i.SpaceNumber);
-            }
-            return AllAreOwned;
-        }
-
         public bool SpaceIsForSale(int spaceNumber)
         {
-            return propertyList[spaceNumber] is RentableLocation &&
-                   !ownersBySpaceNumber.ContainsKey(spaceNumber);
+            return propertyList[spaceNumber] is RentableLocation && !SpaceIsOwned(spaceNumber);
         }
 
         public int GetPriceOfSpace(int spaceNumber)
@@ -153,12 +148,7 @@ namespace Monopoly
 
         public int GetRentOfSpace(IPlayer player, int spaceNumber)
         {
-
-            if (propertyList[spaceNumber].GetType() == typeof(IRentableLocation))
-            {
-                return ((IRentableLocation)propertyList[spaceNumber]).Rent;
-            }
-            return -1;
+            return ((IRentableLocation) propertyList[spaceNumber]).Rent;
         }
 
         public void SetOwnerForSpace(IPlayer player, int spaceNumber)

@@ -12,15 +12,12 @@ namespace Monopoly
         private Dice dice;
         private LocationManager locationManager;
         private Realtor realtor;
-        private Banker banker;
 
         public Board()
         {
             dice = new Dice();
             realtor = new Realtor();
             locationManager = new LocationManager(realtor);
-            banker = new Banker(realtor);
-
         }
 
         public void DoTurn(IPlayer player)
