@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Monopoly.Locations;
 
 namespace Monopoly
 {
@@ -10,13 +11,18 @@ namespace Monopoly
     {
         private const int DEFAULT_STARTING_BALANCE = 0;
        
-        public ILocation PlayerLocation { get; set; }
-        public double Balance              { get; set; }
+        public virtual ILocation PlayerLocation { get; set; }
+        public double Balance   { get; set; }
+        public int DoublesCount { get; set; }
 
+        public int GetOutOfJailCards = 0;
+
+        public JailStrategy jailStrategy;
+             
         public Player(ILocation playerLocation, Board board, int startingBalance = DEFAULT_STARTING_BALANCE)
         {
-            this.PlayerLocation = playerLocation;
-            this.Balance = startingBalance;
+            PlayerLocation = playerLocation;
+            Balance = startingBalance;
         }
         
         public void CompleteLandOnLocationTasks()
@@ -27,6 +33,26 @@ namespace Monopoly
         public void CompleteExitLocationTasks()
         {
             PlayerLocation.GetOnExitTasks().ForEach(x => x.Complete(this));
+        }
+
+        public bool HasGetOutOfJailCard()
+        {
+            return GetOutOfJailCards > 0;
+        }
+
+        public void UseGetOutOfJailCard()
+        {
+            GetOutOfJailCards--;
+        }
+
+        public void AddGetOutOfJailCard()
+        {
+            GetOutOfJailCards++;
+        }
+
+        public JailStrategy GetJailStrategy()
+        {
+            return jailStrategy;
         }
     }
 }

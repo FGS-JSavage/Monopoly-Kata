@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Monopoly;
 using Monopoly.Locations;
+using Moq;
 
 namespace MonopolyUnitTests
 {
@@ -12,6 +13,7 @@ namespace MonopolyUnitTests
         private Board board;
         private List<IPlayer> players;
         private LocationManager locationManager;
+        private Mock<Player> mockPlayer;
 
         [SetUp]
         public void Init()
@@ -38,7 +40,7 @@ namespace MonopolyUnitTests
         [TestCase(85, Result = 5)]
         public int Location_Move_Forward_Correct_Distance(int distance)
         {
-            board.DoTurn(players[0], distance);
+            board.DoTurn(players[0], distance, false);
 
             return players[0].PlayerLocation.SpaceNumber;
         }
@@ -46,10 +48,10 @@ namespace MonopolyUnitTests
         [Test]
         public void Location_Move_Forward_Multiple_Times_Correct_Distance()
         {
-            board.DoTurn(players[0], 5);
-            board.DoTurn(players[0], 10);
-            board.DoTurn(players[0], 20);
-            board.DoTurn(players[0], 10);
+            board.DoTurn(players[0], 5, false);
+            board.DoTurn(players[0], 10, false);
+            board.DoTurn(players[0], 20, false);
+            board.DoTurn(players[0], 10, false);
 
             Assert.AreEqual(5, players[0].PlayerLocation.SpaceNumber);
         }

@@ -4,3 +4,17 @@ C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\Monopoly\bin\Deb
 C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\Monopoly\obj\Debug\Monopoly.csprojResolveAssemblyReference.cache
 C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\Monopoly\obj\Debug\Monopoly.exe
 C:\Users\jsavage\Documents\Visual Studio 2013\Projects\Monopoly\Monopoly\obj\Debug\Monopoly.pdb
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\AutoMoq.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Microsoft.Practices.Unity.Configuration.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Microsoft.Practices.Unity.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Microsoft.Practices.Unity.Interception.Configuration.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Microsoft.Practices.Unity.Interception.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Moq.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Ploeh.AutoFixture.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Microsoft.Practices.Unity.xml
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Microsoft.Practices.Unity.Configuration.xml
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Microsoft.Practices.Unity.Interception.xml
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Microsoft.Practices.Unity.Interception.Configuration.xml
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Moq.xml
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\Monopoly\bin\Debug\Ploeh.AutoFixture.xml

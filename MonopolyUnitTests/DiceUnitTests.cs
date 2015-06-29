@@ -19,10 +19,11 @@ namespace MonopolyUnitTests
         {
             dice = new Dice();
 
-            foreach (var rollValue in Enumerable.Repeat(0, 100).Select(i => dice.Roll()))
+            
+            foreach (var rollValue in Enumerable.Repeat(0, 100).Select(i => dice.Roll() ))
             {
-                Assert.GreaterOrEqual(rollValue, 2);
-                Assert.LessOrEqual(rollValue, 12);
+                Assert.GreaterOrEqual(dice.Score, 2);
+                Assert.LessOrEqual(dice.Score, 12);
             }
         }
     }

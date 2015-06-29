@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Practices.Unity.InterceptionExtension;
+using Moq.Protected;
 
 namespace Monopoly
 {
     public class Dice
     {
-        private const int DEFAULT_DICE = 2;
-        private const int DEFAULT_DICE_SIDES = 6;
+        protected int dieOneScore;
+        protected int dieTwoScore;
+    
 
-        private readonly int numberOfDiceToRoll;
-        private readonly int numberOfDiceSides;
+        public int Score       { get { return dieOneScore + dieTwoScore; } }
+        public bool WasDoubles { get { return dieOneScore == dieTwoScore; } }
 
-        public Dice(int diceCount = DEFAULT_DICE, int sideCount = DEFAULT_DICE_SIDES)
+
+        public void Roll()
         {
-            numberOfDiceToRoll = diceCount;
-            numberOfDiceSides = sideCount;
-        }
-
-        public int Roll()
-        {
-            return Enumerable.Sum(Enumerable.Repeat(0, numberOfDiceToRoll).Select(i => Die.RollDie(numberOfDiceSides)));
+            int dieOneScore = Die.RollDie();
+            int dieTwoScore = Die.RollDie();
         }
 
         private static class Die
@@ -35,5 +34,7 @@ namespace Monopoly
                 return random.Next(sides) + 1;
             }
         }
+
+        
     }
 }

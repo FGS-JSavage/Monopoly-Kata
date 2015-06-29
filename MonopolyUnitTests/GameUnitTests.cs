@@ -21,6 +21,7 @@ namespace MonopolyUnitTests
         [SetUp]
         public void Init()
         {
+
             game = new Game();
             board = game.GetBoard();
             players = game.GetPlayers();
@@ -60,7 +61,7 @@ namespace MonopolyUnitTests
         public void Landing_On_Go_Balance_Increases_By_200()
         {
             Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
-            board.DoTurn(players[0], 40);
+            board.DoTurn(players[0], 40, false);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to landing on Go
         }
@@ -80,7 +81,7 @@ namespace MonopolyUnitTests
         {
             Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
 
-            board.DoTurn(players[0], 45);
+            board.DoTurn(players[0], 45, false);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
         }
@@ -88,7 +89,7 @@ namespace MonopolyUnitTests
         [Test]
         public void Passing_Go_Twice_In_One_Turn_Increases_Balance_By_400()
         {
-            board.DoTurn(players[0], 85);
+            board.DoTurn(players[0], 85, false);
 
             Assert.AreEqual(400, players[0].Balance); // Confirm increase due to passing Go
         }
@@ -99,20 +100,11 @@ namespace MonopolyUnitTests
 
             players[0].Balance = 400;
 
-            board.DoTurn(players[0], 39);
+            board.DoTurn(players[0], 39, false);
 
-            board.DoTurn(players[0], 1);
+            board.DoTurn(players[0], 1, false);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
-        }
-
-        [Test]
-        public void Landing_On_Jail_Defaults_To_Just_Visiting()
-        {
-            // Jail is space # 30
-            board.DoTurn(players[0], 30);
-
-            Assert.That(players[0].PlayerLocation.Group == PropertyGroup.JailVisiting); // Confirm increase due to passing Go
         }
 
         [Test]
@@ -126,7 +118,7 @@ namespace MonopolyUnitTests
 
             players[0].Balance = startingBalance; // set initial balance
 
-            board.DoTurn(players[0], 4); // move to income tax
+            board.DoTurn(players[0], 4, false); // move to income tax
 
             return players[0].Balance; 
         }
@@ -152,7 +144,7 @@ namespace MonopolyUnitTests
 
             players[0].Balance = startingBalance; // set initial balance
 
-            board.DoTurn(players[0], 38); // move to income tax
+            board.DoTurn(players[0], 38, false); // move to income tax
 
             return players[0].Balance;
         }
@@ -166,7 +158,7 @@ namespace MonopolyUnitTests
 
             players[0].Balance = 100; // set initial balance
 
-            board.DoTurn(players[0], 1); // move to unowned property
+            board.DoTurn(players[0], 1, false); // move to unowned property
 
             Assert.AreEqual(40, players[0].Balance);
         }
@@ -179,7 +171,7 @@ namespace MonopolyUnitTests
 
             realtor.SetOwnerForSpace(players[0], 5);
 
-            board.DoTurn(players[1], 5); // move to owned property
+            board.DoTurn(players[1], 5, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -194,7 +186,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 5);
             realtor.SetOwnerForSpace(players[0], 15);
 
-            board.DoTurn(players[1], 5); // move to owned property
+            board.DoTurn(players[1], 5, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -209,7 +201,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 15);
             realtor.SetOwnerForSpace(players[0], 25);
 
-            board.DoTurn(players[1], 5); // move to owned property
+            board.DoTurn(players[1], 5, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -225,7 +217,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 25);
             realtor.SetOwnerForSpace(players[0], 35);
 
-            board.DoTurn(players[1], 5); // move to owned property
+            board.DoTurn(players[1], 5, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -238,7 +230,7 @@ namespace MonopolyUnitTests
 
             realtor.SetOwnerForSpace(players[0], 12);
 
-            board.DoTurn(players[1], 12); // move to owned property
+            board.DoTurn(players[1], 12, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -252,7 +244,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 12);
             realtor.SetOwnerForSpace(players[0], 28);
 
-            board.DoTurn(players[1], 12); // move to owned property
+            board.DoTurn(players[1], 12, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -266,7 +258,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 12);
             realtor.SetOwnerForSpace(players[3], 28);
 
-            board.DoTurn(players[1], 12); // move to owned property
+            board.DoTurn(players[1], 12, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -279,7 +271,7 @@ namespace MonopolyUnitTests
 
             realtor.SetOwnerForSpace(players[0], 6);
 
-            board.DoTurn(players[1], 6); // move to owned property
+            board.DoTurn(players[1], 6, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -293,7 +285,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 6);
             realtor.SetOwnerForSpace(players[0], 8);
 
-            board.DoTurn(players[1], 6); // move to owned property
+            board.DoTurn(players[1], 6, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -308,10 +300,49 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 8);
             realtor.SetOwnerForSpace(players[0], 9);
 
-            board.DoTurn(players[1], 6); // move to owned property
+            board.DoTurn(players[1], 6, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
+
+        [Test]
+        public void RollNonDoublesAndLandOnGoToJail_PlayerIsInJail()
+        {
+            board.DoTurn(players[0], 30, false);
+
+            Assert.That(players[0].PlayerLocation.Group, Is.EqualTo(PropertyGroup.Jail));
+        }
+
+        [Test]
+        public void RollDoublesAndLandOnGoToJail_PlayerIsInJail()
+        {
+            board.DoTurn(players[0], 30, true);
+
+            Assert.That(players[0].PlayerLocation.Group, Is.EqualTo(PropertyGroup.Jail));
+        }
+
+        [Test]
+        public void RollNonDoublesThreeTimesInARow_NeverPassOrLandOnGo_BalanceIsUnchangedAndPlayerIsInJail()
+        {
+        }
+
+        [Test]
+        public void RollNonDoublesTwoTimesInARow_PlayerIsNotInJail()
+        {
+
+        }
+
+        [Test]
+        public void PlayerPaysToGetOutOfJail_RollsDoublesThenMovesAgain_BalanceDecreasesBy50()
+        {
+
+        }
+
+        //[Test]
+        //public void PlayerPaysToGetOutOfJail_RollsDoublesThenMovesAgain_BalanceDecreasesBy50()
+        //{
+
+        //}
     }
 }
     
