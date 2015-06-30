@@ -18,5 +18,9 @@ namespace Monopoly
             player.Balance -= 50;
         }
 
+        public void Charge(IPlayer player, int amount)
+        {
+            player.Balance -= amount;
+        }
     }
 }

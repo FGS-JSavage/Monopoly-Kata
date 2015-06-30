@@ -20,8 +20,8 @@ namespace Monopoly
 
         public void Roll()
         {
-            int dieOneScore = Die.RollDie();
-            int dieTwoScore = Die.RollDie();
+            dieOneScore = Die.RollDie();
+            dieTwoScore = Die.RollDie();
         }
 
         private static class Die

@@ -17,7 +17,7 @@ namespace Monopoly
 
         public int GetOutOfJailCards = 0;
 
-        public JailStrategy jailStrategy;
+        public JailStrategy PreferedJailStrategy { get; set; }
              
         public Player(ILocation playerLocation, Board board, int startingBalance = DEFAULT_STARTING_BALANCE)
         {
@@ -48,11 +48,6 @@ namespace Monopoly
         public void AddGetOutOfJailCard()
         {
             GetOutOfJailCards++;
-        }
-
-        public JailStrategy GetJailStrategy()
-        {
-            return jailStrategy;
         }
     }
 }

@@ -20,8 +20,10 @@ namespace MonopolyUnitTests
             dice = new Dice();
 
             
-            foreach (var rollValue in Enumerable.Repeat(0, 100).Select(i => dice.Roll() ))
+            foreach (var rollValue in Enumerable.Repeat(0, 100))
             {
+                dice.Roll();
+
                 Assert.GreaterOrEqual(dice.Score, 2);
                 Assert.LessOrEqual(dice.Score, 12);
             }

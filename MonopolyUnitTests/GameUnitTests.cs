@@ -17,6 +17,7 @@ namespace MonopolyUnitTests
         private List<IPlayer> players;
         private LocationManager locationManager;
         private Realtor realtor;
+        private Jailer jailer;
             
         [SetUp]
         public void Init()
@@ -27,6 +28,7 @@ namespace MonopolyUnitTests
             players = game.GetPlayers();
             locationManager = board.GetLocationManager();
             realtor = board.GetRealtor();
+            jailer = board.GetJailer();
         }
 
         // RELEASE 1 -----------------------------------------------------------------------
@@ -310,7 +312,7 @@ namespace MonopolyUnitTests
         {
             board.DoTurn(players[0], 30, false);
 
-            Assert.That(players[0].PlayerLocation.Group, Is.EqualTo(PropertyGroup.Jail));
+            Assert.True(jailer.PlayerIsImprisoned(players[0]));
         }
 
         [Test]
@@ -324,25 +326,86 @@ namespace MonopolyUnitTests
         [Test]
         public void RollNonDoublesThreeTimesInARow_NeverPassOrLandOnGo_BalanceIsUnchangedAndPlayerIsInJail()
         {
+            var initialBalance = players[0].Balance;
+            board.DoTurn(players[0], 10, true);
+            board.DoTurn(players[0], 0, true);
+            board.DoTurn(players[0], 0, true);
+
+            Assert.AreEqual(initialBalance, players[0].Balance);
+            Assert.True(jailer.PlayerIsImprisoned(players[0]));
         }
 
         [Test]
         public void RollNonDoublesTwoTimesInARow_PlayerIsNotInJail()
         {
-
+            board.DoTurn(players[0], 3, true);
+            board.DoTurn(players[0], 3, true);
+            
+            Assert.False(jailer.PlayerIsImprisoned(players[0]));
         }
 
         [Test]
-        public void PlayerPaysToGetOutOfJail_RollsDoublesThenMovesAgain_BalanceDecreasesBy50()
+        public void PlayerPaysToGetOutOfJail_BalanceDecreasesBy50()
         {
+            double intialBalance = players[0].Balance;
+            jailer.Imprison(players[0]);
+            board.HandleGetOutOfJailByPaying(players[0]);
 
+            Assert.AreEqual(intialBalance - 50, players[0].Balance);
         }
 
-        //[Test]
-        //public void PlayerPaysToGetOutOfJail_RollsDoublesThenMovesAgain_BalanceDecreasesBy50()
-        //{
+        [Test]
+        public void PlayerRollsToGetOutOfJail_RollsDoublesOnFirstTurn_MovesScoreOfRollAndStops()
+        {
+            players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
+            board.SendPlayerToJail(players[0]);
 
-        //}
+            board.DoTurn(players[0], 10, true);
+
+            Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
+        }
+
+        [Test]
+        public void PlayerRollsToGetOutOfJail_RollsDoublesOnSecondTurn_MovesScoreOfRollAndStops()
+        {
+            players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
+            board.SendPlayerToJail(players[0]);
+
+            board.DoTurn(players[0], 10, false);
+            board.DoTurn(players[0], 10, true);
+
+            Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
+        }
+
+        [Test]
+        public void PlayerRollsToGetOutOfJail_RollsDoublesOnThirdTurn_MovesScoreOfRollAndStops()
+        {
+            players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
+            board.SendPlayerToJail(players[0]);
+
+            board.DoTurn(players[0], 10, false);
+            board.DoTurn(players[0], 10, false);
+            board.DoTurn(players[0], 10, true);
+
+            Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
+        }
+
+        [Test]
+        public void PlayerRollsToGetOutOfJail_TriesThreeTurnsWithoutSuccess_Pays50AndMovesDistanceRolledOnThirdTry()
+        {
+            players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
+
+            var initialBalance = players[0].Balance;
+
+            board.SendPlayerToJail(players[0]);
+
+            board.DoTurn(players[0], 10, false);
+            board.DoTurn(players[0], 10, false);
+            board.DoTurn(players[0], 10, false);
+
+            Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber); // At Correct Location
+            Assert.AreEqual(initialBalance - 50, players[0].Balance);
+        }
     }
 }
     

@@ -17,7 +17,7 @@ namespace Monopoly
 
         public void Imprison(IPlayer player)
         {
-            prisoners.Add(player, 0);
+            prisoners.Add(player, 3);
         }
 
         public int GetRemainingSentence(IPlayer player)

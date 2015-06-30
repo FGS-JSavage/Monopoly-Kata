@@ -34,9 +34,11 @@ namespace Monopoly
         {
             if (jailer.PlayerIsImprisoned(player))
             {
-                DoJailTurn(player, distance, rolledDoubles);    
+                DoJailTurn(player, distance, rolledDoubles);
+                return;
             }
 
+            // Doubles tracking logic
             if (rolledDoubles)
             {
                 player.DoublesCount++;
@@ -46,25 +48,24 @@ namespace Monopoly
                 player.DoublesCount = 0;
             }
 
-            if (player.DoublesCount == 3)
+            if (player.DoublesCount == 3) // Rolled 3 doubles. Send player directly to Jail
             {
-                player.PlayerLocation = new JailLocation();
-                player.DoublesCount = 0;
-                return;
+                SendPlayerToJail(player);
+                return; 
             }
 
             DoStandardTurn(player, distance, rolledDoubles);
         }
 
-        public void DoJailTurn(IPlayer player, int distance, bool RolledDoubles)
+        public void DoJailTurn(IPlayer player, int distance, bool rolledDoubles)
         {
-            if (jailer.GetRemainingSentence(player) == 0)
+            if (jailer.GetRemainingSentence(player) == 0) // Force player to pay for release
             {
                 banker.ChargePlayerToGetOutOfJail(player);
-                
+                return;
             }
 
-            switch (player.GetJailStrategy())
+            switch (player.PreferedJailStrategy)
             {
                 case JailStrategy.UseGetOutOfJailCard:
                     if (player.HasGetOutOfJailCard())
@@ -77,8 +78,8 @@ namespace Monopoly
                     HandleGetOutOfJailByPaying(player);
                     break;
 
-                default: // also handles "case JailStrategy.RollDoubles:"
-                    HandleGetOutOfJailByRollingDoublesStrategy(player);
+                default: // Handles "case JailStrategy.RollDoubles:"
+                    HandleGetOutOfJailByRollingDoublesStrategy(player, distance, rolledDoubles);
                     break;
             }
         }
@@ -88,6 +89,11 @@ namespace Monopoly
             player.CompleteExitLocationTasks();
 
             player.PlayerLocation = locationManager.MovePlayer(player, distance);
+
+            if (player.PlayerLocation.Group == PropertyGroup.Jail)
+            {
+                SendPlayerToJail(player);
+            }
 
             player.CompleteLandOnLocationTasks();
 
@@ -101,19 +107,9 @@ namespace Monopoly
             }
         }
 
-        public LocationManager GetLocationManager()
-        {
-            return locationManager;
-        }
-
-        public Realtor GetRealtor()
-        {
-            return realtor;
-        }
-
         public void PayJailFine(IPlayer player)
         {
-            player.Balance -= 50;
+            banker.ChargePlayerToGetOutOfJail(player);
         }
 
         public void HandleGetOutOfJailUsingCardStrategy(IPlayer player)
@@ -126,14 +122,12 @@ namespace Monopoly
             }
         }
 
-        public void HandleGetOutOfJailByRollingDoublesStrategy(IPlayer player)
+        public void HandleGetOutOfJailByRollingDoublesStrategy(IPlayer player, int distance, bool rolledDoubles)
         {
-            dice.Roll();
-
-            if (dice.WasDoubles) // Success
+            if (rolledDoubles) // Success
             {
-                jailer.ReleasePlayerFromJail(player);
-                DoTurn(player, dice.Score, false);
+                ReleasePlayerFromJail(player);
+                DoTurn(player, distance, false);
             }
             else // Failure
             {
@@ -142,7 +136,7 @@ namespace Monopoly
                 if (jailer.GetRemainingSentence(player) == 0)
                 {
                     HandleGetOutOfJailByPaying(player);
-                    DoTurn(player, dice.Score, false);
+                    DoTurn(player, distance, rolledDoubles);
                 }
             }
         }
@@ -150,7 +144,35 @@ namespace Monopoly
         public void HandleGetOutOfJailByPaying(IPlayer player)
         {
             banker.ChargePlayerToGetOutOfJail(player);
+            ReleasePlayerFromJail(player);
+        }
+
+        public void SendPlayerToJail(IPlayer player)
+        {
+            player.PlayerLocation = new JailLocation();
+            jailer.Imprison(player);
+            player.DoublesCount = 0;
+        }
+
+        public void ReleasePlayerFromJail(IPlayer player)
+        {
             jailer.ReleasePlayerFromJail(player);
+            player.PlayerLocation = new JailVisitingLocation();
+        }
+
+        public LocationManager GetLocationManager()
+        {
+            return locationManager;
+        }
+
+        public Realtor GetRealtor()
+        {
+            return realtor;
+        }
+
+        public Jailer GetJailer()
+        {
+            return jailer;
         }
     }
 }
