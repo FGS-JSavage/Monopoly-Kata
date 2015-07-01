@@ -24,3 +24,5 @@ C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTest
 C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Microsoft.Practices.Unity.Interception.xml
 C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Microsoft.Practices.Unity.Interception.Configuration.xml
 C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Moq.xml
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Ploeh.AutoFixture.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Ploeh.AutoFixture.xml

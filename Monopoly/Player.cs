@@ -19,7 +19,7 @@ namespace Monopoly
 
         public JailStrategy PreferedJailStrategy { get; set; }
              
-        public Player(ILocation playerLocation, Board board, int startingBalance = DEFAULT_STARTING_BALANCE)
+        public Player(ILocation playerLocation, int startingBalance = DEFAULT_STARTING_BALANCE)
         {
             PlayerLocation = playerLocation;
             Balance = startingBalance;

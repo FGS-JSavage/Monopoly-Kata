@@ -18,9 +18,9 @@ namespace Monopoly
         public Board()
         {
             dice = new Dice();
-            realtor = new Realtor();
-            locationManager = new LocationManager(realtor);
             banker = new Banker();
+            realtor = new Realtor(banker);
+            locationManager = new LocationManager(realtor);
             jailer = new Jailer();
         }
 

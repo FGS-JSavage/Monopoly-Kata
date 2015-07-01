@@ -8,9 +8,11 @@ namespace Monopoly
     {
         private Dictionary<int, IPlayer> ownersBySpaceNumber;
         private Dictionary<int, ILocation> propertyList;
+        private Banker banker;
 
-        public Realtor()
+        public Realtor(Banker banker)
         {
+            this.banker = banker;
             ownersBySpaceNumber = new Dictionary<int, IPlayer>();
             propertyList = new Dictionary<int, ILocation>()
             {
@@ -44,7 +46,7 @@ namespace Monopoly
                 { 27, new RentableLocation( 27, 22, 260, PropertyGroup.Yellow       )},
                 { 28, new RentableLocation( 28,  0,   0, PropertyGroup.Utility      )}, 
                 { 29, new RentableLocation( 29, 22, 280, PropertyGroup.Yellow       )},
-                { 30, new JailLocation(                                             )}, // TODO implement Jail
+                { 30, new JailLocation(                                             )},
                 { 31, new RentableLocation( 31, 26, 300, PropertyGroup.DarkGreen    )},
                 { 32, new RentableLocation( 32, 26, 300, PropertyGroup.DarkGreen    )},
                 { 33, new Location(         33,          PropertyGroup.Chest        )}, 
@@ -59,18 +61,17 @@ namespace Monopoly
 
         public void MakePurchase(IPlayer player, int spaceNumber)
         {
-            player.Balance -= GetPriceOfSpace(spaceNumber);
+            banker.Collect(player, GetPriceOfSpace(spaceNumber));
             SetOwnerForSpace(player, spaceNumber);
         }
 
         public void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue)
         {
             var rentalRate = CalculateRent(renter.PlayerLocation.SpaceNumber, diceRollValue);
-            owner.Balance += rentalRate;
-            renter.Balance -= rentalRate;
+            banker.Transfer(renter, owner, rentalRate);
         }
 
-        public int CalculateRent(int spaceNumber, int diceRollValue)
+        public virtual int CalculateRent(int spaceNumber, int diceRollValue)
         {
             var group = propertyList[spaceNumber].Group;
 

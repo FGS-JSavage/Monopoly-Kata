@@ -406,6 +406,8 @@ namespace MonopolyUnitTests
             Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber); // At Correct Location
             Assert.AreEqual(initialBalance - 50, players[0].Balance);
         }
+
+
     }
 }
     

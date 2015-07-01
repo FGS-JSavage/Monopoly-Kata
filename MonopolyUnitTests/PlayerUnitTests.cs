@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Monopoly;
-using Monopoly.Locations;
 
 namespace MonopolyUnitTests
 {
@@ -14,39 +8,37 @@ namespace MonopolyUnitTests
     public class PlayerUnitTests
     {
         private IPlayer player;
-        private Board board;
         private ILocation startingLocation;
 
         [SetUp]
         public void Init()
         {
-            board = new Board();
-            startingLocation = new GoLocation();
-            player = new Player(startingLocation, board);
+
+            player = new Player(startingLocation);
         }
 
         [Test]
-        public void Initialize_Player_To_Location_Zero()
+        public void PlayerStartsOutWithNoGetOutOfJailCards_HasGetOutOfJailCardReturnsFalse()
         {
-            Assert.AreEqual(player.PlayerLocation.SpaceNumber, 0);
+            Assert.False(player.HasGetOutOfJailCard());
         }
 
         [Test]
-        public void Move_Player_Correctly_Adjusts_Players_Location()
+        public void AddingAGetOutOfJailCardCorrectlyAdjustsCardBalance()
         {
-            board.DoTurn(player, 5, false);
+            player.AddGetOutOfJailCard();
 
-            Assert.AreEqual(5, player.PlayerLocation.SpaceNumber);
+            Assert.True(player.HasGetOutOfJailCard());
         }
 
         [Test]
-        public void Move_Player_Multiple_Times_Correctly_Adjusts_Players_Location()
+        public void UsingAGetOutOfJailCard_DecrementsCardBalance()
         {
-            board.DoTurn(player, 10, false);
-            board.DoTurn(player, 15, false);
-            board.DoTurn(player, 10, false);
+            player.AddGetOutOfJailCard();
 
-            Assert.AreEqual(35, player.PlayerLocation.SpaceNumber);
+            player.UseGetOutOfJailCard();
+
+            Assert.False(player.HasGetOutOfJailCard());
         }
     }
 }

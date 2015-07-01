@@ -8,19 +8,26 @@ namespace Monopoly
 {
     public class Banker
     {
-        public Banker()
-        {
-            
-        }
 
         public void ChargePlayerToGetOutOfJail(IPlayer player)
         {
             player.Balance -= 50;
         }
 
-        public void Charge(IPlayer player, int amount)
+        public void Collect(IPlayer player, int amount)
         {
             player.Balance -= amount;
+        }
+
+        public void Payout(IPlayer player, int amount)
+        {
+            player.Balance += amount;
+        }
+
+        public void Transfer(IPlayer payer, IPlayer recipient, int amount)
+        {
+            Collect(payer, amount);
+            Payout(recipient, amount);
         }
     }
 }

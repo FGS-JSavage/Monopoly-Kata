@@ -19,6 +19,7 @@ namespace Monopoly
 
         void UseGetOutOfJailCard();
         bool HasGetOutOfJailCard();
+        void AddGetOutOfJailCard();
 
         JailStrategy PreferedJailStrategy { get; set; }
     }

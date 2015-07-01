@@ -20,7 +20,7 @@ namespace Monopoly
 
             for (int i = 0; i < numberOfPlayers; i++)
             {
-                players.Add(new Player(new GoLocation(), board));
+                players.Add(new Player(new GoLocation()));
             }
 
             dice = new Dice();
