@@ -22,23 +22,28 @@ namespace MonopolyUnitTests
         [SetUp]
         public void Init()
         {
-            mocker = AutoMock.GetLoose();
-
-
+           
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
 
             mockPlayer1 = fixture.Create<Mock<Player>>();
             mockPlayer2 = fixture.Create<Mock<Player>>();
 
-            //mockBanker = new Mock<Banker>(); // Old
-            mockBanker = fixture.Create<Mock<Banker>>();
+
+            // ---- Use the commented code if I need to inject an object into a mock---- AutoMock Style
+            // Autofixture can most likley do this too.
             
+            //mocker = AutoMock.GetLoose();
+
+            //mockBanker = new Mock<Banker>(); // Old
+           
             //mocker.Provide(mockBanker); // Not sure If I need this
-            realtor = new Realtor(mockBanker.Object);
+            //realtor = new Realtor(mockBanker.Object); // Old
+
+            mockBanker = fixture.Create<Mock<Banker>>();
 
             mockRealtor = fixture.Create<Mock<Realtor>>();
 
-
+            realtor = mockRealtor.Object;
         }
 
         [Test]
@@ -152,7 +157,6 @@ namespace MonopolyUnitTests
         [Test] // TODO figure out how the hell to do this
         public void ChargeRent_CorrectlyTransfersFunds()
         {
-            //Mock<Realtor> real = new Mock<Realtor>();
             var moneyToBeTransferred = 20;
             mockRealtor.Setup(x => x.CalculateRent(It.IsAny<int>(), It.IsAny<int>())).Returns(moneyToBeTransferred);
 

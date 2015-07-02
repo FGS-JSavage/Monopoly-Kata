@@ -24,7 +24,7 @@ namespace Monopoly
             player.Balance += amount;
         }
 
-        public void Transfer(IPlayer payer, IPlayer recipient, int amount)
+        public virtual void Transfer(IPlayer payer, IPlayer recipient, int amount)
         {
             Collect(payer, amount);
             Payout(recipient, amount);
