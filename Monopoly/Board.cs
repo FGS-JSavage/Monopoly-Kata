@@ -214,5 +214,11 @@ namespace Monopoly
         {
             return jailer;
         }
+
+        public MoveToClosest(IPlayer player, PropertyGroup desiredGroup)
+        {
+            var nextLocation = locationManager.GetClosest(player.PlayerLocation.SpaceNumber, desiredGroup);
+
+        }
     }
 }

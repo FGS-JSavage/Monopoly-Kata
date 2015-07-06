@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Practices.ObjectBuilder2;
 using Monopoly.Locations;
 
 namespace Monopoly
@@ -135,6 +136,14 @@ namespace Monopoly
                 }
             }
             return propertiesAlsoOwned;
+        }
+
+        public IEnumerable<ILocation> getSpaceNumbersOfType(PropertyGroup desiredGroup)
+        {
+            yield return propertyList.Values.Where(i => i.Group == desiredGroup))
+            
+                
+            
         }
 
         public bool SpaceIsForSale(int spaceNumber)
