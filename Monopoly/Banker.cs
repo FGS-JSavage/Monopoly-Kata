@@ -8,7 +8,6 @@ namespace Monopoly
 {
     public class Banker
     {
-
         public void ChargePlayerToGetOutOfJail(IPlayer player)
         {
             player.Balance -= 50;

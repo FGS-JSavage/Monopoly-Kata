@@ -67,8 +67,13 @@
   <ItemGroup>
     <Compile Include="Banker.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="Cards\Card.cs" />
+    <Compile Include="Cards\Deck.cs" />
+    <Compile Include="Cards\DeckFactory.cs" />
+    <Compile Include="Cards\GetOutOfJailCard.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Interfaces\ICard.cs" />
     <Compile Include="Jailer.cs" />
     <Compile Include="Locations\IncomeTaxLocation.cs" />
     <Compile Include="LocationManager.cs" />
@@ -76,6 +81,8 @@
     <Compile Include="Locations\LuxuryTaxLocation.cs" />
     <Compile Include="Locations\RentableLocation.cs" />
     <Compile Include="Realtor.cs" />
+    <Compile Include="Tasks\DrawChanceTask.cs" />
+    <Compile Include="Tasks\DrawChestTask.cs" />
     <Compile Include="Tasks\IPlayerTask.cs" />
     <Compile Include="Tasks\LandOnGoTask.cs" />
     <Compile Include="Locations\GoLocation.cs" />
@@ -90,8 +97,12 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\MoveToLocationTask.cs" />
+    <Compile Include="Tasks\PayBankerTask.cs" />
     <Compile Include="Tasks\PayIncomeTaxTask.cs" />
     <Compile Include="Tasks\PayLuxuryTaxTask.cs" />
+    <Compile Include="Tasks\PayAllOtherPlayersTask.cs" />
+    <Compile Include="Tasks\ReceivePayoutFromBankerTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

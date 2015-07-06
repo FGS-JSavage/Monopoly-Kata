@@ -112,7 +112,6 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(mockPlayer1.Object, 11);
             realtor.SetOwnerForSpace(mockPlayer1.Object, 13);
 
-
             Assert.AreEqual(expectedRent, realtor.CalculateRent(11, 0));
         }
 
@@ -152,18 +151,6 @@ namespace MonopolyUnitTests
             mockRealtor.Object.SetOwnerForSpace(mockPlayer2.Object, 28);
 
             Assert.AreEqual(50, realtor.CalculateRent(12, 5));
-        }
-
-        [Test] // TODO figure out how the hell to do this
-        public void ChargeRent_CorrectlyTransfersFunds()
-        {
-            var moneyToBeTransferred = 20;
-            mockRealtor.Setup(x => x.CalculateRent(It.IsAny<int>(), It.IsAny<int>())).Returns(moneyToBeTransferred);
-
-
-            mockRealtor.Object.ChargeRent(mockPlayer1.Object, mockPlayer2.Object, 5);
-
-            mockBanker.Verify(x => x.Transfer(It.IsAny<Player>(), It.IsAny<Player>(), moneyToBeTransferred));
         }
     }
 }

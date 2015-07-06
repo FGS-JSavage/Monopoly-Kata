@@ -14,6 +14,8 @@ namespace Monopoly
         private Realtor realtor;
         private Banker banker;
         private Jailer jailer;
+        private Deck chanceDeck;
+        private Deck chestDeck;
 
         public Board()
         {
@@ -24,13 +26,22 @@ namespace Monopoly
             jailer = new Jailer();
         }
 
+        public Board(Realtor realtor, Jailer jailer, Banker banker)
+        {
+            dice = new Dice();
+            this.realtor = realtor;
+            this.locationManager = new LocationManager(this.realtor);
+            this.jailer = jailer;
+            this.banker = banker;
+        }
+
         public void DoTurn(IPlayer player)
         {
             dice.Roll();
             DoTurn(player, dice.Score, dice.WasDoubles);
         }
 
-        public void DoTurn(IPlayer player, int distance, bool rolledDoubles)
+        public virtual void DoTurn(IPlayer player, int distance, bool rolledDoubles)
         {
             if (jailer.PlayerIsImprisoned(player))
             {
@@ -57,7 +68,7 @@ namespace Monopoly
             DoStandardTurn(player, distance, rolledDoubles);
         }
 
-        public void DoJailTurn(IPlayer player, int distance, bool rolledDoubles)
+        public virtual void DoJailTurn(IPlayer player, int distance, bool rolledDoubles)
         {
             if (jailer.GetRemainingSentence(player) == 0) // Force player to pay for release
             {
@@ -122,6 +133,15 @@ namespace Monopoly
             }
         }
 
+        public void MovePlayerDirectlyToSpace(IPlayer player, int spaceNumber)
+        {
+            player.CompleteExitLocationTasks();
+
+            player.PlayerLocation = locationManager.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
+
+            player.CompleteLandOnLocationTasks();
+        }
+
         public void HandleGetOutOfJailByRollingDoublesStrategy(IPlayer player, int distance, bool rolledDoubles)
         {
             if (rolledDoubles) // Success
@@ -158,6 +178,26 @@ namespace Monopoly
         {
             jailer.ReleasePlayerFromJail(player);
             player.PlayerLocation = new JailVisitingLocation();
+        }
+
+        public ICard DrawChance()
+        {
+            return chestDeck.Draw();
+        }
+
+        public void DiscardChance(ICard card)
+        {
+            chanceDeck.Discard(card);
+        }
+
+        public ICard DrawChest()
+        {
+            return chestDeck.Draw();
+        }
+
+        public void DiscardChest(ICard card)
+        {
+            chestDeck.Discard(card);
         }
 
         public LocationManager GetLocationManager()

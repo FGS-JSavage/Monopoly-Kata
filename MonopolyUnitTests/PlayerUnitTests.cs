@@ -13,7 +13,7 @@ namespace MonopolyUnitTests
         [SetUp]
         public void Init()
         {
-
+            startingLocation = new GoLocation();
             player = new Player(startingLocation);
         }
 

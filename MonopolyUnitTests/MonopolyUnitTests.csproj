@@ -109,10 +109,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BankerUnitTests.cs" />
+    <Compile Include="BoardUnitTests.cs" />
     <Compile Include="DiceUnitTests.cs" />
     <Compile Include="GameUnitTests.cs" />
     <Compile Include="LocalAddin.cs" />
-    <Compile Include="LocationUnitTests.cs" />
     <Compile Include="PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealtorUnitTests.cs" />

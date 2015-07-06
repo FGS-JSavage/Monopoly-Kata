@@ -24,10 +24,23 @@ namespace Monopoly.Locations
             while (nextSpaceNumber > 40) // Handles Flying over go
             {
                 player.Balance += 200;
+
                 nextSpaceNumber -= NUMBER_OF_SPACES;
             }
           
             return locationFactory.GetLocationForSpaceNumber(nextSpaceNumber % 40);
+        }
+
+        public ILocation MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber)
+        {
+            ILocation nextLocation = locationFactory.GetLocationForSpaceNumber(spaceNumber);
+
+            if (nextLocation.SpaceNumber < player.PlayerLocation.SpaceNumber)
+            {
+                nextLocation.AddOnLandTask(new LandOnGoTask());
+            }
+
+            return nextLocation;
         }
 
         public int ChompToBoardSize(int spaceNumber)

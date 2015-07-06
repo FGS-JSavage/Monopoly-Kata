@@ -19,7 +19,6 @@ namespace MonopolyUnitTests
         {
             dice = new Dice();
 
-            
             foreach (var rollValue in Enumerable.Repeat(0, 100))
             {
                 dice.Roll();
@@ -28,5 +27,7 @@ namespace MonopolyUnitTests
                 Assert.LessOrEqual(dice.Score, 12);
             }
         }
+
+
     }
 }
