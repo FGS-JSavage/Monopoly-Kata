@@ -13,7 +13,7 @@ namespace Monopoly
         private Banker banker;
         private Board board;
 
-        public Realtor(Banker banker, Board board)
+        public Realtor(Banker banker)
         {
             this.banker = banker;
             this.board = board;
@@ -43,7 +43,7 @@ namespace Monopoly
                 { 19, new RentableLocation( 19, 16, 200, PropertyGroup.Orange       )},
                 { 20, new Location(         20,          PropertyGroup.FreeParking  )}, 
                 { 21, new RentableLocation( 21, 18, 220, PropertyGroup.Red          )},
-                { 22, new ChanceLocation(   22,          PropertyGroup.Chance, board)}, 
+                { 22, new ChanceLocation(   22,          PropertyGroup.Chance       )}, 
                 { 23, new RentableLocation( 23, 18, 220, PropertyGroup.Red          )},
                 { 24, new RentableLocation( 24, 20, 240, PropertyGroup.Red          )},
                 { 25, new RentableLocation( 25,  0,   0, PropertyGroup.Railroad     )}, 

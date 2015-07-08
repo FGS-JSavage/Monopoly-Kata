@@ -9,9 +9,9 @@ namespace Monopoly.Locations
 {
     public class ChanceLocation : Location
     {
-        public ChanceLocation(int spaceNumber, PropertyGroup @group, Board board) : base(spaceNumber, @group)
+        public ChanceLocation(int spaceNumber, PropertyGroup @group) : base(spaceNumber, @group)
         {
-            OnLandTasks.Add(new DrawChanceTask(board));
+            //OnLandTasks.Add(new DrawChanceTask(board));
         }
     }
 }

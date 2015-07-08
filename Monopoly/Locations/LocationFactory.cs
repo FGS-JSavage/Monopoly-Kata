@@ -19,9 +19,9 @@ namespace Monopoly.Locations
             };
         }
 
-        public List<ILocation> GetLocations()
+        public Dictionary<int, ILocation> BuildLocations()
         {
-            retrun new Dictionary<int, ILocation>()
+            return new Dictionary<int, ILocation>()
             {
                 {  0, new GoLocation()                                               },
                 {  1, new RentableLocation(  1,  2,  60, PropertyGroup.Purple       )},
@@ -45,7 +45,7 @@ namespace Monopoly.Locations
                 { 19, new RentableLocation( 19, 16, 200, PropertyGroup.Orange       )},
                 { 20, new Location(         20,          PropertyGroup.FreeParking  )}, 
                 { 21, new RentableLocation( 21, 18, 220, PropertyGroup.Red          )},
-                { 22, new ChanceLocation(   22,          PropertyGroup.Chance, board)}, 
+                { 22, new ChanceLocation(   22,          PropertyGroup.Chance       )}, 
                 { 23, new RentableLocation( 23, 18, 220, PropertyGroup.Red          )},
                 { 24, new RentableLocation( 24, 20, 240, PropertyGroup.Red          )},
                 { 25, new RentableLocation( 25,  0,   0, PropertyGroup.Railroad     )}, 
