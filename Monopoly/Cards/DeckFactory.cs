@@ -52,7 +52,7 @@ namespace Monopoly
             deck.Add(new Card("Doctor's Fees",                    new PayBankerTask(50)));
             deck.Add(new GetOutOfJailCard("Get Out of Jail Card", new GetOutOfJailTask(board)));
             deck.Add(new Card("Go Directly To Jail",              new GoDirectlyToJailTask(board)));
-            deck.Add(new Card("It Is Your Birthday", new CollectFromAllTask(10, players, banker)));
+            deck.Add(new Card("It Is Your Birthday",              new CollectFromAllTask(10, players, banker)));
             deck.Add(new Card("Opera Night", new CollectFromAllTask(50, players, banker)));
             deck.Add(new Card("Income Tax Refund", new CollectFromBankerTask(20)));
             deck.Add(new Card("Life Insurance Matures", new CollectFromBankerTask(100)));
