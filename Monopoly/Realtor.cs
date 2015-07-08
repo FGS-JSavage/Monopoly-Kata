@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Microsoft.Practices.ObjectBuilder2;
 using Monopoly.Locations;
 
@@ -10,11 +11,14 @@ namespace Monopoly
         private Dictionary<int, IPlayer> ownersBySpaceNumber;
         private Dictionary<int, ILocation> propertyList;
         private Banker banker;
+        private Board board;
 
-        public Realtor(Banker banker)
+        public Realtor(Banker banker, Board board)
         {
             this.banker = banker;
+            this.board = board;
             ownersBySpaceNumber = new Dictionary<int, IPlayer>();
+
             propertyList = new Dictionary<int, ILocation>()
             {
                 {  0, new GoLocation()                                               },
@@ -39,7 +43,7 @@ namespace Monopoly
                 { 19, new RentableLocation( 19, 16, 200, PropertyGroup.Orange       )},
                 { 20, new Location(         20,          PropertyGroup.FreeParking  )}, 
                 { 21, new RentableLocation( 21, 18, 220, PropertyGroup.Red          )},
-                { 22, new Location(         22,          PropertyGroup.Chance       )}, 
+                { 22, new ChanceLocation(   22,          PropertyGroup.Chance, board)}, 
                 { 23, new RentableLocation( 23, 18, 220, PropertyGroup.Red          )},
                 { 24, new RentableLocation( 24, 20, 240, PropertyGroup.Red          )},
                 { 25, new RentableLocation( 25,  0,   0, PropertyGroup.Railroad     )}, 
@@ -138,13 +142,6 @@ namespace Monopoly
             return propertiesAlsoOwned;
         }
 
-        public IEnumerable<ILocation> getSpaceNumbersOfType(PropertyGroup desiredGroup)
-        {
-            yield return propertyList.Values.Where(i => i.Group == desiredGroup))
-            
-                
-            
-        }
 
         public bool SpaceIsForSale(int spaceNumber)
         {

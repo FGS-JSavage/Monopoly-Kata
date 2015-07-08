@@ -21,7 +21,7 @@ namespace Monopoly
         {
             dice = new Dice();
             banker = new Banker();
-            realtor = new Realtor(banker);
+            realtor = new Realtor(banker, this);
             locationManager = new LocationManager(realtor);
             jailer = new Jailer();
         }
@@ -127,7 +127,7 @@ namespace Monopoly
         {
             if (player.HasGetOutOfJailCard())
             {
-                player.UseGetOutOfJailCard();
+                player.DecrementGetOutOfJailCard();
                 jailer.ReleasePlayerFromJail(player);
                 DoTurn(player);
             }
@@ -140,6 +140,11 @@ namespace Monopoly
             player.PlayerLocation = locationManager.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
 
             player.CompleteLandOnLocationTasks();
+        }
+
+        public void MoveToClosest(IPlayer player, PropertyGroup destinationGroup)
+        {
+            locationManager.MoveToClosest(player, destinationGroup);
         }
 
         public void HandleGetOutOfJailByRollingDoublesStrategy(IPlayer player, int distance, bool rolledDoubles)
@@ -180,7 +185,7 @@ namespace Monopoly
             player.PlayerLocation = new JailVisitingLocation();
         }
 
-        public ICard DrawChance()
+        public virtual ICard DrawChance()
         {
             return chestDeck.Draw();
         }
@@ -213,12 +218,6 @@ namespace Monopoly
         public Jailer GetJailer()
         {
             return jailer;
-        }
-
-        public MoveToClosest(IPlayer player, PropertyGroup desiredGroup)
-        {
-            var nextLocation = locationManager.GetClosest(player.PlayerLocation.SpaceNumber, desiredGroup);
-
         }
     }
 }

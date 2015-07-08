@@ -36,7 +36,7 @@ namespace MonopolyUnitTests
         {
             player.AddGetOutOfJailCard();
 
-            player.UseGetOutOfJailCard();
+            player.DecrementGetOutOfJailCard();
 
             Assert.False(player.HasGetOutOfJailCard());
         }

@@ -17,7 +17,7 @@ namespace Monopoly
         void CompleteLandOnLocationTasks();
         void CompleteExitLocationTasks();
 
-        void UseGetOutOfJailCard();
+        void DecrementGetOutOfJailCard();
         bool HasGetOutOfJailCard();
         void AddGetOutOfJailCard();
 

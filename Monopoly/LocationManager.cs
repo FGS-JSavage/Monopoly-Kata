@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Monopoly.Locations
 {
-    
     public class LocationManager
     {
         private LocationFactory locationFactory;
@@ -46,6 +45,20 @@ namespace Monopoly.Locations
         public int ChompToBoardSize(int spaceNumber)
         {
             return spaceNumber % NUMBER_OF_SPACES;
+        }
+
+        public void MoveToClosest(IPlayer player, PropertyGroup desiredGroup)
+        {
+            ILocation closestLocationInGroup = locationFactory.GetClosest(player.PlayerLocation.SpaceNumber, desiredGroup);
+
+            MovePlayerToLocation(player, closestLocationInGroup);
+        }
+
+        public void MovePlayerToLocation(IPlayer player, ILocation location)
+        {
+            player.CompleteExitLocationTasks();
+            player.PlayerLocation = location;
+            player.CompleteLandOnLocationTasks();
         }
     }
 }

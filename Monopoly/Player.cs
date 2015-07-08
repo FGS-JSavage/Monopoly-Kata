@@ -40,7 +40,7 @@ namespace Monopoly
             return GetOutOfJailCards > 0;
         }
 
-        public void UseGetOutOfJailCard()
+        public void DecrementGetOutOfJailCard()
         {
             GetOutOfJailCards--;
         }

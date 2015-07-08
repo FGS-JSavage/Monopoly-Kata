@@ -1,5 +1,6 @@
 ﻿using Autofac.Extras.Moq;
 using Monopoly;
+using Monopoly.Tasks;
 using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
@@ -42,6 +43,20 @@ namespace MonopolyUnitTests
             mockBoard.Object.DoTurn(mockPlayer.Object, distance, rolledDoubles);
             mockBoard.Verify(x => x.DoJailTurn(It.IsAny<IPlayer>(), distance, rolledDoubles));
         }
+ 
+        [Test]
 
+        public void DrawsChanceCard_AdvanceToNearestUtility_MovesPlayerToElectricCompany([Values(22, 37)] int startingSpaceNumber)
+        {
+            int ExpectedUtilitySpaceNumber = 28;
+
+
+            mockBoard.Setup(x => x.DrawChance())
+                .Returns(new Card("Move To Closest Utility", new MoveToNearestPropertyGroupTask(board, PropertyGroup.Utility)));
+
+            board.MovePlayerDirectlyToSpace(mockPlayer.Object, startingSpaceNumber);
+
+            Assert.AreEqual(ExpectedUtilitySpaceNumber, mockPlayer.Object.PlayerLocation.SpaceNumber);
+        }
     }
 }

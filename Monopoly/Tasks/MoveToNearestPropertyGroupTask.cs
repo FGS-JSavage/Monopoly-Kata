@@ -6,20 +6,19 @@ using System.Threading.Tasks;
 
 namespace Monopoly.Tasks
 {
-    public class MoveToLocationTask : IPlayerTask
+    public class MoveToNearestPropertyGroupTask : IPlayerTask
     {
-        private int destinationSpaceNumber;
         private Board board;
 
-        public MoveToLocationTask(Board board, int destinationSpaceNumber)
+        public MoveToNearestPropertyGroupTask(Board board, PropertyGroup targetGroup)
         {
             this.board = board;
-            this.destinationSpaceNumber = destinationSpaceNumber;
         }
+
 
         public void Complete(IPlayer player)
         {
-            board.MovePlayerDirectlyToSpace(player, destinationSpaceNumber);
+            board.MoveToClosest(player, PropertyGroup.Utility);
         }
     }
 }

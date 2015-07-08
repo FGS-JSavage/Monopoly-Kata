@@ -75,14 +75,18 @@
     <Compile Include="Game.cs" />
     <Compile Include="Interfaces\ICard.cs" />
     <Compile Include="Jailer.cs" />
+    <Compile Include="Locations\ChanceLocation.cs" />
     <Compile Include="Locations\IncomeTaxLocation.cs" />
     <Compile Include="LocationManager.cs" />
     <Compile Include="Locations\JailLocation.cs" />
     <Compile Include="Locations\LuxuryTaxLocation.cs" />
     <Compile Include="Locations\RentableLocation.cs" />
     <Compile Include="Realtor.cs" />
+    <Compile Include="Tasks\CollectFromAllTask.cs" />
     <Compile Include="Tasks\DrawChanceTask.cs" />
     <Compile Include="Tasks\DrawChestTask.cs" />
+    <Compile Include="Tasks\GetOutOfJailTask.cs" />
+    <Compile Include="Tasks\GoDirectlyToJailTask.cs" />
     <Compile Include="Tasks\IPlayerTask.cs" />
     <Compile Include="Tasks\LandOnGoTask.cs" />
     <Compile Include="Locations\GoLocation.cs" />
@@ -98,11 +102,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\MoveToLocationTask.cs" />
+    <Compile Include="Tasks\MoveToNearestPropertyGroupTask.cs" />
     <Compile Include="Tasks\PayBankerTask.cs" />
     <Compile Include="Tasks\PayIncomeTaxTask.cs" />
     <Compile Include="Tasks\PayLuxuryTaxTask.cs" />
     <Compile Include="Tasks\PayAllOtherPlayersTask.cs" />
-    <Compile Include="Tasks\ReceivePayoutFromBankerTask.cs" />
+    <Compile Include="Tasks\CollectFromBankerTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

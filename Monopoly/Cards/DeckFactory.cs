@@ -47,11 +47,11 @@ namespace Monopoly
             // Holiday Fund matures - Receive $100 
             
             
-            deck.Add(new Card("Advance To Go", new MoveToLocationTask(board)));
-            deck.Add(new Card("Bank Error In Your Favor", new CollectFromBankerTask(75)));
-            deck.Add(new Card("Doctor's Fees", new PayBankerTask(50)));
-            deck.Add(new GetOutOfJailCard());
-            deck.Add(new Card("Go Directly To Jail", new GoDirectlyToJailTask(board)));
+            deck.Add(new Card("Advance To Go",                    new MoveToLocationTask(board, 0)));
+            deck.Add(new Card("Bank Error In Your Favor",         new CollectFromBankerTask(75)));
+            deck.Add(new Card("Doctor's Fees",                    new PayBankerTask(50)));
+            deck.Add(new GetOutOfJailCard("Get Out of Jail Card", new GetOutOfJailTask(board)));
+            deck.Add(new Card("Go Directly To Jail",              new GoDirectlyToJailTask(board)));
             deck.Add(new Card("It Is Your Birthday", new CollectFromAllTask(10, players, banker)));
             deck.Add(new Card("Opera Night", new CollectFromAllTask(50, players, banker)));
             deck.Add(new Card("Income Tax Refund", new CollectFromBankerTask(20)));
@@ -92,8 +92,12 @@ namespace Monopoly
             // Your building loan matures – collect $150 
             // You have won a crossword competition - collect $100
 
-            deck.Add(new Card("Advance to Go (Collect $200)", new MoveToLocationTask(board)));
+            deck.Add(new Card("Advance to Go (Collect $200)", new MoveToLocationTask(board, 0)));
+            deck.Add(new Card("Advance To Illinios Ave",      new MoveToLocationTask(board, 24)));
+            deck.Add(new Card("Advance To Nearest Utility",   new MoveToNearestPropertyGroupTask(board, PropertyGroup.Utility)));
+            
 
+            //deck.Add();
             // TODO shuffle deck
 
             return new Deck(deck);
