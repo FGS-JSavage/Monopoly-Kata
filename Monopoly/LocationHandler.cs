@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Monopoly.Locations
 {
-    public class LocationManager
+    public class MovementHandler
     {
-        private LocationFactory locationFactory;
+        private Realtor realtor;
         private const int NUMBER_OF_SPACES = 40;
 
-        public LocationManager(Realtor realtor)
+        public MovementHandler(Realtor realtor)
         {
-            locationFactory = new LocationFactory(realtor);
+            this.realtor = realtor;
         }
 
         public ILocation MovePlayer(IPlayer player, int distance)
@@ -27,12 +27,12 @@ namespace Monopoly.Locations
                 nextSpaceNumber -= NUMBER_OF_SPACES;
             }
           
-            return locationFactory.GetLocationForSpaceNumber(nextSpaceNumber % 40);
+            return realtor.LocationForSpaceNumber(nextSpaceNumber % 40);
         }
 
         public ILocation MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber)
         {
-            ILocation nextLocation = locationFactory.GetLocationForSpaceNumber(spaceNumber);
+            ILocation nextLocation = realtor.LocationForSpaceNumber(spaceNumber);
 
             if (nextLocation.SpaceNumber < player.PlayerLocation.SpaceNumber)
             {
@@ -49,7 +49,7 @@ namespace Monopoly.Locations
 
         public void MoveToClosest(IPlayer player, PropertyGroup desiredGroup)
         {
-            ILocation closestLocationInGroup = locationFactory.GetClosest(player.PlayerLocation.SpaceNumber, desiredGroup);
+            ILocation closestLocationInGroup = realtor.GetClosest(player.PlayerLocation.SpaceNumber, desiredGroup);
 
             MovePlayerToLocation(player, closestLocationInGroup);
         }

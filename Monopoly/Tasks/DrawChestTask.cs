@@ -9,17 +9,17 @@ namespace Monopoly.Tasks
 {
     public class DrawChestTask : IPlayerTask
     {
-        private Board board;
+        private TurnHandler _turnHandler;
 
-        public DrawChestTask(Board board)
+        public DrawChestTask(TurnHandler _turnHandler)
         {
-            this.board = board;
+            this._turnHandler = _turnHandler;
         }
 
 
         public void Complete(IPlayer player)
         {
-            var card = board.DrawChest();
+            var card = _turnHandler.DrawChest();
 
             if (card.GetType() == typeof (GetOutOfJailCard))
             {
@@ -28,7 +28,7 @@ namespace Monopoly.Tasks
             else
             {
                 card.Tasks.ForEach(x => x.Complete(player));
-                board.DiscardChest(card);
+                _turnHandler.DiscardChest(card);
             }
 
         }

@@ -10,6 +10,6 @@ namespace Monopoly
 {
     public interface IBoard
     {
-        LocationManager GetLocationManager();
+        LocationHandler GetLocationManager();
     }
 }

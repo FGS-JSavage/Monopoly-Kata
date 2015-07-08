@@ -6,20 +6,7 @@ namespace Monopoly.Locations
 {
     public class LocationFactory
     {
-        Dictionary<int, ILocation> locationKeeper;
-        private Realtor realtor;
-
-        public LocationFactory(Realtor realtor)
-        {
-            this.realtor = realtor;
-
-            locationKeeper = new Dictionary<int, ILocation>()
-            {
-                { 0, new GoLocation() }
-            };
-        }
-
-        public Dictionary<int, ILocation> BuildLocations()
+        public static Dictionary<int, ILocation> BuildLocations()
         {
             return new Dictionary<int, ILocation>()
             {
@@ -64,20 +51,14 @@ namespace Monopoly.Locations
                 { 38, new LuxuryTaxLocation()                                        }, 
                 { 39, new RentableLocation( 39, 50, 400, PropertyGroup.DarkBlue     )},
             };
-        } 
-
-        public ILocation GetLocationForSpaceNumber(int spaceNumber)
-        {
-            return realtor.LocationForSpaceNumber(spaceNumber);
         }
-
         
-        public ILocation GetClosest(int playerLocation, PropertyGroup desiredGroup)
-        {
-            return locationKeeper.Values.Where(   x => x.Group == desiredGroup)
-                                        .OrderBy( y => Math.Abs((long)y.SpaceNumber - playerLocation))
-                                        .ThenBy(  z => z.SpaceNumber)
-                                        .First();
-        }
+        //public ILocation GetClosest(int playerLocation, PropertyGroup desiredGroup)
+        //{
+        //    return locationKeeper.Values.Where(   x => x.Group == desiredGroup)
+        //                                .OrderBy( y => Math.Abs((long)y.SpaceNumber - playerLocation))
+        //                                .ThenBy(  z => z.SpaceNumber)
+        //                                .First();
+        //}
     }
 }

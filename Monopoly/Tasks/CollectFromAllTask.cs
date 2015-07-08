@@ -14,9 +14,9 @@ namespace Monopoly.Tasks
 
         public CollectFromAllTask(int amount, List<IPlayer> players, Banker banker)
         {
-            this.amount = amount;
+            this.amount  = amount;
             this.players = players;
-            this.banker = banker;
+            this.banker  = banker;
         }
 
         public void Complete(IPlayer player)

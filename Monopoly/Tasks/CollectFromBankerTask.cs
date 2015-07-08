@@ -4,15 +4,18 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Monopoly.Handlers;
 
 namespace Monopoly.Tasks
 {
     public class CollectFromBankerTask : IPlayerTask
     {
         private int amount;
+        private TaskHandler taskHandler;
 
-        public CollectFromBankerTask(int amount)
+        public CollectFromBankerTask(TaskHandler taskHandler, int amount)
         {
+            this.taskHandler = taskHandler;
             this.amount = amount;
         }
 

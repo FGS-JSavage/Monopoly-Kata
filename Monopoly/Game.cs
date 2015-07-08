@@ -11,12 +11,12 @@ namespace Monopoly
         private const int DEFAULT_NUMBER_OF_PLAYERS = 6;
         private List<IPlayer> players;
         private Dice dice;
-        private Board board;
+        private TurnHandler _turnHandler;
 
         public Game(int numberOfPlayers = DEFAULT_NUMBER_OF_PLAYERS)
         {
             players = new List<IPlayer>();
-            board = new Board();
+            _turnHandler = new TurnHandler();
 
             for (int i = 0; i < numberOfPlayers; i++)
             {
@@ -28,7 +28,7 @@ namespace Monopoly
 
         public void DoTurn(IPlayer player)
         {
-            board.DoTurn(player);
+            _turnHandler.DoTurn(player);
         }
 
         public void DoRound()
@@ -44,9 +44,9 @@ namespace Monopoly
             return players;
         }
 
-        public Board GetBoard()
+        public TurnHandler GetBoard()
         {
-            return board;
+            return _turnHandler;
         }
     }
 }

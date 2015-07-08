@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Monopoly.Locations;
 
 namespace Monopoly.Tasks
 {
     public class MoveToLocationTask : IPlayerTask
     {
         private int destinationSpaceNumber;
-        private Board board;
+        private MovementHandler movementHandler;
 
-        public MoveToLocationTask(Board board, int destinationSpaceNumber)
+        public MoveToLocationTask(MovementHandler movementHandler, int destinationSpaceNumber)
         {
-            this.board = board;
+            this.movementHandler = movementHandler;
             this.destinationSpaceNumber = destinationSpaceNumber;
         }
 
         public void Complete(IPlayer player)
         {
-            board.MovePlayerDirectlyToSpace(player, destinationSpaceNumber);
+            movementHandler.MovePlayerDirectlyToSpaceNumber(player, destinationSpaceNumber);
         }
     }
 }

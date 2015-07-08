@@ -1,5 +1,6 @@
 ﻿using Autofac.Extras.Moq;
 using Monopoly;
+using Monopoly.Locations;
 using Monopoly.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -11,13 +12,15 @@ namespace MonopolyUnitTests
     [TestFixture]
     class BoardUnitTests
     {
-        private Board board;
+        private TurnHandler _turnHandler;
         
+
         private Mock<Player> mockPlayer;
         private Mock<Jailer> mockJailer;
         private Mock<Realtor> mockRealtor;
         private Mock<Banker> mockBanker;
-        private Mock<Board> mockBoard;
+        private Mock<TurnHandler> mockBoard;
+        private Mock<MovementHandler> mockLocationManager;
 
         [SetUp]
         public void Init()
@@ -27,10 +30,10 @@ namespace MonopolyUnitTests
             mockJailer  = fixture.Create<Mock<Jailer>>();
             mockRealtor = fixture.Create<Mock<Realtor>>();
             mockBanker  = fixture.Create<Mock<Banker>>();
-            mockBoard   = fixture.Create<Mock<Board>>();
+            mockBoard   = fixture.Create<Mock<TurnHandler>>();
             mockPlayer  = fixture.Create<Mock<Player>>();
-            
-            board = new Board(mockRealtor.Object, mockJailer.Object, mockBanker.Object);
+
+            _turnHandler = mockBoard.Object;
         }
 
         [Test]
@@ -45,16 +48,14 @@ namespace MonopolyUnitTests
         }
  
         [Test]
-
         public void DrawsChanceCard_AdvanceToNearestUtility_MovesPlayerToElectricCompany([Values(22, 37)] int startingSpaceNumber)
         {
             int ExpectedUtilitySpaceNumber = 28;
 
-
             mockBoard.Setup(x => x.DrawChance())
-                .Returns(new Card("Move To Closest Utility", new MoveToNearestPropertyGroupTask(board, PropertyGroup.Utility)));
+                .Returns(new Card("Move To Closest Utility", new MoveToNearestPropertyGroupTask(_turnHandler, PropertyGroup.Utility)));
 
-            board.MovePlayerDirectlyToSpace(mockPlayer.Object, startingSpaceNumber);
+            _turnHandler.MovePlayerDirectlyToSpace(mockPlayer.Object, startingSpaceNumber);
 
             Assert.AreEqual(ExpectedUtilitySpaceNumber, mockPlayer.Object.PlayerLocation.SpaceNumber);
         }

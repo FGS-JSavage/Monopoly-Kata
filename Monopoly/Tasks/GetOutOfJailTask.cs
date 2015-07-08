@@ -8,16 +8,16 @@ namespace Monopoly.Tasks
 {
     public class GetOutOfJailTask : IPlayerTask
     {
-        private Board board;
+        private TurnHandler _turnHandler;
 
-        public GetOutOfJailTask(Board board)
+        public GetOutOfJailTask(TurnHandler _turnHandler)
         {
-            this.board = board;
+            this._turnHandler = _turnHandler;
         }
         public void Complete(IPlayer player)
         {
             // TODO 
-            //board.ReleasePlayerFromJail(player);
+            //TurnHandler.ReleasePlayerFromJail(player);
             //player.DecrementGetOutOfJailCard();
         }
     }

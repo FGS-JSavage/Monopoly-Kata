@@ -7,32 +7,34 @@ using Monopoly.Locations;
 
 namespace Monopoly
 {
-    public class Board
+    public class TurnHandler
     {
         private Dice dice;
-        private LocationManager locationManager;
+        private MovementHandler movementHandler;
         private Realtor realtor;
         private Banker banker;
         private Jailer jailer;
+
         private Deck chanceDeck;
         private Deck chestDeck;
 
-        public Board()
+        public TurnHandler()
         {
             dice = new Dice();
             banker = new Banker();
-            realtor = new Realtor(banker, this);
-            locationManager = new LocationManager(realtor);
+            realtor = new Realtor(banker);
+            movementHandler = new MovementHandler(realtor);
             jailer = new Jailer();
         }
 
-        public Board(Realtor realtor, Jailer jailer, Banker banker)
+        public TurnHandler(Realtor realtor, Jailer jailer, Banker banker, MovementHandler movementHandler)
         {
             dice = new Dice();
             this.realtor = realtor;
-            this.locationManager = new LocationManager(this.realtor);
+            this.movementHandler = movementHandler;
             this.jailer = jailer;
             this.banker = banker;
+            this.movementHandler = movementHandler;
         }
 
         public void DoTurn(IPlayer player)
@@ -99,7 +101,7 @@ namespace Monopoly
         {
             player.CompleteExitLocationTasks();
 
-            player.PlayerLocation = locationManager.MovePlayer(player, distance);
+            player.PlayerLocation = movementHandler.MovePlayer(player, distance);
 
             if (player.PlayerLocation.Group == PropertyGroup.Jail)
             {
@@ -137,14 +139,14 @@ namespace Monopoly
         {
             player.CompleteExitLocationTasks();
 
-            player.PlayerLocation = locationManager.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
+            player.PlayerLocation = movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
 
             player.CompleteLandOnLocationTasks();
         }
 
         public void MoveToClosest(IPlayer player, PropertyGroup destinationGroup)
         {
-            locationManager.MoveToClosest(player, destinationGroup);
+            movementHandler.MoveToClosest(player, destinationGroup);
         }
 
         public void HandleGetOutOfJailByRollingDoublesStrategy(IPlayer player, int distance, bool rolledDoubles)
@@ -205,9 +207,9 @@ namespace Monopoly
             chestDeck.Discard(card);
         }
 
-        public LocationManager GetLocationManager()
+        public MovementHandler GetLocationManager()
         {
-            return locationManager;
+            return movementHandler;
         }
 
         public Realtor GetRealtor()
@@ -218,6 +220,13 @@ namespace Monopoly
         public Jailer GetJailer()
         {
             return jailer;
+        }
+
+        // REQUIRED
+        public void AddDecks(Deck chanceDeck, Deck chestDeck)
+        {
+            this.chanceDeck = chanceDeck;
+            this.chestDeck = chestDeck;
         }
     }
 }

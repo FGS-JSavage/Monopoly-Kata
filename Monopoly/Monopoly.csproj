@@ -66,21 +66,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banker.cs" />
-    <Compile Include="Board.cs" />
+    <Compile Include="Handlers\PlayerTaskHandler.cs" />
+    <Compile Include="Handlers\TaskHandler.cs" />
+    <Compile Include="Turnhandler.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Deck.cs" />
     <Compile Include="Cards\DeckFactory.cs" />
     <Compile Include="Cards\GetOutOfJailCard.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameFactory.cs" />
+    <Compile Include="Handlers\BoardHandler.cs" />
     <Compile Include="Interfaces\ICard.cs" />
+    <Compile Include="Interfaces\ITurnHandler.cs" />
     <Compile Include="Jailer.cs" />
     <Compile Include="Locations\ChanceLocation.cs" />
     <Compile Include="Locations\IncomeTaxLocation.cs" />
-    <Compile Include="LocationManager.cs" />
+    <Compile Include="LocationHandler.cs" />
     <Compile Include="Locations\JailLocation.cs" />
     <Compile Include="Locations\LuxuryTaxLocation.cs" />
     <Compile Include="Locations\RentableLocation.cs" />
+    <Compile Include="PlayerFactory.cs" />
     <Compile Include="Realtor.cs" />
     <Compile Include="Tasks\CollectFromAllTask.cs" />
     <Compile Include="Tasks\DrawChanceTask.cs" />
