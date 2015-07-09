@@ -131,6 +131,11 @@ namespace Monopoly
         {
             this.propertyList = propertyList;
         }
+
+        public ILocation GetClosest(int spaceNumber, PropertyGroup desiredGroup)
+        {
+            return new GoLocation();
+        }
     }
 
     public enum PropertyGroup

@@ -11,7 +11,7 @@ namespace Monopoly.Locations
     {
         public ChanceLocation(int spaceNumber, PropertyGroup @group) : base(spaceNumber, @group)
         {
-            OnLandTasks.Add(new DrawChanceTask());
+            //OnLandTasks.Add(new DrawChanceTask()); // TODO
         }
     }
 }

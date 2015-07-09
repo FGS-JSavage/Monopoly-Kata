@@ -20,7 +20,8 @@ namespace MonopolyUnitTests
         private Mock<Realtor> mockRealtor;
         private Mock<Banker> mockBanker;
         private Mock<TurnHandler> mockBoard;
-        private Mock<MovementHandler> mockLocationManager;
+        private Mock<TaskHandler> mockTaskHandler;
+        private Mock<MovementHandler> mockMovementHandler;
 
         [SetUp]
         public void Init()
@@ -53,9 +54,9 @@ namespace MonopolyUnitTests
             int ExpectedUtilitySpaceNumber = 28;
 
             mockBoard.Setup(x => x.DrawChance())
-                .Returns(new Card("Move To Closest Utility", new MoveToNearestPropertyGroupTask(turnHandler, PropertyGroup.Utility)));
+                .Returns(new Card("Move To Closest Utility", new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, mockTaskHandler.Object)));
 
-            turnHandler.MovePlayerDirectlyToSpace(mockPlayer.Object, startingSpaceNumber);
+            mockMovementHandler.Object.MovePlayerDirectlyToSpaceNumber(mockPlayer.Object, startingSpaceNumber);
 
             Assert.AreEqual(ExpectedUtilitySpaceNumber, mockPlayer.Object.PlayerLocation.SpaceNumber);
         }

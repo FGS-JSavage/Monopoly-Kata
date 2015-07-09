@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Monopoly;
+using Monopoly.Locations;
 
 namespace MonopolyUnitTests
 {
@@ -14,7 +15,7 @@ namespace MonopolyUnitTests
         private Game game;
         private TurnHandler turnHandler;
         private List<IPlayer> players;
-        private MovementHandler movementHandler;
+        private IMovementHandler movementHandler;
         private Realtor realtor;
         private Jailer jailer;
             

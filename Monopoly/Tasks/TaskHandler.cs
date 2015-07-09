@@ -34,7 +34,7 @@ namespace Monopoly.Tasks
 
         public void HandleCollectFromBankerTask(IPlayer player, int amount)
         {
-            banker.Payout(amount);
+            banker.Payout(player, amount);
         }
 
         public void HandleDrawChest(IPlayer player)
@@ -52,9 +52,14 @@ namespace Monopoly.Tasks
             banker.Collect(player, amount);
         }
 
-        public void MoveToClosest(IPlayer player, PropertyGroup utility)
+        public void MoveToClosest(IPlayer player, PropertyGroup group)
         {
-            movementHandler.MoveToClosest();
+            movementHandler.MoveToClosest(player, group);
+        }
+
+        public void SendPlayerToJail(IPlayer player)
+        {
+            // TODO
         }
     }
 }
