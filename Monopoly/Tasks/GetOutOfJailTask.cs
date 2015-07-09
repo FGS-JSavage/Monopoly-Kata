@@ -8,11 +8,11 @@ namespace Monopoly.Tasks
 {
     public class GetOutOfJailTask : IPlayerTask
     {
-        private TurnHandler _turnHandler;
+        private TaskHandler taskHandler;
 
-        public GetOutOfJailTask(TurnHandler _turnHandler)
+        public GetOutOfJailTask(TaskHandler taskHandler)
         {
-            this._turnHandler = _turnHandler;
+            this.taskHandler = taskHandler;
         }
         public void Complete(IPlayer player)
         {

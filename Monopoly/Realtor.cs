@@ -9,13 +9,12 @@ namespace Monopoly
     public class Realtor
     {
         private Dictionary<int, IPlayer> ownersBySpaceNumber;
-        private Dictionary<int, ILocation> propertyList;
+        private Dictionary<int, ILocation> propertyList;      // Injected
         private IBanker banker;
 
-        public Realtor(IBanker banker, out Dictionary<int, ILocation> propertyList)
+        public Realtor(IBanker banker)
         {
             this.banker = banker;
-            this.propertyList = propertyList;
             ownersBySpaceNumber = new Dictionary<int, IPlayer>();
         }
 
@@ -126,6 +125,11 @@ namespace Monopoly
         public IPlayer GetOwnerForSpace(int spaceNumber)
         {
             return ownersBySpaceNumber[spaceNumber];
+        }
+
+        public void AddProperties(Dictionary<int, ILocation> propertyList)
+        {
+            this.propertyList = propertyList;
         }
     }
 

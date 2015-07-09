@@ -9,14 +9,17 @@ namespace Monopoly.Tasks
     public class PayBankerTask : IPlayerTask
     {
         private int amount;
-        public PayBankerTask(int amount)
+        private TaskHandler taskHandler;
+        
+        public PayBankerTask(int amount, TaskHandler taskHandler)
         {
+            this.taskHandler = taskHandler;
             this.amount = amount;
         }
 
         public void Complete(IPlayer player)
         {
-            player.Balance -= amount;
+            taskHandler.HandlePayBankerTask(amount, player);
         }
     }
 }

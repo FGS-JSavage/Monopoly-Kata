@@ -6,7 +6,7 @@ namespace Monopoly.Locations
 {
     public class LocationFactory
     {
-        public static Dictionary<int, ILocation> BuildLocations()
+        public static Dictionary<int, ILocation> BuildLocations(Deck chanceDeck, Deck chestDeck)
         {
             return new Dictionary<int, ILocation>()
             {
@@ -17,7 +17,7 @@ namespace Monopoly.Locations
                 {  4, new IncomeTaxLocation()                                        }, 
                 {  5, new RentableLocation(  5,  0,   0, PropertyGroup.Railroad     )}, 
                 {  6, new RentableLocation(  6,  6, 100, PropertyGroup.LightGreen   )},
-                {  7, new Location(          7,          PropertyGroup.Chance       )},
+                {  7, new Location(          7,          PropertyGroup.Chance       )}, // Inject Deck
                 {  8, new RentableLocation(  8,  6, 100, PropertyGroup.LightGreen   )},
                 {  9, new RentableLocation(  9,  8, 120, PropertyGroup.LightGreen   )},
                 { 10, new Location(         10,          PropertyGroup.JailVisiting )},
@@ -27,12 +27,12 @@ namespace Monopoly.Locations
                 { 14, new RentableLocation( 14, 12, 160, PropertyGroup.Violet       )},
                 { 15, new RentableLocation( 15,  0,   0, PropertyGroup.Railroad     )}, 
                 { 16, new RentableLocation( 16, 14, 180, PropertyGroup.Orange       )},
-                { 17, new Location(         17,          PropertyGroup.Chest        )},
+                { 17, new Location(         17,          PropertyGroup.Chest        )}, // Inject Deck
                 { 18, new RentableLocation( 18, 14, 180, PropertyGroup.Orange       )},
                 { 19, new RentableLocation( 19, 16, 200, PropertyGroup.Orange       )},
                 { 20, new Location(         20,          PropertyGroup.FreeParking  )}, 
                 { 21, new RentableLocation( 21, 18, 220, PropertyGroup.Red          )},
-                { 22, new ChanceLocation(   22,          PropertyGroup.Chance       )}, 
+                { 22, new ChanceLocation(   22,          PropertyGroup.Chance       )}, // Inject Deck
                 { 23, new RentableLocation( 23, 18, 220, PropertyGroup.Red          )},
                 { 24, new RentableLocation( 24, 20, 240, PropertyGroup.Red          )},
                 { 25, new RentableLocation( 25,  0,   0, PropertyGroup.Railroad     )}, 
@@ -43,10 +43,10 @@ namespace Monopoly.Locations
                 { 30, new JailLocation(                                             )},
                 { 31, new RentableLocation( 31, 26, 300, PropertyGroup.DarkGreen    )},
                 { 32, new RentableLocation( 32, 26, 300, PropertyGroup.DarkGreen    )},
-                { 33, new Location(         33,          PropertyGroup.Chest        )}, 
+                { 33, new Location(         33,          PropertyGroup.Chest        )}, // Inject Deck
                 { 34, new RentableLocation( 34, 28, 320, PropertyGroup.DarkGreen    )},
                 { 35, new RentableLocation( 35,  0,   0, PropertyGroup.Railroad     )}, 
-                { 36, new Location(         36,          PropertyGroup.Chance       )}, 
+                { 36, new Location(         36,          PropertyGroup.Chance       )}, // Inject Deck
                 { 37, new RentableLocation( 37, 35, 350, PropertyGroup.DarkBlue     )},
                 { 38, new LuxuryTaxLocation()                                        }, 
                 { 39, new RentableLocation( 39, 50, 400, PropertyGroup.DarkBlue     )},

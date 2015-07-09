@@ -8,17 +8,17 @@ namespace Monopoly.Tasks
 {
     public class MoveToNearestPropertyGroupTask : IPlayerTask
     {
-        private TurnHandler turnHandler;
+        private TaskHandler taskHandler;
 
-        public MoveToNearestPropertyGroupTask(TurnHandler turnHandler, PropertyGroup targetGroup)
+        public MoveToNearestPropertyGroupTask(PropertyGroup targetGroup, TaskHandler taskHandler)
         {
-            this.turnHandler = turnHandler;
+            this.taskHandler = taskHandler;
         }
 
 
         public void Complete(IPlayer player)
         {
-            turnHandler.MoveToClosest(player, PropertyGroup.Utility);
+            taskHandler.MoveToClosest(player, PropertyGroup.Utility);
         }
     }
 }

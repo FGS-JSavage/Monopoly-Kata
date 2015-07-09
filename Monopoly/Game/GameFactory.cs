@@ -11,28 +11,35 @@ namespace Monopoly
 {
     public class GameFactory
     {
+
+        /*
+         * 
+         * Maybe use delegates for discard.  
+         * 
+         * 
+         * 
+
+        */
+
         public static void BuildGame(int numberOfPlayers)
         {
             List<IPlayer> players = PlayerFactory.BuildPlayers(numberOfPlayers);
             Banker banker = new Banker();
             Jailer jailer = new Jailer();
 
-            //Lazy<Dictionary<int, ILocation>> properties = new Lazy<Dictionary<int, ILocation>>();
-
-            Dictionary<int, ILocation> properties = LocationFactory.BuildLocations();
-
-            Realtor realtor = new Realtor(banker, properties);
+            Realtor realtor = new Realtor(banker);
             MovementHandler movementHandler = new MovementHandler(realtor);
+            
+            TaskHandler taskHandler = new TaskHandler(movementHandler, players, banker, jailer);
+
+            Deck chestDeck = DeckFactory.BuildCommuntiyChestDeck(taskHandler);
+            Deck chanceDeck = DeckFactory.BuildChanceDeck(taskHandler);
+
+            realtor.AddProperties(LocationFactory.BuildLocations(chestDeck, chanceDeck));
+
             TurnHandler turnHandler = new TurnHandler(realtor, jailer, banker, movementHandler);
 
-            properties = LocationFactory.BuildLocations();
-
-            Deck chestDeck = DeckFactory.BuildCommuntiyChestDeck(turnHandler, banker, players);
-            Deck chanceDeck = DeckFactory.BuildChanceDeck(turnHandler, banker, players);
-
-            /* -- Insert Decks into TurnHandler -- */
-
-            TaskHandler taskHandler = new TaskHandler(movementHandler, players, banker, jailer);
+            //return new Game(turnHandler); // TODO
         }
     }
 }

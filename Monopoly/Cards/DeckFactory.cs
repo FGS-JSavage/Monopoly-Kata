@@ -37,31 +37,30 @@ namespace Monopoly
             // Holiday Fund matures - Receive $100 
             
             
-            deck.Add(new Card("Advance To Go",                    new MoveToLocationTask(0, taskHandler)));
-            deck.Add(new Card("Bank Error In Your Favor",         new CollectFromBankerTask(75, taskHandler)));
-            deck.Add(new Card("Doctor's Fees",                    new PayBankerTask(50)));
-            deck.Add(new GetOutOfJailCard("Get Out of Jail Card", new GetOutOfJailTask(taskHandler)));
-            deck.Add(new Card("Go Directly To Jail",              new GoDirectlyToJailTask(taskHandler)));
-            deck.Add(new Card("It Is Your Birthday",              new CollectFromAllTask(10, taskHandler)));
-            deck.Add(new Card("Opera Night", new CollectFromAllTask(50, taskHandler)));
-            deck.Add(new Card("Income Tax Refund", new CollectFromBankerTask(20, taskHandler)));
-            deck.Add(new Card("Life Insurance Matures", new CollectFromBankerTask(100, taskHandler)));
-            deck.Add(new Card("Pay Hospital Fees", new PayBankerTask(100, taskHandler)));
-            deck.Add(new Card("Pay Hospital Fees", new PayBankerTask(50, taskHandler)));
-            deck.Add(new Card("Receive $25 Consultancy Fee", new CollectFromBankerTask(25, taskHandler)));
+            deck.Add(new Card("Advance To Go",                    new MoveToLocationTask(      0, taskHandler)));
+            deck.Add(new Card("Bank Error In Your Favor",         new CollectFromBankerTask(  75, taskHandler)));
+            deck.Add(new Card("Doctor's Fees",                    new PayBankerTask(          50, taskHandler)));
+            deck.Add(new Card("Get Out of Jail Card",             new GetOutOfJailTask(           taskHandler)));
+            deck.Add(new Card("Go Directly To Jail",              new GoDirectlyToJailTask(       taskHandler)));
+            deck.Add(new Card("It Is Your Birthday",              new CollectFromAllTask(     10, taskHandler)));
+            deck.Add(new Card("Opera Night",                      new CollectFromAllTask(     50, taskHandler)));
+            deck.Add(new Card("Income Tax Refund",                new CollectFromBankerTask(  20, taskHandler)));
+            deck.Add(new Card("Life Insurance Matures",           new CollectFromBankerTask( 100, taskHandler)));
+            deck.Add(new Card("Pay Hospital Fees",                new PayBankerTask(         100, taskHandler)));
+            deck.Add(new Card("Pay Hospital Fees",                new PayBankerTask(          50, taskHandler)));
+            deck.Add(new Card("Receive $25 Consultancy Fee",      new CollectFromBankerTask(  25, taskHandler)));
             // Street repairs, I don't have houses implemented though
             deck.Add(new Card("You have won second prize in a beauty contest", new CollectFromBankerTask(10, taskHandler)));
-            deck.Add(new Card("You inherit $100", new CollectFromBankerTask(100, taskHandler)));
-            deck.Add(new Card("From sale of stock you get $50", new CollectFromBankerTask(50, taskHandler)));
-            deck.Add(new Card("Holiday Fund matures", new CollectFromBankerTask(100, taskHandler)));
-
+            deck.Add(new Card("You inherit $100",                 new CollectFromBankerTask( 100, taskHandler)));
+            deck.Add(new Card("From sale of stock you get $50",   new CollectFromBankerTask(  50, taskHandler)));
+            deck.Add(new Card("Holiday Fund matures",             new CollectFromBankerTask( 100, taskHandler)));
 
             // TODO shuffle deck
  
             return new Deck(deck);
         }
 
-        public static Deck BuildChanceDeck(TurnHandler _turnHandler, Banker banker, List<IPlayer> players)
+        public static Deck BuildChanceDeck(TaskHandler taskHandler)
         {
             var deck = new List<ICard>();
 
@@ -82,9 +81,9 @@ namespace Monopoly
             // Your building loan matures – collect $150 
             // You have won a crossword competition - collect $100
 
-            deck.Add(new Card("Advance to Go (Collect $200)", new MoveToLocationTask(_turnHandler, 0)));
-            deck.Add(new Card("Advance To Illinios Ave",      new MoveToLocationTask(_turnHandler, 24)));
-            deck.Add(new Card("Advance To Nearest Utility",   new MoveToNearestPropertyGroupTask(_turnHandler, PropertyGroup.Utility)));
+            deck.Add(new Card("Advance to Go (Collect $200)", new MoveToLocationTask(0, taskHandler)));
+            deck.Add(new Card("Advance To Illinios Ave",      new MoveToLocationTask(24, taskHandler)));
+            deck.Add(new Card("Advance To Nearest Utility",   new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, taskHandler)));
             
 
             //deck.Add();

@@ -8,15 +8,15 @@ namespace Monopoly.Tasks
 {
     public class GoDirectlyToJailTask : IPlayerTask
     {
-        private TurnHandler _turnHandler;
+        private TaskHandler taskHandler;
 
-        public GoDirectlyToJailTask(TurnHandler _turnHandler)
+        public GoDirectlyToJailTask(TaskHandler taskHandler)
         {
-            this._turnHandler = _turnHandler;
+            this.taskHandler = taskHandler;
         }
         public void Complete(IPlayer player)
         {
-            _turnHandler.SendPlayerToJail(player);
+            taskHandler.SendPlayerToJail(player);
         }
     }
 }

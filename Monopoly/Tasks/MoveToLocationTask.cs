@@ -10,17 +10,17 @@ namespace Monopoly.Tasks
     public class MoveToLocationTask : IPlayerTask
     {
         private int destinationSpaceNumber;
-        private MovementHandler movementHandler;
+        private TaskHandler taskHandler;
 
-        public MoveToLocationTask(MovementHandler movementHandler, int destinationSpaceNumber)
+        public MoveToLocationTask(int destinationSpaceNumber, TaskHandler taskHandler)
         {
-            this.movementHandler = movementHandler;
+            this.taskHandler = taskHandler;
             this.destinationSpaceNumber = destinationSpaceNumber;
         }
 
         public void Complete(IPlayer player)
         {
-            movementHandler.MovePlayerDirectlyToSpaceNumber(player, destinationSpaceNumber);
+            taskHandler.HandleMoveToLocationTask(player, destinationSpaceNumber);
         }
     }
 }

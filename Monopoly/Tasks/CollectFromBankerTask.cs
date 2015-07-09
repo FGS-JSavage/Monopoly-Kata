@@ -10,10 +10,10 @@ namespace Monopoly.Tasks
 {
     public class CollectFromBankerTask : IPlayerTask
     {
-        private int amount;
         private TaskHandler taskHandler;
-
-        public CollectFromBankerTask(TaskHandler taskHandler, int amount)
+        private int amount;
+        
+        public CollectFromBankerTask(int amount, TaskHandler taskHandler)
         {
             this.taskHandler = taskHandler;
             this.amount = amount;
@@ -21,7 +21,7 @@ namespace Monopoly.Tasks
 
         public void Complete(IPlayer player)
         {
-            player.Balance += amount;
+            taskHandler.HandleCollectFromBankerTask(player, amount);
         }
     }
 }

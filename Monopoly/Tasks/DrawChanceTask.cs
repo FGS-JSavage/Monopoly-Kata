@@ -9,19 +9,26 @@ namespace Monopoly.Tasks
 {
     public class DrawChanceTask : IPlayerTask
     {
-        private TurnHandler turnHandler;
+        private Deck deck;
 
-        public DrawChanceTask(TurnHandler turnHandler)
+        public DrawChanceTask(Deck deck)
         {
-            this.turnHandler = turnHandler;
+            this.deck = deck;
         }
 
         public virtual void Complete(IPlayer player)
         {
-            var card = turnHandler.DrawChest();
+            var card = deck.Draw();
 
-            card.Tasks.ForEach(x => x.Complete(player));
-            turnHandler.DiscardChest(card);
+            if (card.Name == "Get Out of Jail Card")
+            {
+                player.AddGetOutOfJailCard();
+            }
+            else
+            {
+                card.Tasks.ForEach(x => x.Complete(player));
+                deck.Discard(card);    
+            }
         }
     }
 }
