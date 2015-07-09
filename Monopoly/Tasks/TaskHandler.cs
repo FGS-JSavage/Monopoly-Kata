@@ -54,7 +54,7 @@ namespace Monopoly.Tasks
 
         public void MoveToClosest(IPlayer player, PropertyGroup utility)
         {
-            throw new NotImplementedException();
+            movementHandler.MoveToClosest();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MonopolyUnitTests
     [TestFixture]
     class BoardUnitTests
     {
-        private TurnHandler _turnHandler;
+        private TurnHandler turnHandler;
         
 
         private Mock<Player> mockPlayer;
@@ -33,7 +33,7 @@ namespace MonopolyUnitTests
             mockBoard   = fixture.Create<Mock<TurnHandler>>();
             mockPlayer  = fixture.Create<Mock<Player>>();
 
-            _turnHandler = mockBoard.Object;
+            turnHandler = mockBoard.Object;
         }
 
         [Test]
@@ -53,9 +53,9 @@ namespace MonopolyUnitTests
             int ExpectedUtilitySpaceNumber = 28;
 
             mockBoard.Setup(x => x.DrawChance())
-                .Returns(new Card("Move To Closest Utility", new MoveToNearestPropertyGroupTask(_turnHandler, PropertyGroup.Utility)));
+                .Returns(new Card("Move To Closest Utility", new MoveToNearestPropertyGroupTask(turnHandler, PropertyGroup.Utility)));
 
-            _turnHandler.MovePlayerDirectlyToSpace(mockPlayer.Object, startingSpaceNumber);
+            turnHandler.MovePlayerDirectlyToSpace(mockPlayer.Object, startingSpaceNumber);
 
             Assert.AreEqual(ExpectedUtilitySpaceNumber, mockPlayer.Object.PlayerLocation.SpaceNumber);
         }

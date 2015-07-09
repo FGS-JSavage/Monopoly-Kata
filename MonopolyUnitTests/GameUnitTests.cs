@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Monopoly;
-using Monopoly.Locations;
 
 namespace MonopolyUnitTests
 {
@@ -13,7 +12,7 @@ namespace MonopolyUnitTests
     class GameUnitTests
     {
         private Game game;
-        private TurnHandler _turnHandler;
+        private TurnHandler turnHandler;
         private List<IPlayer> players;
         private MovementHandler movementHandler;
         private Realtor realtor;
@@ -24,11 +23,11 @@ namespace MonopolyUnitTests
         {
 
             game = new Game();
-            _turnHandler = game.GetBoard();
+            turnHandler = game.GetBoard();
             players = game.GetPlayers();
-            movementHandler = _turnHandler.GetLocationManager();
-            realtor = _turnHandler.GetRealtor();
-            jailer = _turnHandler.GetJailer();
+            movementHandler = turnHandler.GetLocationManager();
+            realtor = turnHandler.GetRealtor();
+            jailer = turnHandler.GetJailer();
         }
 
         // RELEASE 1 -----------------------------------------------------------------------
@@ -63,7 +62,7 @@ namespace MonopolyUnitTests
         public void Landing_On_Go_Balance_Increases_By_200()
         {
             Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
-            _turnHandler.DoTurn(players[0], 40, false);
+            turnHandler.DoTurn(players[0], 40, false);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to landing on Go
         }
@@ -83,7 +82,7 @@ namespace MonopolyUnitTests
         {
             Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
 
-            _turnHandler.DoTurn(players[0], 45, false);
+            turnHandler.DoTurn(players[0], 45, false);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
         }
@@ -91,7 +90,7 @@ namespace MonopolyUnitTests
         [Test]
         public void Passing_Go_Twice_In_One_Turn_Increases_Balance_By_400()
         {
-            _turnHandler.DoTurn(players[0], 85, false);
+            turnHandler.DoTurn(players[0], 85, false);
 
             Assert.AreEqual(400, players[0].Balance); // Confirm increase due to passing Go
         }
@@ -102,9 +101,9 @@ namespace MonopolyUnitTests
 
             players[0].Balance = 400;
 
-            _turnHandler.DoTurn(players[0], 39, false);
+            turnHandler.DoTurn(players[0], 39, false);
 
-            _turnHandler.DoTurn(players[0], 1, false);
+            turnHandler.DoTurn(players[0], 1, false);
 
             Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
         }
@@ -120,7 +119,7 @@ namespace MonopolyUnitTests
 
             players[0].Balance = startingBalance; // set initial balance
 
-            _turnHandler.DoTurn(players[0], 4, false); // move to income tax
+            turnHandler.DoTurn(players[0], 4, false); // move to income tax
 
             return players[0].Balance; 
         }
@@ -146,7 +145,7 @@ namespace MonopolyUnitTests
 
             players[0].Balance = startingBalance; // set initial balance
 
-            _turnHandler.DoTurn(players[0], 38, false); // move to income tax
+            turnHandler.DoTurn(players[0], 38, false); // move to income tax
 
             return players[0].Balance;
         }
@@ -160,7 +159,7 @@ namespace MonopolyUnitTests
 
             players[0].Balance = 100; // set initial balance
 
-            _turnHandler.DoTurn(players[0], 1, false); // move to unowned property
+            turnHandler.DoTurn(players[0], 1, false); // move to unowned property
 
             Assert.AreEqual(40, players[0].Balance);
         }
@@ -173,7 +172,7 @@ namespace MonopolyUnitTests
 
             realtor.SetOwnerForSpace(players[0], 5);
 
-            _turnHandler.DoTurn(players[1], 5, false); // move to owned property
+            turnHandler.DoTurn(players[1], 5, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -188,7 +187,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 5);
             realtor.SetOwnerForSpace(players[0], 15);
 
-            _turnHandler.DoTurn(players[1], 5, false); // move to owned property
+            turnHandler.DoTurn(players[1], 5, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -203,7 +202,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 15);
             realtor.SetOwnerForSpace(players[0], 25);
 
-            _turnHandler.DoTurn(players[1], 5, false); // move to owned property
+            turnHandler.DoTurn(players[1], 5, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -219,7 +218,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 25);
             realtor.SetOwnerForSpace(players[0], 35);
 
-            _turnHandler.DoTurn(players[1], 5, false); // move to owned property
+            turnHandler.DoTurn(players[1], 5, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -232,7 +231,7 @@ namespace MonopolyUnitTests
 
             realtor.SetOwnerForSpace(players[0], 12);
 
-            _turnHandler.DoTurn(players[1], 12, false); // move to owned property
+            turnHandler.DoTurn(players[1], 12, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -246,7 +245,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 12);
             realtor.SetOwnerForSpace(players[0], 28);
 
-            _turnHandler.DoTurn(players[1], 12, false); // move to owned property
+            turnHandler.DoTurn(players[1], 12, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -260,7 +259,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 12);
             realtor.SetOwnerForSpace(players[3], 28);
 
-            _turnHandler.DoTurn(players[1], 12, false); // move to owned property
+            turnHandler.DoTurn(players[1], 12, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -273,7 +272,7 @@ namespace MonopolyUnitTests
 
             realtor.SetOwnerForSpace(players[0], 6);
 
-            _turnHandler.DoTurn(players[1], 6, false); // move to owned property
+            turnHandler.DoTurn(players[1], 6, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -287,7 +286,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 6);
             realtor.SetOwnerForSpace(players[0], 8);
 
-            _turnHandler.DoTurn(players[1], 6, false); // move to owned property
+            turnHandler.DoTurn(players[1], 6, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -302,7 +301,7 @@ namespace MonopolyUnitTests
             realtor.SetOwnerForSpace(players[0], 8);
             realtor.SetOwnerForSpace(players[0], 9);
 
-            _turnHandler.DoTurn(players[1], 6, false); // move to owned property
+            turnHandler.DoTurn(players[1], 6, false); // move to owned property
 
             Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
         }
@@ -310,7 +309,7 @@ namespace MonopolyUnitTests
         [Test]
         public void RollNonDoublesAndLandOnGoToJail_PlayerIsInJail()
         {
-            _turnHandler.DoTurn(players[0], 30, false);
+            turnHandler.DoTurn(players[0], 30, false);
 
             Assert.True(jailer.PlayerIsImprisoned(players[0]));
         }
@@ -318,7 +317,7 @@ namespace MonopolyUnitTests
         [Test]
         public void RollDoublesAndLandOnGoToJail_PlayerIsInJail()
         {
-            _turnHandler.DoTurn(players[0], 30, true);
+            turnHandler.DoTurn(players[0], 30, true);
 
             Assert.That(players[0].PlayerLocation.Group, Is.EqualTo(PropertyGroup.Jail));
         }
@@ -327,9 +326,9 @@ namespace MonopolyUnitTests
         public void RollNonDoublesThreeTimesInARow_NeverPassOrLandOnGo_BalanceIsUnchangedAndPlayerIsInJail()
         {
             var initialBalance = players[0].Balance;
-            _turnHandler.DoTurn(players[0], 10, true);
-            _turnHandler.DoTurn(players[0], 0, true);
-            _turnHandler.DoTurn(players[0], 0, true);
+            turnHandler.DoTurn(players[0], 10, true);
+            turnHandler.DoTurn(players[0], 0, true);
+            turnHandler.DoTurn(players[0], 0, true);
 
             Assert.AreEqual(initialBalance, players[0].Balance);
             Assert.True(jailer.PlayerIsImprisoned(players[0]));
@@ -338,8 +337,8 @@ namespace MonopolyUnitTests
         [Test]
         public void RollNonDoublesTwoTimesInARow_PlayerIsNotInJail()
         {
-            _turnHandler.DoTurn(players[0], 3, true);
-            _turnHandler.DoTurn(players[0], 3, true);
+            turnHandler.DoTurn(players[0], 3, true);
+            turnHandler.DoTurn(players[0], 3, true);
             
             Assert.False(jailer.PlayerIsImprisoned(players[0]));
         }
@@ -349,7 +348,7 @@ namespace MonopolyUnitTests
         {
             double intialBalance = players[0].Balance;
             jailer.Imprison(players[0]);
-            _turnHandler.HandleGetOutOfJailByPaying(players[0]);
+            turnHandler.HandleGetOutOfJailByPaying(players[0]);
 
             Assert.AreEqual(intialBalance - 50, players[0].Balance);
         }
@@ -358,9 +357,9 @@ namespace MonopolyUnitTests
         public void PlayerRollsToGetOutOfJail_RollsDoublesOnFirstTurn_MovesScoreOfRollAndStops()
         {
             players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-            _turnHandler.SendPlayerToJail(players[0]);
+            turnHandler.SendPlayerToJail(players[0]);
 
-            _turnHandler.DoTurn(players[0], 10, true);
+            turnHandler.DoTurn(players[0], 10, true);
 
             Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
         }
@@ -369,10 +368,10 @@ namespace MonopolyUnitTests
         public void PlayerRollsToGetOutOfJail_RollsDoublesOnSecondTurn_MovesScoreOfRollAndStops()
         {
             players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-            _turnHandler.SendPlayerToJail(players[0]);
+            turnHandler.SendPlayerToJail(players[0]);
 
-            _turnHandler.DoTurn(players[0], 10, false);
-            _turnHandler.DoTurn(players[0], 10, true);
+            turnHandler.DoTurn(players[0], 10, false);
+            turnHandler.DoTurn(players[0], 10, true);
 
             Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
         }
@@ -381,11 +380,11 @@ namespace MonopolyUnitTests
         public void PlayerRollsToGetOutOfJail_RollsDoublesOnThirdTurn_MovesScoreOfRollAndStops()
         {
             players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-            _turnHandler.SendPlayerToJail(players[0]);
+            turnHandler.SendPlayerToJail(players[0]);
 
-            _turnHandler.DoTurn(players[0], 10, false);
-            _turnHandler.DoTurn(players[0], 10, false);
-            _turnHandler.DoTurn(players[0], 10, true);
+            turnHandler.DoTurn(players[0], 10, false);
+            turnHandler.DoTurn(players[0], 10, false);
+            turnHandler.DoTurn(players[0], 10, true);
 
             Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
         }
@@ -397,17 +396,15 @@ namespace MonopolyUnitTests
 
             var initialBalance = players[0].Balance;
 
-            _turnHandler.SendPlayerToJail(players[0]);
+            turnHandler.SendPlayerToJail(players[0]);
 
-            _turnHandler.DoTurn(players[0], 10, false);
-            _turnHandler.DoTurn(players[0], 10, false);
-            _turnHandler.DoTurn(players[0], 10, false);
+            turnHandler.DoTurn(players[0], 10, false);
+            turnHandler.DoTurn(players[0], 10, false);
+            turnHandler.DoTurn(players[0], 10, false);
 
             Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber); // At Correct Location
             Assert.AreEqual(initialBalance - 50, players[0].Balance);
         }
-
-
     }
 }
     

@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Banker.cs" />
     <Compile Include="Handlers\PlayerTaskHandler.cs" />
+    <Compile Include="IMovementHandler.cs" />
     <Compile Include="Tasks\TaskHandler.cs" />
     <Compile Include="Turnhandler.cs" />
     <Compile Include="Cards\Card.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="Tasks\IPlayerTask.cs" />
     <Compile Include="Tasks\LandOnGoTask.cs" />
     <Compile Include="Locations\GoLocation.cs" />
-    <Compile Include="Interfaces\IBoard.cs" />
     <Compile Include="Game\IGame.cs" />
     <Compile Include="Locations\ILocation.cs" />
     <Compile Include="Player\IPlayer.cs" />
