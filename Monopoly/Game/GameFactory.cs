@@ -21,8 +21,8 @@ namespace Monopoly
 
             Dictionary<int, ILocation> properties = LocationFactory.BuildLocations();
 
-            MovementHandler movementHandler = new MovementHandler(out properties);
-            Realtor realtor = new Realtor(banker, out properties);
+            Realtor realtor = new Realtor(banker, properties);
+            MovementHandler movementHandler = new MovementHandler(realtor);
             TurnHandler turnHandler = new TurnHandler(realtor, jailer, banker, movementHandler);
 
             properties = LocationFactory.BuildLocations();
@@ -32,7 +32,7 @@ namespace Monopoly
 
             /* -- Insert Decks into TurnHandler -- */
 
-            TaskHandler taskHandler = new TaskHandler(movementHandler, );
+            TaskHandler taskHandler = new TaskHandler(movementHandler, players, banker, jailer);
         }
     }
 }

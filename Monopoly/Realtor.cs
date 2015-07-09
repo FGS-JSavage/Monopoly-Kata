@@ -10,9 +10,9 @@ namespace Monopoly
     {
         private Dictionary<int, IPlayer> ownersBySpaceNumber;
         private Dictionary<int, ILocation> propertyList;
-        private Banker banker;
+        private IBanker banker;
 
-        public Realtor(Banker banker, out Dictionary<int, ILocation> propertyList)
+        public Realtor(IBanker banker, out Dictionary<int, ILocation> propertyList)
         {
             this.banker = banker;
             this.propertyList = propertyList;

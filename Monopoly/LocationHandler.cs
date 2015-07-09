@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Monopoly.Locations
 {
-    public class MovementHandler
+    public interface IMovementHandler
+    {
+        ILocation MovePlayer(IPlayer player, int distance);
+        ILocation MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber);
+        void MoveToClosest(IPlayer player, PropertyGroup desiredGroup);
+        void MovePlayerToLocation(IPlayer player, ILocation location);
+    }
+
+    public class MovementHandler : IMovementHandler
     {
         private Realtor realtor;
         private const int NUMBER_OF_SPACES = 40;

@@ -5,25 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Monopoly.Locations;
 
-namespace Monopoly.Handlers
+namespace Monopoly.Tasks
 {
     public class TaskHandler
     {
-        private MovementHandler movementHandler;
+        private IMovementHandler movementHandler;
         private List<IPlayer> players;
-        private Banker banker;
-        private Jailer jailer;
+        private IBanker banker;
+        private IJailer jailer;
 
-        public TaskHandler(MovementHandler movementHandler, List<IPlayer> players, Banker banker, Jailer jailer)
+        public TaskHandler(IMovementHandler movementHandler, List<IPlayer> players, IBanker banker, IJailer jailer)
         {
             this.movementHandler = movementHandler;
             this.players = players;
             this.banker = banker;
             this.jailer = jailer;
         }
-
-
-
-        
     }
 }

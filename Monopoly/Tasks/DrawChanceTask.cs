@@ -9,8 +9,6 @@ namespace Monopoly.Tasks
 {
     public class DrawChanceTask : IPlayerTask
     {
-        private TaskManager taskManager;
-
         private TurnHandler turnHandler;
 
         public DrawChanceTask(TurnHandler turnHandler)

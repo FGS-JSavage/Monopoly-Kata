@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Monopoly
 {
-    public class Jailer
+    public interface IJailer
+    {
+        void Imprison(IPlayer player);
+        void ReleasePlayerFromJail(IPlayer player);
+    }
+
+    public class Jailer : IJailer
     {
         public Dictionary<IPlayer, int> prisoners;
 
