@@ -42,3 +42,5 @@ C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTest
 C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Struik.AutoFixture.AutoMoq.AutoSetup.pdb
 C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Struik.AutoFixture.AutoMoq.AutoSetup.xml
 C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\FSharp.Core.xml
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Ninject.dll
+C:\Users\jsavage\documents\visual studio 2013\Projects\Monopoly\MonopolyUnitTests\bin\Debug\Ninject.xml

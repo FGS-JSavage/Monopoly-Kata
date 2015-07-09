@@ -4,9 +4,17 @@ using System.Linq;
 
 namespace Monopoly.Locations
 {
-    public class LocationFactory
+    public class LocationFactory : ILocationFactory
     {
-        public static Dictionary<int, ILocation> BuildLocations(Deck chanceDeck, Deck chestDeck)
+        private Deck chanceDeck;
+        private Deck chestDeck;
+
+        public LocationFactory(Deck chanceDeck, Deck chestDeck)
+        {
+            this.chanceDeck = chanceDeck;
+            this.chestDeck  = chestDeck;
+        }
+        public Dictionary<int, ILocation> BuildLocations()
         {
             return new Dictionary<int, ILocation>()
             {

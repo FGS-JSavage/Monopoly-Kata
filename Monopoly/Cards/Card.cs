@@ -11,12 +11,6 @@ namespace Monopoly
         public String Name      { get; set; }
         public List<IPlayerTask> Tasks { get; set; }
 
-        public Card(string name, List<IPlayerTask> tasks)
-        {
-            Name = name;
-            Tasks = tasks;
-        }
-
         public Card(string name, IPlayerTask task)
         {
             Name = name;

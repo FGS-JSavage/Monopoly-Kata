@@ -10,6 +10,9 @@ namespace Monopoly
     {
         void Imprison(IPlayer player);
         void ReleasePlayerFromJail(IPlayer player);
+        bool PlayerIsImprisoned(IPlayer player);
+        int GetRemainingSentence(IPlayer player);
+        void DecreaseSentence(IPlayer player);
     }
 
     public class Jailer : IJailer

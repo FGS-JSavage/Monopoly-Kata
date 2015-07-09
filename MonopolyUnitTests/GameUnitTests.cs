@@ -7,21 +7,30 @@ using NUnit.Framework;
 using Monopoly;
 using Monopoly.Locations;
 
+
 namespace MonopolyUnitTests
 {
     [TestFixture]
     class GameUnitTests
     {
+        
         private Game game;
         private TurnHandler turnHandler;
         private List<IPlayer> players;
         private IMovementHandler movementHandler;
-        private Realtor realtor;
-        private Jailer jailer;
+        private IRealtor realtor;
+        private IJailer  jailer;
             
         [SetUp]
         public void Init()
         {
+
+            //players = PlayerFactory.BuildPlayers(6);
+
+            //IKernel ninject = new StandardKernel(new BindingsModule());
+
+            //turnHandler = ninject.Get<TurnHandler>();
+
 
             game = new Game();
             turnHandler = game.GetBoard();

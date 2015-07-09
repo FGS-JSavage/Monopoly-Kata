@@ -4,37 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Monopoly.Locations;
+using Ninject;
 
 namespace Monopoly
 {
-    public class TurnHandler
+    public class TurnHandler : ITurnHandler
     {
-        private Dice dice;
-        private MovementHandler movementHandler;
-        private Realtor realtor;
-        private Banker banker;
-        private Jailer jailer;
+        private IRealtor realtor;
+        private IJailer  jailer;
+        private IBanker  banker;
+        private IMovementHandler movementHandler;
+        private IDice dice;
 
-        private Deck chanceDeck;
-        private Deck chestDeck;
-
-        public TurnHandler()
+        [Inject]
+        public TurnHandler(IRealtor realtor, IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice)
         {
-            dice = new Dice();
-            banker = new Banker();
-            realtor = new Realtor(banker);
-            movementHandler = new MovementHandler(realtor);
-            jailer = new Jailer();
-        }
-
-        public TurnHandler(Realtor realtor, Jailer jailer, Banker banker, MovementHandler movementHandler)
-        {
-            dice = new Dice();
             this.realtor = realtor;
-            this.movementHandler = movementHandler;
             this.jailer = jailer;
             this.banker = banker;
             this.movementHandler = movementHandler;
+            this.dice = dice;
         }
 
         public void DoTurn(IPlayer player)
@@ -187,46 +176,19 @@ namespace Monopoly
             player.PlayerLocation = new JailVisitingLocation();
         }
 
-        public virtual ICard DrawChance()
-        {
-            return chestDeck.Draw();
-        }
-
-        public void DiscardChance(ICard card)
-        {
-            chanceDeck.Discard(card);
-        }
-
-        public ICard DrawChest()
-        {
-            return chestDeck.Draw();
-        }
-
-        public void DiscardChest(ICard card)
-        {
-            chestDeck.Discard(card);
-        }
-
-        public MovementHandler GetLocationManager()
+        public IMovementHandler GetLocationManager()
         {
             return movementHandler;
         }
 
-        public Realtor GetRealtor()
+        public IRealtor GetRealtor()
         {
             return realtor;
         }
 
-        public Jailer GetJailer()
+        public IJailer GetJailer()
         {
             return jailer;
-        }
-
-        // REQUIRED
-        public void AddDecks(Deck chanceDeck, Deck chestDeck)
-        {
-            this.chanceDeck = chanceDeck;
-            this.chestDeck = chestDeck;
         }
     }
 }

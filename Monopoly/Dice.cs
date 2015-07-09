@@ -8,7 +8,14 @@ using Moq.Protected;
 
 namespace Monopoly
 {
-    public class Dice
+    public interface IDice
+    {
+        int Score { get; }
+        bool WasDoubles { get; }
+        void Roll();
+    }
+
+    public class Dice : IDice
     {
         protected int dieOneScore;
         protected int dieTwoScore;

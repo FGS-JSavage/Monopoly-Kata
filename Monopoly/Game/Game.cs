@@ -10,25 +10,26 @@ namespace Monopoly
     {
         private const int DEFAULT_NUMBER_OF_PLAYERS = 6;
         private List<IPlayer> players;
-        private Dice dice;
-        private TurnHandler _turnHandler;
+        private TurnHandler turnHandler;
 
         public Game(int numberOfPlayers = DEFAULT_NUMBER_OF_PLAYERS)
         {
-            players = new List<IPlayer>();
-            _turnHandler = new TurnHandler();
+            players = PlayerFactory.BuildPlayers(numberOfPlayers);
 
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 players.Add(new Player(new GoLocation()));
             }
-
-            dice = new Dice();
         }
 
         public void DoTurn(IPlayer player)
         {
-            _turnHandler.DoTurn(player);
+            turnHandler.DoTurn(player);
+        }
+
+        public List<IPlayer> GetPlayers()
+        {
+            throw new NotImplementedException();
         }
 
         public void DoRound()
@@ -39,14 +40,14 @@ namespace Monopoly
             }
         }
 
-        public List<IPlayer> GetPlayers()
+        public List<IPlayer> Player()
         {
             return players;
         }
 
         public TurnHandler GetBoard()
         {
-            return _turnHandler;
+            return turnHandler;
         }
     }
 }

@@ -53,6 +53,9 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1506.2515\lib\net40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="Ploeh.AutoFixture">
       <HintPath>..\packages\AutoFixture.3.30.8\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
@@ -68,7 +71,12 @@
     <Compile Include="Banker.cs" />
     <Compile Include="Handlers\PlayerTaskHandler.cs" />
     <Compile Include="IMovementHandler.cs" />
+    <Compile Include="IRealtor.cs" />
+    <Compile Include="ITurnHandler.cs" />
+    <Compile Include="Locations\ILocationFactory.cs" />
     <Compile Include="MovementHandler.cs" />
+    <Compile Include="Ninject\BindingsModule.cs" />
+    <Compile Include="Tasks\ITaskHandler.cs" />
     <Compile Include="Tasks\TaskHandler.cs" />
     <Compile Include="Turnhandler.cs" />
     <Compile Include="Cards\Card.cs" />

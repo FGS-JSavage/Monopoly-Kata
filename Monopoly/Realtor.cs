@@ -6,16 +6,18 @@ using Monopoly.Locations;
 
 namespace Monopoly
 {
-    public class Realtor
+    public class Realtor : IRealtor
     {
         private Dictionary<int, IPlayer> ownersBySpaceNumber;
         private Dictionary<int, ILocation> propertyList;      // Injected
         private IBanker banker;
+        private ILocationFactory locationFactory;
 
-        public Realtor(IBanker banker)
+        public Realtor(IBanker banker, ILocationFactory locationFactory)
         {
             this.banker = banker;
             ownersBySpaceNumber = new Dictionary<int, IPlayer>();
+            propertyList = locationFactory.BuildLocations();
         }
 
         public void MakePurchase(IPlayer player, int spaceNumber)

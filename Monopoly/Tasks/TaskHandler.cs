@@ -7,7 +7,7 @@ using Monopoly.Locations;
 
 namespace Monopoly.Tasks
 {
-    public class TaskHandler
+    public class TaskHandler : ITaskHandler
     {
         private IMovementHandler movementHandler;
         private List<IPlayer> players;

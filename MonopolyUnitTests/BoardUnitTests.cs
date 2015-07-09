@@ -53,8 +53,8 @@ namespace MonopolyUnitTests
         {
             int ExpectedUtilitySpaceNumber = 28;
 
-            mockBoard.Setup(x => x.DrawChance())
-                .Returns(new Card("Move To Closest Utility", new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, mockTaskHandler.Object)));
+            //mockBoard.Setup(x => x.DrawChance())
+            //    .Returns(new Card("Move To Closest Utility", new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, mockTaskHandler.Object)));
 
             mockMovementHandler.Object.MovePlayerDirectlyToSpaceNumber(mockPlayer.Object, startingSpaceNumber);
 

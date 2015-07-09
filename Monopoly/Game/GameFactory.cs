@@ -23,23 +23,34 @@ namespace Monopoly
 
         public static void BuildGame(int numberOfPlayers)
         {
-            List<IPlayer> players = PlayerFactory.BuildPlayers(numberOfPlayers);
-            Banker banker = new Banker();
-            Jailer jailer = new Jailer();
+            //List<IPlayer> players = PlayerFactory.BuildPlayers(numberOfPlayers);
+            //Banker banker = new Banker();
+            //Jailer jailer = new Jailer();
+            //Dice   dice   = new Dice();
 
-            Realtor realtor = new Realtor(banker);
-            MovementHandler movementHandler = new MovementHandler(realtor);
+            //Realtor realtor = new Realtor(banker);
+            //MovementHandler movementHandler = new MovementHandler(realtor);
             
-            TaskHandler taskHandler = new TaskHandler(movementHandler, players, banker, jailer);
+            //TaskHandler taskHandler = new TaskHandler(movementHandler, players, banker, jailer);
 
-            Deck chestDeck = DeckFactory.BuildCommuntiyChestDeck(taskHandler);
-            Deck chanceDeck = DeckFactory.BuildChanceDeck(taskHandler);
+            //Deck chestDeck = DeckFactory.BuildCommuntiyChestDeck(taskHandler);
+            //Deck chanceDeck = DeckFactory.BuildChanceDeck(taskHandler);
 
-            realtor.AddProperties(LocationFactory.BuildLocations(chestDeck, chanceDeck));
+            //realtor.AddProperties(LocationFactory.BuildLocations(chestDeck, chanceDeck));
 
-            TurnHandler turnHandler = new TurnHandler(realtor, jailer, banker, movementHandler);
+            //TurnHandler turnHandler = new TurnHandler(realtor, jailer, banker, movementHandler, dice);
 
-            //return new Game(turnHandler); // TODO
+            ////return new Game(turnHandler); // TODO
         }
+
+        public static void BuildGameUsingNinject(int numberOfPlayers)
+        {
+        
+        }
+
+
+
+
+
     }
 }
