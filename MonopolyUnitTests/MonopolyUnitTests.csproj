@@ -117,10 +117,12 @@
     <Compile Include="DiceUnitTests.cs" />
     <Compile Include="GameUnitTests.cs" />
     <Compile Include="LocalAddin.cs" />
+    <Compile Include="MovementHandlerUnitTests.cs" />
     <Compile Include="NunitNinjectTest.cs" />
     <Compile Include="PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealtorUnitTests.cs" />
+    <Compile Include="TurnHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Monopoly\Monopoly.csproj">

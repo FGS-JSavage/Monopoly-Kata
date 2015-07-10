@@ -3,54 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Practices.Unity.Configuration;
 using Monopoly.Handlers;
 using Monopoly.Locations;
+using Monopoly.Ninject;
 using Monopoly.Tasks;
+using Ninject;
 
 namespace Monopoly
 {
     public class GameFactory
     {
-
-        /*
-         * 
-         * Maybe use delegates for discard.  
-         * 
-         * 
-         * 
-
-        */
-
-        public static void BuildGame(int numberOfPlayers)
+        public static Game BuildGame(int numberOfPlayers)
         {
-            //List<IPlayer> players = PlayerFactory.BuildPlayers(numberOfPlayers);
-            //Banker banker = new Banker();
-            //Jailer jailer = new Jailer();
-            //Dice   dice   = new Dice();
+            if (numberOfPlayers < 2 || numberOfPlayers > 8)
+            {
+                return null;
+            }
 
-            //Realtor realtor = new Realtor(banker);
-            //MovementHandler movementHandler = new MovementHandler(realtor);
-            
-            //TaskHandler taskHandler = new TaskHandler(movementHandler, players, banker, jailer);
+            List<IPlayer> players = PlayerFactory.BuildPlayers(numberOfPlayers);
 
-            //Deck chestDeck = DeckFactory.BuildCommuntiyChestDeck(taskHandler);
-            //Deck chanceDeck = DeckFactory.BuildChanceDeck(taskHandler);
 
-            //realtor.AddProperties(LocationFactory.BuildLocations(chestDeck, chanceDeck));
+            IKernel ninject = new StandardKernel(new BindingsModule());
 
-            //TurnHandler turnHandler = new TurnHandler(realtor, jailer, banker, movementHandler, dice);
-
-            ////return new Game(turnHandler); // TODO
+            return new Game(ninject.Get<TurnHandler>(), PlayerFactory.BuildPlayers(numberOfPlayers));
         }
 
-        public static void BuildGameUsingNinject(int numberOfPlayers)
+        public static Game BuildGame(List<string> names)
         {
-        
+            if (names.Count < 2 || names.Count > 8)
+            {
+                return null;
+            }
+
+            IKernel ninject = new StandardKernel(new BindingsModule());
+
+            return new Game(ninject.Get<TurnHandler>(), PlayerFactory.BuildPlayers(names));
         }
-
-
-
-
-
     }
 }

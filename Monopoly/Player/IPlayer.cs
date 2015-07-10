@@ -13,6 +13,8 @@ namespace Monopoly
         ILocation PlayerLocation    { get; set; }
         double Balance              { get; set; }
         int DoublesCount            { get; set; }
+        string Name                 { get; set; }
+        int RoundsPlayed            { get; set; }
 
         void CompleteLandOnLocationTasks();
         void CompleteExitLocationTasks();

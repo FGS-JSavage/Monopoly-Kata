@@ -12,14 +12,10 @@ namespace Monopoly
         private List<IPlayer> players;
         private TurnHandler turnHandler;
 
-        public Game(int numberOfPlayers = DEFAULT_NUMBER_OF_PLAYERS)
+        public Game(TurnHandler turnHandler, List<IPlayer> players)
         {
-            players = PlayerFactory.BuildPlayers(numberOfPlayers);
-
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                players.Add(new Player(new GoLocation()));
-            }
+            this.players = players.OrderBy(elem => Guid.NewGuid()).ToList(); ;
+            this.turnHandler = turnHandler;
         }
 
         public void DoTurn(IPlayer player)
@@ -29,7 +25,7 @@ namespace Monopoly
 
         public List<IPlayer> GetPlayers()
         {
-            throw new NotImplementedException();
+            return players;
         }
 
         public void DoRound()
@@ -37,6 +33,7 @@ namespace Monopoly
             foreach (var player in players)
             {
                 DoTurn(player);
+                player.RoundsPlayed++;
             }
         }
 

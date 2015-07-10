@@ -21,8 +21,8 @@ namespace Monopoly
         protected int dieTwoScore;
     
 
-        public int Score       { get { return dieOneScore + dieTwoScore; } }
-        public bool WasDoubles { get { return dieOneScore == dieTwoScore; } }
+        public virtual int Score       { get { return dieOneScore + dieTwoScore; } }
+        public virtual bool WasDoubles { get { return dieOneScore == dieTwoScore; } }
 
 
         public void Roll()

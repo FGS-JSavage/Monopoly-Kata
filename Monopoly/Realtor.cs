@@ -20,7 +20,7 @@ namespace Monopoly
             propertyList = locationFactory.BuildLocations();
         }
 
-        public void MakePurchase(IPlayer player, int spaceNumber)
+        public virtual void MakePurchase(IPlayer player, int spaceNumber)
         {
             banker.Collect(player, GetPriceOfSpace(spaceNumber));
             SetOwnerForSpace(player, spaceNumber);

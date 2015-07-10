@@ -19,6 +19,7 @@ namespace Monopoly.Ninject
 
             // Transient
             Bind<IPlayer>().To<Player>();
+            Bind<ILocation>().To<GoLocation>(); // ?????
 
             // Fancy Singletons
             Bind<IDice>().To<Dice>();
@@ -29,6 +30,7 @@ namespace Monopoly.Ninject
             Bind<IJailer>().To<Jailer>().InSingletonScope();
             Bind<ITaskHandler>().To<TaskHandler>().InSingletonScope();
             Bind<IRealtor>().To<Realtor>().InSingletonScope();
+            Bind<IGame>().To<Game>();
         }
     }
 }

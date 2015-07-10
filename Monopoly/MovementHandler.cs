@@ -16,7 +16,7 @@ namespace Monopoly
             this.realtor = realtor;
         }
 
-        public ILocation MovePlayer(IPlayer player, int distance)
+        public void MovePlayer(IPlayer player, int distance)
         {
             int nextSpaceNumber = player.PlayerLocation.SpaceNumber + distance;
 
@@ -27,10 +27,12 @@ namespace Monopoly
                 nextSpaceNumber -= NUMBER_OF_SPACES;
             }
           
-            return realtor.LocationForSpaceNumber(nextSpaceNumber % 40);
+            
+
+            MovePlayerToLocation(player, realtor.LocationForSpaceNumber(nextSpaceNumber % 40));
         }
 
-        public ILocation MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber)
+        public void MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber)
         {
             ILocation nextLocation = realtor.LocationForSpaceNumber(spaceNumber);
 
@@ -39,7 +41,8 @@ namespace Monopoly
                 nextLocation.AddOnLandTask(new LandOnGoTask());
             }
 
-            return nextLocation;
+            MovePlayerToLocation(player, nextLocation);
+            
         }
 
         public int ChompToBoardSize(int spaceNumber)

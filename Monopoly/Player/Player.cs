@@ -14,6 +14,8 @@ namespace Monopoly
         public virtual ILocation PlayerLocation { get; set; }
         public double Balance   { get; set; }
         public int DoublesCount { get; set; }
+        public string Name      { get; set; }
+        public int RoundsPlayed { get; set; }
 
         public int GetOutOfJailCards = 0;
 

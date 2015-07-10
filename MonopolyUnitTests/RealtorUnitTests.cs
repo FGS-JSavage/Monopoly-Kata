@@ -1,6 +1,9 @@
-﻿using Autofac.Extras.Moq;
+﻿using System.Collections.Generic;
+using Autofac.Extras.Moq;
 using Monopoly;
+using Monopoly.Ninject;
 using Moq;
+using Ninject;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
@@ -9,47 +12,27 @@ namespace MonopolyUnitTests
 {
     internal class RealtorUnitTests
     {
-        private AutoMock mocker;
-
+        private TurnHandler turnHandler;
         private Realtor realtor;
-
-        private Mock<Realtor> mockRealtor;
-        private Mock<Player> mockPlayer1;
-        private Mock<Player> mockPlayer2;
-
-        private Mock<Banker> mockBanker;
+        private Player player1;
+        private Player player2;
 
         [SetUp]
         public void Init()
         {
-           
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
-
-            mockPlayer1 = fixture.Create<Mock<Player>>();
-            mockPlayer2 = fixture.Create<Mock<Player>>();
-
-
-            // ---- Use the commented code if I need to inject an object into a mock---- AutoMock Style
-            // Autofixture can most likley do this too.
+            IKernel ninject = new StandardKernel(new BindingsModule());
             
-            //mocker = AutoMock.GetLoose();
+            turnHandler = ninject.Get<TurnHandler>();
+            realtor = ninject.Get<Realtor>();
 
-            //mockBanker = new Mock<Banker>(); // Old
-           
-            //mocker.Provide(mockBanker); // Not sure If I need this
-            //realtor = new Realtor(mockBanker.Object); // Old
-
-            mockBanker = fixture.Create<Mock<Banker>>();
-
-            mockRealtor = fixture.Create<Mock<Realtor>>();
-
-            realtor = mockRealtor.Object;
+            player1 = new Player(new GoLocation());
+            player2 = new Player(new GoLocation());
         }
 
         [Test]
         public void CalculateRentForRailroad_WhenOneIsOwned_RentIs25()
         {
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 5);
+            realtor.SetOwnerForSpace(player1, 5);
 
             Assert.AreEqual(25, realtor.CalculateRent(5, 0));
         }
@@ -57,8 +40,8 @@ namespace MonopolyUnitTests
         [Test]
         public void CalculateRentForRailroad_WhenTwoAreOwnedBySamePlayer_RentIs50()
         {
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 5);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 15);
+            realtor.SetOwnerForSpace(player1, 5);
+            realtor.SetOwnerForSpace(player1, 15);
 
             Assert.AreEqual(50, realtor.CalculateRent(5, 0));
         }
@@ -66,9 +49,9 @@ namespace MonopolyUnitTests
         [Test]
         public void CalculateRentForRailroad_WhenThreeAreOwnedBySamePlayer_RentIs75()
         {
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 5);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 15);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 25);
+            realtor.SetOwnerForSpace(player1, 5);
+            realtor.SetOwnerForSpace(player1, 15);
+            realtor.SetOwnerForSpace(player1, 25);
 
             Assert.AreEqual(75, realtor.CalculateRent(5, 0));
         }
@@ -76,10 +59,10 @@ namespace MonopolyUnitTests
         [Test]
         public void CalculateRentForRailroad_WhenAllAreOwnedBySamePlayer_RentIs100()
         {
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 5);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 15);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 25);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 35);
+            realtor.SetOwnerForSpace(player1, 5);
+            realtor.SetOwnerForSpace(player1, 15);
+            realtor.SetOwnerForSpace(player1, 25);
+            realtor.SetOwnerForSpace(player1, 35);
 
             Assert.AreEqual(100, realtor.CalculateRent(5, 0));
         }
@@ -87,9 +70,9 @@ namespace MonopolyUnitTests
         [Test]
         public void CalculateRentForRailroad_WhenTwoAreOwnedBySamePlayerAndAnotherIsOwnedByADifferentPlayer_RentIs50()
         {
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 5);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 15);
-            realtor.SetOwnerForSpace(mockPlayer2.Object, 25);
+            realtor.SetOwnerForSpace(player1, 5);
+            realtor.SetOwnerForSpace(player1, 15);
+            realtor.SetOwnerForSpace(player2, 25);
 
             Assert.AreEqual(50, realtor.CalculateRent(5, 0));
         }
@@ -99,7 +82,7 @@ namespace MonopolyUnitTests
         {
             var expectedRent = 10;
 
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 11);
+            realtor.SetOwnerForSpace(player1, 11);
 
             Assert.AreEqual(expectedRent, realtor.CalculateRent(11, 0));
         }
@@ -109,8 +92,8 @@ namespace MonopolyUnitTests
         {
             var expectedRent = 10;
 
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 11);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 13);
+            realtor.SetOwnerForSpace(player1, 11);
+            realtor.SetOwnerForSpace(player1, 13);
 
             Assert.AreEqual(expectedRent, realtor.CalculateRent(11, 0));
         }
@@ -120,9 +103,9 @@ namespace MonopolyUnitTests
         {
             var expectedRent = 20;
 
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 11);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 13);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 14);
+            realtor.SetOwnerForSpace(player1, 11);
+            realtor.SetOwnerForSpace(player1, 13);
+            realtor.SetOwnerForSpace(player1, 14);
 
             Assert.AreEqual(expectedRent, realtor.CalculateRent(11, 0));
         }
@@ -130,7 +113,7 @@ namespace MonopolyUnitTests
         [Test]
         public void CalculateRentForUtility_WhenOneIsOwned()
         {
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 12);
+            realtor.SetOwnerForSpace(player1, 12);
 
             Assert.AreEqual(20, realtor.CalculateRent(12, 5));
         }
@@ -138,8 +121,8 @@ namespace MonopolyUnitTests
         [Test]
         public void CalculateRentForUtility_WhenBothAreOwnedBySamePlayer()
         {
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 12);
-            realtor.SetOwnerForSpace(mockPlayer1.Object, 28);
+            realtor.SetOwnerForSpace(player1, 12);
+            realtor.SetOwnerForSpace(player1, 28);
 
             Assert.AreEqual(50, realtor.CalculateRent(12, 5));
         }
@@ -147,8 +130,8 @@ namespace MonopolyUnitTests
         [Test]
         public void CalculateRentForUtility_WhenBothAreOwnedByDifferentPlayers()
         {
-            mockRealtor.Object.SetOwnerForSpace(mockPlayer1.Object, 12);
-            mockRealtor.Object.SetOwnerForSpace(mockPlayer2.Object, 28);
+            realtor.SetOwnerForSpace(player1, 12);
+            realtor.SetOwnerForSpace(player2, 28);
 
             Assert.AreEqual(50, realtor.CalculateRent(12, 5));
         }

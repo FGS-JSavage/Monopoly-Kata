@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using NUnit.Framework;
 using Monopoly;
 using Monopoly.Locations;
+using Monopoly.Ninject;
+using Ninject;
 
 
 namespace MonopolyUnitTests
@@ -13,408 +16,480 @@ namespace MonopolyUnitTests
     [TestFixture]
     class GameUnitTests
     {
-        
+        private IKernel ninject;
         private Game game;
-        private TurnHandler turnHandler;
-        private List<IPlayer> players;
-        private IMovementHandler movementHandler;
-        private IRealtor realtor;
-        private IJailer  jailer;
-            
+
+
         [SetUp]
         public void Init()
         {
-
-            //players = PlayerFactory.BuildPlayers(6);
-
-            //IKernel ninject = new StandardKernel(new BindingsModule());
-
-            //turnHandler = ninject.Get<TurnHandler>();
-
-
-            game = new Game();
-            turnHandler = game.GetBoard();
-            players = game.GetPlayers();
-            movementHandler = turnHandler.GetLocationManager();
-            realtor = turnHandler.GetRealtor();
-            jailer = turnHandler.GetJailer();
+            ninject = new StandardKernel(new BindingsModule());
+            game = ninject.Get<Game>();
         }
 
-        // RELEASE 1 -----------------------------------------------------------------------
+        // ---------------  Release 1 ----------------------------------------------------
 
         [Test]
-        public void Default_Game_Constructor_Initializes_Six_Players()
+        public void CreateAGameWithLessThan2PlayersFails()
         {
-            Assert.AreEqual(game.GetPlayers().Count, 6);
+            game = GameFactory.BuildGame(1);
+
+            Assert.IsNull(game);
         }
 
         [Test]
-        public void Default_Game_Constructor_Initializes_All_Players_To_Space_Zero()
+        public void CreateAGameWithMoreThan8PlayersFails()
         {
-            foreach (var player in game.GetPlayers())
+            game = GameFactory.BuildGame(9);
+
+            Assert.IsNull(game);
+        }
+
+        [Test]
+        public void CreateGame_PlayersShouldBeInRandomOrder()
+        {
+            List<string> names = new List<string>() {"amy", "bill"};
+
+            game = GameFactory.BuildGame(names);
+
+            string nameOfFirstRoller = null;
+            string nameOfLastRoundsFirstRoller = null;
+
+            bool orderHasSwapped = false;
+            for (int i = 0; i < 100 ^ orderHasSwapped; i++)
             {
-                Assert.AreEqual(player.PlayerLocation.SpaceNumber, 0);    
+                nameOfLastRoundsFirstRoller = nameOfFirstRoller;
+
+                game = GameFactory.BuildGame(names);
+
+                nameOfFirstRoller = game.GetPlayers()[0].Name;
+
+                orderHasSwapped = nameOfFirstRoller != nameOfLastRoundsFirstRoller && i > 2;
             }
+
+            Assert.True(orderHasSwapped);
         }
 
         [Test]
-        public void Move_Players_Twenty_Times()
+        public void Play20Rounds_EveryPlayerShouldHaveTaken20Turns()
         {
-            foreach (var i in Enumerable.Range(0,20))
+            game = GameFactory.BuildGame(5);
+
+            for (int i = 0; i < 20; i++)
             {
                 game.DoRound();
             }
+
+            foreach(IPlayer player in game.GetPlayers())
+            {
+                Assert.AreEqual(20, player.RoundsPlayed);    
+            }
         }
 
-        // RELEASE 2 -----------------------------------------------------------------------
+        // ---------------  Release 2 ----------------------------------------------------
+        
+        
+
+        
+        
+        
+        // ---------------  Release 3 ----------------------------------------------------
+        // ---------------  Release 4 ----------------------------------------------------
+        // ---------------  Release 5 ----------------------------------------------------
+
+        //private Game game;
+        //private TurnHandler turnHandler;
+        //private List<IPlayer> players;
+        //private IMovementHandler movementHandler;
+        //private IRealtor realtor;
+        //private IJailer  jailer;
+
+        //[SetUp]
+        //public void Init()
+        //{
+        //    game = new Game();
+        //    turnHandler = game.GetBoard();
+        //    players = game.GetPlayers();
+        //    movementHandler = turnHandler.GetLocationManager();
+        //    realtor = turnHandler.GetRealtor();
+        //    jailer = turnHandler.GetJailer();
+        //}
+
+        //// RELEASE 1 -----------------------------------------------------------------------
+
+        //[Test]
+        //public void Default_Game_Constructor_Initializes_Six_Players()
+        //{
+        //    Assert.AreEqual(game.GetPlayers().Count, 6);
+        //}
+
+        //[Test]
+        //public void Default_Game_Constructor_Initializes_All_Players_To_Space_Zero()
+        //{
+        //    foreach (var player in game.GetPlayers())
+        //    {
+        //        Assert.AreEqual(player.PlayerLocation.SpaceNumber, 0);    
+        //    }
+        //}
+
+        //[Test]
+        //public void Move_Players_Twenty_Times()
+        //{
+        //    foreach (var i in Enumerable.Range(0,20))
+        //    {
+        //        game.DoRound();
+        //    }
+        //}
+
+        //// RELEASE 2 -----------------------------------------------------------------------
+
+        //[Test]
+        //public void Landing_On_Go_Balance_Increases_By_200()
+        //{
+        //    Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
+        //    turnHandler.DoTurn(players[0], 40, false);
+
+        //    Assert.AreEqual(200, players[0].Balance); // Confirm increase due to landing on Go
+        //}
+
+        //[Test]
+        //public void Landing_On_A_Normal_Location_Does_Not_Change_Balance()
+        //{
+        //    Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
+
+        //    movementHandler.MovePlayer(players[0], 35);
+
+        //    Assert.AreEqual(0, players[0].Balance); // Confirm increase due to landing on Go
+        //}
+
+        //[Test]
+        //public void Passing_Go_Without_Landing_On_Go_Increases_Balance_By_200()
+        //{
+        //    Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
 
-        [Test]
-        public void Landing_On_Go_Balance_Increases_By_200()
-        {
-            Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
-            turnHandler.DoTurn(players[0], 40, false);
+        //    turnHandler.DoTurn(players[0], 45, false);
+
+        //    Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
+        //}
+
+        //[Test]
+        //public void Passing_Go_Twice_In_One_Turn_Increases_Balance_By_400()
+        //{
+        //    turnHandler.DoTurn(players[0], 85, false);
 
-            Assert.AreEqual(200, players[0].Balance); // Confirm increase due to landing on Go
-        }
+        //    Assert.AreEqual(400, players[0].Balance); // Confirm increase due to passing Go
+        //}
 
-        [Test]
-        public void Landing_On_A_Normal_Location_Does_Not_Change_Balance()
-        {
-            Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
+        //[Test]
+        //public void Player_Start_Near_End_Roll_Enough_To_Pass_Go_Balance_Increases_By_200()
+        //{
 
-            movementHandler.MovePlayer(players[0], 35);
+        //    players[0].Balance = 400;
 
-            Assert.AreEqual(0, players[0].Balance); // Confirm increase due to landing on Go
-        }
+        //    turnHandler.DoTurn(players[0], 39, false);
 
-        [Test]
-        public void Passing_Go_Without_Landing_On_Go_Increases_Balance_By_200()
-        {
-            Assert.AreEqual(0, players[0].Balance); // Confirm starting balance
+        //    turnHandler.DoTurn(players[0], 1, false);
 
-            turnHandler.DoTurn(players[0], 45, false);
+        //    Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
+        //}
 
-            Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
-        }
+        //[Test]
+        //[TestCase(1800, Result = 1620.0 )]
+        //[TestCase(2200, Result = 2000.0 )]
+        //[TestCase(0,    Result =    0.0 )]
+        //[TestCase(2000, Result = 1800.0 )]
+        //public double Land_On_Income_Tax_Charges_Correctly(int startingBalance)
+        //{
+        //    // Income tax is space # 4
 
-        [Test]
-        public void Passing_Go_Twice_In_One_Turn_Increases_Balance_By_400()
-        {
-            turnHandler.DoTurn(players[0], 85, false);
+        //    players[0].Balance = startingBalance; // set initial balance
 
-            Assert.AreEqual(400, players[0].Balance); // Confirm increase due to passing Go
-        }
+        //    turnHandler.DoTurn(players[0], 4, false); // move to income tax
 
-        [Test]
-        public void Player_Start_Near_End_Roll_Enough_To_Pass_Go_Balance_Increases_By_200()
-        {
+        //    return players[0].Balance; 
+        //}
 
-            players[0].Balance = 400;
+        //[Test]
+        //public void Passing_Over_Income_Tax_Does_Not_Effect_Balance()
+        //{
+        //    // Income tax is space # 4
 
-            turnHandler.DoTurn(players[0], 39, false);
+        //    movementHandler.MovePlayer(players[0], 6); // move to income tax
 
-            turnHandler.DoTurn(players[0], 1, false);
+        //    Assert.AreEqual(players[0].Balance, 0); // Confirm no change in balance
+        //}
 
-            Assert.AreEqual(200, players[0].Balance); // Confirm increase due to passing Go
-        }
+        //[Test]
+        //[TestCase(1000, Result = 925.0 )]
+        //[TestCase(75,   Result =   0.0 )]
+        //[TestCase(50,   Result =   0.0 )]
+        //[TestCase(0,    Result =   0.0 )]
+        //public double Landing_On_Luxury_Tax_Decreases_Balance_By_75(int startingBalance)
+        //{
+        //    // Income tax is space # 4
 
-        [Test]
-        [TestCase(1800, Result = 1620.0 )]
-        [TestCase(2200, Result = 2000.0 )]
-        [TestCase(0,    Result =    0.0 )]
-        [TestCase(2000, Result = 1800.0 )]
-        public double Land_On_Income_Tax_Charges_Correctly(int startingBalance)
-        {
-            // Income tax is space # 4
+        //    players[0].Balance = startingBalance; // set initial balance
 
-            players[0].Balance = startingBalance; // set initial balance
+        //    turnHandler.DoTurn(players[0], 38, false); // move to income tax
 
-            turnHandler.DoTurn(players[0], 4, false); // move to income tax
+        //    return players[0].Balance;
+        //}
 
-            return players[0].Balance; 
-        }
+        //// Release 3 -------------------------------------------------------------------------------------------
 
-        [Test]
-        public void Passing_Over_Income_Tax_Does_Not_Effect_Balance()
-        {
-            // Income tax is space # 4
+        //[Test]
+        //public void Player_Landing_On_Unowned_Property_Automagically_Buys_It()
+        //{
+        //    // Space 1 is unowned
 
-            movementHandler.MovePlayer(players[0], 6); // move to income tax
+        //    players[0].Balance = 100; // set initial balance
 
-            Assert.AreEqual(players[0].Balance, 0); // Confirm no change in balance
-        }
+        //    turnHandler.DoTurn(players[0], 1, false); // move to unowned property
 
-        [Test]
-        [TestCase(1000, Result = 925.0 )]
-        [TestCase(75,   Result =   0.0 )]
-        [TestCase(50,   Result =   0.0 )]
-        [TestCase(0,    Result =   0.0 )]
-        public double Landing_On_Luxury_Tax_Decreases_Balance_By_75(int startingBalance)
-        {
-            // Income tax is space # 4
+        //    Assert.AreEqual(40, players[0].Balance);
+        //}
 
-            players[0].Balance = startingBalance; // set initial balance
+        //[Test]
+        //public void Landing_On_Railroad_Charges_Correct_Rent_When_Only_One_Is_Owned()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 25;
 
-            turnHandler.DoTurn(players[0], 38, false); // move to income tax
+        //    realtor.SetOwnerForSpace(players[0], 5);
 
-            return players[0].Balance;
-        }
+        //    turnHandler.DoTurn(players[1], 5, false); // move to owned property
 
-        // Release 3 -------------------------------------------------------------------------------------------
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-        [Test]
-        public void Player_Landing_On_Unowned_Property_Automagically_Buys_It()
-        {
-            // Space 1 is unowned
 
-            players[0].Balance = 100; // set initial balance
+        //[Test]
+        //public void Landing_On_Railroad_Charges_Correct_Rent_When_2_Are_Owned()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 50;
 
-            turnHandler.DoTurn(players[0], 1, false); // move to unowned property
+        //    realtor.SetOwnerForSpace(players[0], 5);
+        //    realtor.SetOwnerForSpace(players[0], 15);
 
-            Assert.AreEqual(40, players[0].Balance);
-        }
+        //    turnHandler.DoTurn(players[1], 5, false); // move to owned property
 
-        [Test]
-        public void Landing_On_Railroad_Charges_Correct_Rent_When_Only_One_Is_Owned()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 25;
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-            realtor.SetOwnerForSpace(players[0], 5);
+        //[Test]
+        //public void Landing_On_Railroad_Charges_Correct_Rent_When_3_Are_Owned()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 75;
 
-            turnHandler.DoTurn(players[1], 5, false); // move to owned property
+        //    realtor.SetOwnerForSpace(players[0], 5);
+        //    realtor.SetOwnerForSpace(players[0], 15);
+        //    realtor.SetOwnerForSpace(players[0], 25);
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    turnHandler.DoTurn(players[1], 5, false); // move to owned property
 
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-        [Test]
-        public void Landing_On_Railroad_Charges_Correct_Rent_When_2_Are_Owned()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 50;
+        //[Test]
+        //public void Landing_On_Railroad_Charges_Correct_Rent_When_4_Are_Owned()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 100;
 
-            realtor.SetOwnerForSpace(players[0], 5);
-            realtor.SetOwnerForSpace(players[0], 15);
+        //    realtor.SetOwnerForSpace(players[0], 5);
+        //    realtor.SetOwnerForSpace(players[0], 15);
+        //    realtor.SetOwnerForSpace(players[0], 25);
+        //    realtor.SetOwnerForSpace(players[0], 35);
 
-            turnHandler.DoTurn(players[1], 5, false); // move to owned property
+        //    turnHandler.DoTurn(players[1], 5, false); // move to owned property
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-        [Test]
-        public void Landing_On_Railroad_Charges_Correct_Rent_When_3_Are_Owned()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 75;
+        //[Test]
+        //public void Landing_On_Utility_When_One_Is_Owned_Charges_4x_Roll()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 48;
 
-            realtor.SetOwnerForSpace(players[0], 5);
-            realtor.SetOwnerForSpace(players[0], 15);
-            realtor.SetOwnerForSpace(players[0], 25);
+        //    realtor.SetOwnerForSpace(players[0], 12);
 
-            turnHandler.DoTurn(players[1], 5, false); // move to owned property
+        //    turnHandler.DoTurn(players[1], 12, false); // move to owned property
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-        [Test]
-        public void Landing_On_Railroad_Charges_Correct_Rent_When_4_Are_Owned()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 100;
+        //[Test]
+        //public void Landing_On_Utility_When_Two_Are_Owned_By_Same_Player_Charges_10x_Roll()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 120;
 
-            realtor.SetOwnerForSpace(players[0], 5);
-            realtor.SetOwnerForSpace(players[0], 15);
-            realtor.SetOwnerForSpace(players[0], 25);
-            realtor.SetOwnerForSpace(players[0], 35);
+        //    realtor.SetOwnerForSpace(players[0], 12);
+        //    realtor.SetOwnerForSpace(players[0], 28);
 
-            turnHandler.DoTurn(players[1], 5, false); // move to owned property
+        //    turnHandler.DoTurn(players[1], 12, false); // move to owned property
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-        [Test]
-        public void Landing_On_Utility_When_One_Is_Owned_Charges_4x_Roll()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 48;
+        //[Test]
+        //public void Landing_On_Utility_When_Two_Are_Owned_By_Different_Players_Charges_10x_Roll()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 120;
 
-            realtor.SetOwnerForSpace(players[0], 12);
+        //    realtor.SetOwnerForSpace(players[0], 12);
+        //    realtor.SetOwnerForSpace(players[3], 28);
 
-            turnHandler.DoTurn(players[1], 12, false); // move to owned property
+        //    turnHandler.DoTurn(players[1], 12, false); // move to owned property
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-        [Test]
-        public void Landing_On_Utility_When_Two_Are_Owned_By_Same_Player_Charges_10x_Roll()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 120;
+        //[Test]
+        //public void Landing_On_Real_Estate_When_Owned_Charges_Single_Rent()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 6;
 
-            realtor.SetOwnerForSpace(players[0], 12);
-            realtor.SetOwnerForSpace(players[0], 28);
+        //    realtor.SetOwnerForSpace(players[0], 6);
 
-            turnHandler.DoTurn(players[1], 12, false); // move to owned property
+        //    turnHandler.DoTurn(players[1], 6, false); // move to owned property
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-        [Test]
-        public void Landing_On_Utility_When_Two_Are_Owned_By_Different_Players_Charges_10x_Roll()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 120;
+        //[Test]
+        //public void Landing_On_Real_Estate_When_2_Out_Of_Three_In_Group_Are_Owned_Charges_Single_Rent()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 6;
 
-            realtor.SetOwnerForSpace(players[0], 12);
-            realtor.SetOwnerForSpace(players[3], 28);
+        //    realtor.SetOwnerForSpace(players[0], 6);
+        //    realtor.SetOwnerForSpace(players[0], 8);
 
-            turnHandler.DoTurn(players[1], 12, false); // move to owned property
+        //    turnHandler.DoTurn(players[1], 6, false); // move to owned property
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-        [Test]
-        public void Landing_On_Real_Estate_When_Owned_Charges_Single_Rent()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 6;
+        //[Test]
+        //public void Landing_On_Real_Estate_When_All_In_Group_Are_Owned_Charges_Double_Rent()
+        //{
+        //    var initalBalance = players[1].Balance;
+        //    var expectedRent = 12;
 
-            realtor.SetOwnerForSpace(players[0], 6);
+        //    realtor.SetOwnerForSpace(players[0], 6);
+        //    realtor.SetOwnerForSpace(players[0], 8);
+        //    realtor.SetOwnerForSpace(players[0], 9);
 
-            turnHandler.DoTurn(players[1], 6, false); // move to owned property
+        //    turnHandler.DoTurn(players[1], 6, false); // move to owned property
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
+        //}
 
-        [Test]
-        public void Landing_On_Real_Estate_When_2_Out_Of_Three_In_Group_Are_Owned_Charges_Single_Rent()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 6;
+        //[Test]
+        //public void RollNonDoublesAndLandOnGoToJail_PlayerIsInJail()
+        //{
+        //    turnHandler.DoTurn(players[0], 30, false);
 
-            realtor.SetOwnerForSpace(players[0], 6);
-            realtor.SetOwnerForSpace(players[0], 8);
+        //    Assert.True(jailer.PlayerIsImprisoned(players[0]));
+        //}
 
-            turnHandler.DoTurn(players[1], 6, false); // move to owned property
+        //[Test]
+        //public void RollDoublesAndLandOnGoToJail_PlayerIsInJail()
+        //{
+        //    turnHandler.DoTurn(players[0], 30, true);
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    Assert.That(players[0].PlayerLocation.Group, Is.EqualTo(PropertyGroup.Jail));
+        //}
 
-        [Test]
-        public void Landing_On_Real_Estate_When_All_In_Group_Are_Owned_Charges_Double_Rent()
-        {
-            var initalBalance = players[1].Balance;
-            var expectedRent = 12;
+        //[Test]
+        //public void RollNonDoublesThreeTimesInARow_NeverPassOrLandOnGo_BalanceIsUnchangedAndPlayerIsInJail()
+        //{
+        //    var initialBalance = players[0].Balance;
+        //    turnHandler.DoTurn(players[0], 10, true);
+        //    turnHandler.DoTurn(players[0], 0, true);
+        //    turnHandler.DoTurn(players[0], 0, true);
 
-            realtor.SetOwnerForSpace(players[0], 6);
-            realtor.SetOwnerForSpace(players[0], 8);
-            realtor.SetOwnerForSpace(players[0], 9);
+        //    Assert.AreEqual(initialBalance, players[0].Balance);
+        //    Assert.True(jailer.PlayerIsImprisoned(players[0]));
+        //}
 
-            turnHandler.DoTurn(players[1], 6, false); // move to owned property
+        //[Test]
+        //public void RollNonDoublesTwoTimesInARow_PlayerIsNotInJail()
+        //{
+        //    turnHandler.DoTurn(players[0], 3, true);
+        //    turnHandler.DoTurn(players[0], 3, true);
 
-            Assert.AreEqual(expectedRent, Math.Abs(initalBalance - players[1].Balance));
-        }
+        //    Assert.False(jailer.PlayerIsImprisoned(players[0]));
+        //}
 
-        [Test]
-        public void RollNonDoublesAndLandOnGoToJail_PlayerIsInJail()
-        {
-            turnHandler.DoTurn(players[0], 30, false);
+        //[Test]
+        //public void PlayerPaysToGetOutOfJail_BalanceDecreasesBy50()
+        //{
+        //    double intialBalance = players[0].Balance;
+        //    jailer.Imprison(players[0]);
+        //    turnHandler.HandleGetOutOfJailByPaying(players[0]);
 
-            Assert.True(jailer.PlayerIsImprisoned(players[0]));
-        }
+        //    Assert.AreEqual(intialBalance - 50, players[0].Balance);
+        //}
 
-        [Test]
-        public void RollDoublesAndLandOnGoToJail_PlayerIsInJail()
-        {
-            turnHandler.DoTurn(players[0], 30, true);
+        //[Test]
+        //public void PlayerRollsToGetOutOfJail_RollsDoublesOnFirstTurn_MovesScoreOfRollAndStops()
+        //{
+        //    players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
+        //    turnHandler.SendPlayerToJail(players[0]);
 
-            Assert.That(players[0].PlayerLocation.Group, Is.EqualTo(PropertyGroup.Jail));
-        }
+        //    turnHandler.DoTurn(players[0], 10, true);
 
-        [Test]
-        public void RollNonDoublesThreeTimesInARow_NeverPassOrLandOnGo_BalanceIsUnchangedAndPlayerIsInJail()
-        {
-            var initialBalance = players[0].Balance;
-            turnHandler.DoTurn(players[0], 10, true);
-            turnHandler.DoTurn(players[0], 0, true);
-            turnHandler.DoTurn(players[0], 0, true);
+        //    Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
+        //}
 
-            Assert.AreEqual(initialBalance, players[0].Balance);
-            Assert.True(jailer.PlayerIsImprisoned(players[0]));
-        }
+        //[Test]
+        //public void PlayerRollsToGetOutOfJail_RollsDoublesOnSecondTurn_MovesScoreOfRollAndStops()
+        //{
+        //    players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
+        //    turnHandler.SendPlayerToJail(players[0]);
 
-        [Test]
-        public void RollNonDoublesTwoTimesInARow_PlayerIsNotInJail()
-        {
-            turnHandler.DoTurn(players[0], 3, true);
-            turnHandler.DoTurn(players[0], 3, true);
-            
-            Assert.False(jailer.PlayerIsImprisoned(players[0]));
-        }
+        //    turnHandler.DoTurn(players[0], 10, false);
+        //    turnHandler.DoTurn(players[0], 10, true);
 
-        [Test]
-        public void PlayerPaysToGetOutOfJail_BalanceDecreasesBy50()
-        {
-            double intialBalance = players[0].Balance;
-            jailer.Imprison(players[0]);
-            turnHandler.HandleGetOutOfJailByPaying(players[0]);
+        //    Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
+        //}
 
-            Assert.AreEqual(intialBalance - 50, players[0].Balance);
-        }
+        //[Test]
+        //public void PlayerRollsToGetOutOfJail_RollsDoublesOnThirdTurn_MovesScoreOfRollAndStops()
+        //{
+        //    players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
+        //    turnHandler.SendPlayerToJail(players[0]);
 
-        [Test]
-        public void PlayerRollsToGetOutOfJail_RollsDoublesOnFirstTurn_MovesScoreOfRollAndStops()
-        {
-            players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-            turnHandler.SendPlayerToJail(players[0]);
+        //    turnHandler.DoTurn(players[0], 10, false);
+        //    turnHandler.DoTurn(players[0], 10, false);
+        //    turnHandler.DoTurn(players[0], 10, true);
 
-            turnHandler.DoTurn(players[0], 10, true);
+        //    Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
+        //}
 
-            Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
-        }
+        //[Test]
+        //public void PlayerRollsToGetOutOfJail_TriesThreeTurnsWithoutSuccess_Pays50AndMovesDistanceRolledOnThirdTry()
+        //{
+        //    players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
 
-        [Test]
-        public void PlayerRollsToGetOutOfJail_RollsDoublesOnSecondTurn_MovesScoreOfRollAndStops()
-        {
-            players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-            turnHandler.SendPlayerToJail(players[0]);
+        //    var initialBalance = players[0].Balance;
 
-            turnHandler.DoTurn(players[0], 10, false);
-            turnHandler.DoTurn(players[0], 10, true);
+        //    turnHandler.SendPlayerToJail(players[0]);
 
-            Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
-        }
+        //    turnHandler.DoTurn(players[0], 10, false);
+        //    turnHandler.DoTurn(players[0], 10, false);
+        //    turnHandler.DoTurn(players[0], 10, false);
 
-        [Test]
-        public void PlayerRollsToGetOutOfJail_RollsDoublesOnThirdTurn_MovesScoreOfRollAndStops()
-        {
-            players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-            turnHandler.SendPlayerToJail(players[0]);
-
-            turnHandler.DoTurn(players[0], 10, false);
-            turnHandler.DoTurn(players[0], 10, false);
-            turnHandler.DoTurn(players[0], 10, true);
-
-            Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber);
-        }
-
-        [Test]
-        public void PlayerRollsToGetOutOfJail_TriesThreeTurnsWithoutSuccess_Pays50AndMovesDistanceRolledOnThirdTry()
-        {
-            players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-
-            var initialBalance = players[0].Balance;
-
-            turnHandler.SendPlayerToJail(players[0]);
-
-            turnHandler.DoTurn(players[0], 10, false);
-            turnHandler.DoTurn(players[0], 10, false);
-            turnHandler.DoTurn(players[0], 10, false);
-
-            Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber); // At Correct Location
-            Assert.AreEqual(initialBalance - 50, players[0].Balance);
-        }
+        //    Assert.AreEqual(20, players[0].PlayerLocation.SpaceNumber); // At Correct Location
+        //    Assert.AreEqual(initialBalance - 50, players[0].Balance);
+        //}
     }
 }
     

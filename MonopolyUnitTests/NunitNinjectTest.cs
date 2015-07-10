@@ -14,30 +14,29 @@ namespace MonopolyUnitTests
     [TestFixture]
     class NunitNinjectTest
     {
-        private IRealtor realtor1;
-        private IRealtor realtor2;
+        //private IRealtor realtor1;
+        //private IRealtor realtor2;
 
-        private ITurnHandler turnHandler;
-        private ITurnHandler turnHandler2;
+        //private ITurnHandler turnHandler;
+        //private ITurnHandler turnHandler2;
 
-        [SetUp]
-        public void Init()
-        {
-            IKernel ninject = new StandardKernel(new BindingsModule());
+        //[SetUp]
+        //public void Init()
+        //{
+        //    IKernel ninject = new StandardKernel(new BindingsModule());
 
-            realtor1 = ninject.Get<IRealtor>();
-            realtor2 = ninject.Get<IRealtor>();
+        //    realtor1 = ninject.Get<IRealtor>();
+        //    realtor2 = ninject.Get<IRealtor>();
 
-            turnHandler = ninject.Get<ITurnHandler>();
-            turnHandler2 = ninject.Get<ITurnHandler>();
-        }
+        //    turnHandler = ninject.Get<ITurnHandler>();
+        //    turnHandler2 = ninject.Get<ITurnHandler>();
+        //}
 
-        [Test]
-        public void TestSingletons()
-        {
-            Assert.AreSame(realtor1, realtor2);
-            Assert.That(turnHandler.GetRealtor(), Is.EqualTo(turnHandler2.GetRealtor()));
-        }
+        //[Test]
+        //public void TestSingletons()
+        //{
+            
+        //}
 
 
     }

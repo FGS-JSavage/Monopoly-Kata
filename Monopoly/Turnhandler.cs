@@ -90,7 +90,8 @@ namespace Monopoly
         {
             player.CompleteExitLocationTasks();
 
-            player.PlayerLocation = movementHandler.MovePlayer(player, distance);
+            //player.PlayerLocation = movementHandler.MovePlayer(player, distance);
+            movementHandler.MovePlayer(player, distance);
 
             if (player.PlayerLocation.Group == PropertyGroup.Jail)
             {
@@ -128,7 +129,9 @@ namespace Monopoly
         {
             player.CompleteExitLocationTasks();
 
-            player.PlayerLocation = movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
+            //player.PlayerLocation = movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
+
+            movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
 
             player.CompleteLandOnLocationTasks();
         }
