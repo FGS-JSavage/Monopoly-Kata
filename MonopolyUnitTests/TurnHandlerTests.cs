@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Monopoly;
+using Monopoly.Locations;
 using Monopoly.Ninject;
 using Moq;
 using Ninject;
@@ -78,7 +79,7 @@ namespace MonopolyUnitTests
         // ---------------  Release 4 ----------------------------------------------------
 
         [Test]
-        public void PlayerRollsNonDoubleslandingOnGoToJail_TurnIsOverAndBalanceIsUnchanged()
+        public void PlayerRollsNonDoublesLandingOnGoToJail_TurnIsOverAndBalanceIsUnchanged()
         {
             mockDice.Setup(x => x.Score).Returns(30);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
@@ -148,7 +149,120 @@ namespace MonopolyUnitTests
             Assert.IsFalse(jailer.PlayerIsImprisoned(player));
         }
 
+        [Test]
+        public void PlayerIsInJail_PaysForFreedomRollsDoublesMovesRollsAgain_BalanceIsDecreasedBy50()
+        {
+            double initialBalance = player.Balance;
+            int JailFee = 50;
+
+            mockDice.Setup(x => x.Score).Returns(10);
+            mockDice.Setup(x => x.WasDoubles).Returns(true);
+            player.PreferedJailStrategy = JailStrategy.Pay;
+            turnHandler.SendPlayerToJail(player);
+
+            turnHandler.DoTurn(player);
+
+            mockDice.Setup(x => x.Score).Returns(0);
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance - JailFee, player.Balance);
+        }
+
+
+        [Test]
+        public void PlayerIsInJail_PaysForFreedomRollsDoublesMoves_BalanceIsDecreasedBy50()
+        {
+            double initialBalance = player.Balance;
+            int JailFee = 50;
+
+            mockDice.Setup(x => x.Score).Returns(10);
+            mockDice.Setup(x => x.WasDoubles).Returns(true);
+            player.PreferedJailStrategy = JailStrategy.Pay;
+            turnHandler.SendPlayerToJail(player);
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance - JailFee, player.Balance);
+        }
+
+        [Test]
+        public void PlayerIsInJailUsingRollsForFreedomStrategy_RollsDoublesMoveOnce_TurnIsOver()
+        {
+            double initialBalance = player.Balance;
+            int initialSpaceNumber = 10;
+            int expectedDistance = 10;
+
+            mockDice.Setup(x => x.Score).Returns(expectedDistance);
+            mockDice.Setup(x => x.WasDoubles).Returns(true);
+            player.PreferedJailStrategy = JailStrategy.RollDoubles;
+            turnHandler.SendPlayerToJail(player);
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance, player.Balance); 
+            Assert.AreEqual(initialSpaceNumber + expectedDistance, player.PlayerLocation.SpaceNumber);
+        }
+
+        [Test]
+        public void PlayerIsInJailUsingRollsForFreedomStrategy_RollsNonDoublesTwice_StillInJail()
+        {
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+            player.PreferedJailStrategy = JailStrategy.RollDoubles;
+            turnHandler.SendPlayerToJail(player);
+
+            turnHandler.DoTurn(player);
+            turnHandler.DoTurn(player);
+            
+            Assert.IsTrue(jailer.PlayerIsImprisoned(player));
+        }
+
+        [Test]
+        public void PlayerIsInJailUsingRollsForFreedomStrategy_RollsDoublesOnThirdTry_MovesAndTurnIsOver()
+        {
+            double initialBalance = player.Balance;
+            int initialSpaceNumber = 10;
+            int expectedDistance = 10;
+
+            mockDice.Setup(x => x.Score).Returns(expectedDistance);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+            player.PreferedJailStrategy = JailStrategy.RollDoubles;
+            turnHandler.SendPlayerToJail(player);
+
+            turnHandler.DoTurn(player);
+            turnHandler.DoTurn(player);
+
+            mockDice.Setup(x => x.WasDoubles).Returns(true);
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance, player.Balance);
+            Assert.AreEqual(initialSpaceNumber + expectedDistance, player.PlayerLocation.SpaceNumber);
+        }
+
+        [Test]
+        public void PlayerIsInJailUsingRollsForFreedomStrategy_RollsNonDoublesThreeTimes_PaysToGetOutOfJailAndMoves()
+        {
+            double initialBalance = player.Balance;
+            int initialSpaceNumber = 10;
+            int expectedDistance = 10;
+            int jailFee = 50;
+
+            mockDice.Setup(x => x.Score).Returns(expectedDistance);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+            player.PreferedJailStrategy = JailStrategy.RollDoubles;
+            turnHandler.SendPlayerToJail(player);
+
+            turnHandler.DoTurn(player);
+            turnHandler.DoTurn(player);
+            turnHandler.DoTurn(player);
+            
+            Assert.AreEqual(initialBalance - jailFee, player.Balance);
+            Assert.AreEqual(initialSpaceNumber + expectedDistance, player.PlayerLocation.SpaceNumber);
+        }
+
         // ---------------  Release 5 ----------------------------------------------------
         
+
+
     }
 }
