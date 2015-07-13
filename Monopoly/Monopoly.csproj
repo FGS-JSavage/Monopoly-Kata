@@ -69,16 +69,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banker.cs" />
-    <Compile Include="Handlers\PlayerTaskHandler.cs" />
-    <Compile Include="IMovementHandler.cs" />
-    <Compile Include="IRealtor.cs" />
-    <Compile Include="ITurnHandler.cs" />
+    <Compile Include="Interfaces\IMovementHandler.cs" />
+    <Compile Include="Interfaces\IRealtor.cs" />
+    <Compile Include="Interfaces\ITurnHandler.cs" />
     <Compile Include="Locations\ILocationFactory.cs" />
     <Compile Include="MovementHandler.cs" />
     <Compile Include="Ninject\BindingsModule.cs" />
     <Compile Include="Tasks\ITaskHandler.cs" />
-    <Compile Include="Tasks\TaskHandler.cs" />
-    <Compile Include="Turnhandler.cs" />
+    <Compile Include="Handlers\TaskHandler.cs" />
+    <Compile Include="TurnHandler.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Deck.cs" />
     <Compile Include="Cards\DeckFactory.cs" />
@@ -87,9 +86,8 @@
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameFactory.cs" />
     <Compile Include="Interfaces\ICard.cs" />
-    <Compile Include="Interfaces\ITurnHandler.cs" />
     <Compile Include="Jailer.cs" />
-    <Compile Include="Locations\ChanceLocation.cs" />
+    <Compile Include="Locations\DrawCardLocation.cs" />
     <Compile Include="Locations\IncomeTaxLocation.cs" />
     <Compile Include="Locations\JailLocation.cs" />
     <Compile Include="Locations\LuxuryTaxLocation.cs" />
@@ -97,8 +95,7 @@
     <Compile Include="Player\PlayerFactory.cs" />
     <Compile Include="Realtor.cs" />
     <Compile Include="Tasks\CollectFromAllTask.cs" />
-    <Compile Include="Tasks\DrawChanceTask.cs" />
-    <Compile Include="Tasks\DrawChestTask.cs" />
+    <Compile Include="Tasks\DrawCardTask.cs" />
     <Compile Include="Tasks\GetOutOfJailTask.cs" />
     <Compile Include="Tasks\GoDirectlyToJailTask.cs" />
     <Compile Include="Tasks\IPlayerTask.cs" />

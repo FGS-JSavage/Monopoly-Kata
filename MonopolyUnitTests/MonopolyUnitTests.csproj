@@ -112,17 +112,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BankerUnitTests.cs" />
-    <Compile Include="BoardUnitTests.cs" />
-    <Compile Include="DiceUnitTests.cs" />
-    <Compile Include="GameUnitTests.cs" />
+    <Compile Include="TestClasses\BankerUnitTests.cs" />
+    <Compile Include="TestClasses\BoardUnitTests.cs" />
+    <Compile Include="TestClasses\CardIntegrationTests.cs" />
+    <Compile Include="TestClasses\DiceUnitTests.cs" />
+    <Compile Include="TestClasses\GameUnitTests.cs" />
     <Compile Include="LocalAddin.cs" />
-    <Compile Include="MovementHandlerUnitTests.cs" />
-    <Compile Include="NunitNinjectTest.cs" />
-    <Compile Include="PlayerUnitTests.cs" />
+    <Compile Include="TestClasses\MovementHandlerUnitTests.cs" />
+    <Compile Include="TestClasses\NunitNinjectTest.cs" />
+    <Compile Include="TestClasses\PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RealtorUnitTests.cs" />
-    <Compile Include="TurnHandlerTests.cs" />
+    <Compile Include="TestClasses\RealtorUnitTests.cs" />
+    <Compile Include="TestClasses\TurnHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Monopoly\Monopoly.csproj">

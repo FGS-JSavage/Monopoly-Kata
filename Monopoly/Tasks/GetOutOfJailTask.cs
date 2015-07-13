@@ -8,9 +8,9 @@ namespace Monopoly.Tasks
 {
     public class GetOutOfJailTask : IPlayerTask
     {
-        private TaskHandler taskHandler;
+        private ITaskHandler taskHandler;
 
-        public GetOutOfJailTask(TaskHandler taskHandler)
+        public GetOutOfJailTask(ITaskHandler taskHandler)
         {
             this.taskHandler = taskHandler;
         }

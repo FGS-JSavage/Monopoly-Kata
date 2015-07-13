@@ -8,10 +8,10 @@ namespace Monopoly.Tasks
 {
     class CollectFromAllTask : IPlayerTask
     {
-        private TaskHandler taskHandler;
+        private ITaskHandler taskHandler;
         private int amount;
 
-        public CollectFromAllTask(int amount, TaskHandler taskHandler)
+        public CollectFromAllTask(int amount, ITaskHandler taskHandler)
         {
             this.taskHandler = taskHandler;
             this.amount = amount;

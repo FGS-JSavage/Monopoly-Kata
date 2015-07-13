@@ -10,9 +10,9 @@ namespace Monopoly.Tasks
     public class MoveToLocationTask : IPlayerTask
     {
         private int destinationSpaceNumber;
-        private TaskHandler taskHandler;
+        private ITaskHandler taskHandler;
 
-        public MoveToLocationTask(int destinationSpaceNumber, TaskHandler taskHandler)
+        public MoveToLocationTask(int destinationSpaceNumber, ITaskHandler taskHandler)
         {
             this.taskHandler = taskHandler;
             this.destinationSpaceNumber = destinationSpaceNumber;

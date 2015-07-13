@@ -16,7 +16,6 @@ namespace Monopoly
         private IMovementHandler movementHandler;
         private IDice dice;
 
-        [Inject]
         public TurnHandler(IRealtor realtor, IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice)
         {
             this.realtor = realtor;

@@ -8,13 +8,15 @@ namespace Monopoly
 {
     public class MovementHandler : IMovementHandler
     {
-        private Realtor realtor;
+        private IRealtor realtor;
         private const int NUMBER_OF_SPACES = 40;
 
-        public MovementHandler(Realtor realtor)
+        public MovementHandler(IRealtor realtor)
         {
             this.realtor = realtor;
         }
+
+        
 
         public void MovePlayer(IPlayer player, int distance)
         {

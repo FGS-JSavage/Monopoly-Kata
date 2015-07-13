@@ -8,9 +8,9 @@ namespace Monopoly.Tasks
 {
     public class MoveToNearestPropertyGroupTask : IPlayerTask
     {
-        private TaskHandler taskHandler;
+        private ITaskHandler taskHandler;
 
-        public MoveToNearestPropertyGroupTask(PropertyGroup targetGroup, TaskHandler taskHandler)
+        public MoveToNearestPropertyGroupTask(PropertyGroup targetGroup, ITaskHandler taskHandler)
         {
             this.taskHandler = taskHandler;
         }

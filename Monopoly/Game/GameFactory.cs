@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity.Configuration;
-using Monopoly.Handlers;
 using Monopoly.Locations;
 using Monopoly.Ninject;
 using Monopoly.Tasks;

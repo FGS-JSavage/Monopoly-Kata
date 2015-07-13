@@ -1,17 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Monopoly.Cards;
-using Monopoly.Handlers;
 using Monopoly.Tasks;
+using Ninject;
 
 namespace Monopoly
 {
-    public class DeckFactory
+    public interface IDeckFactory
     {
-        public static Deck BuildCommuntiyChestDeck(TaskHandler taskHandler)
+        IDeck BuildCommuntiyChestDeck();
+        IDeck BuildChanceDeck();
+    }
+
+
+    public class DeckFactory : IDeckFactory
+    {
+        private TaskHandler taskHandler;
+
+        public DeckFactory(TaskHandler taskHandler)
+        {
+            this.taskHandler = taskHandler;
+        }
+
+        public IDeck BuildCommuntiyChestDeck()
         {
             var deck = new List<ICard>();
 
@@ -60,7 +75,7 @@ namespace Monopoly
             return new Deck(deck);
         }
 
-        public static Deck BuildChanceDeck(TaskHandler taskHandler)
+        public IDeck BuildChanceDeck()
         {
             var deck = new List<ICard>();
 

@@ -9,9 +9,9 @@ namespace Monopoly.Tasks
     public class PayBankerTask : IPlayerTask
     {
         private int amount;
-        private TaskHandler taskHandler;
+        private ITaskHandler taskHandler;
         
-        public PayBankerTask(int amount, TaskHandler taskHandler)
+        public PayBankerTask(int amount, ITaskHandler taskHandler)
         {
             this.taskHandler = taskHandler;
             this.amount = amount;
