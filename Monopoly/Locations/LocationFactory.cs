@@ -8,16 +8,15 @@ namespace Monopoly.Locations
     public class LocationFactory : ILocationFactory
     {
 
-        //[Inject] 
-        public IDeckFactory deckFactory;
+        [Inject] public IDeckFactory deckFactory;
 
         public IDeck chanceDeck;
         public IDeck chestDeck;
 
-        public LocationFactory(IDeckFactory deckFactory)
+        public LocationFactory()
         {
-            chanceDeck = deckFactory.BuildChanceDeck();
-            chestDeck = deckFactory.BuildCommuntiyChestDeck();
+            //chanceDeck = deckFactory.BuildChanceDeck();
+            //chestDeck = deckFactory.BuildCommuntiyChestDeck();
              //Nothing
         }
 
@@ -25,7 +24,7 @@ namespace Monopoly.Locations
         {
             return new Dictionary<int, ILocation>()
             {
-                {  0, new GoLocation()                                               },
+                {  0, new GoLocation()                                                  },
                 {  1, new RentableLocation(  1,  2,  60,    PropertyGroup.Purple       )},
                 {  2, new DrawCardLocation(  2, chestDeck,  PropertyGroup.Chest        )}, 
                 {  3, new RentableLocation(  3,  4,  60,    PropertyGroup.Purple       )},
@@ -68,7 +67,6 @@ namespace Monopoly.Locations
             };
         }
 
-         
         //public ILocation GetClosest(int playerLocation, PropertyGroup desiredGroup)
         //{
         //    return locationKeeper.Values.Where(   x => x.Group == desiredGroup)
@@ -77,10 +75,14 @@ namespace Monopoly.Locations
         //                                .First();
         //}
 
-        public void InjectDecks(IDeck chanceDeck, IDeck chestDeck)
+        public void Initialize()
         {
-            this.chanceDeck = chanceDeck;
-            this.chestDeck = chestDeck;
+
+            if (deckFactory != null)
+            {
+                this.chanceDeck = deckFactory.BuildChanceDeck();
+                this.chestDeck = deckFactory.BuildCommuntiyChestDeck();
+            }
         }
     }
 }

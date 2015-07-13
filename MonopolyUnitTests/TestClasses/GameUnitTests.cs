@@ -24,7 +24,7 @@ namespace MonopolyUnitTests
         public void Init()
         {
             ninject = new StandardKernel(new BindingsModule());
-            ninject.Get<ILocationFactory>().InjectDecks(ninject.Get<IDeckFactory>().BuildChanceDeck(), ninject.Get<IDeckFactory>().BuildChanceDeck());
+            //ninject.Get<ILocationFactory>().InjectDecks(ninject.Get<IDeckFactory>().BuildChanceDeck(), ninject.Get<IDeckFactory>().BuildChanceDeck());
             game = ninject.Get<Game>();
         }
 

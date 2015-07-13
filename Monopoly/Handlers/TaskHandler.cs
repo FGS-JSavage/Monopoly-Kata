@@ -14,7 +14,7 @@ namespace Monopoly.Tasks
         private IBanker banker;
         private IJailer jailer;
 
-        public TaskHandler()
+        public TaskHandler(IMovementHandler movementHandler, List<IPlayer> players, Banker banker, Jailer jailer)
         {
             this.movementHandler = movementHandler;
             this.players = players;
@@ -24,7 +24,7 @@ namespace Monopoly.Tasks
 
         public void HandleLandOnGoTask()
         {
-                
+            
         }
 
         public void HandleCollectFromAllPlayersTask(IPlayer player, int amount)
@@ -44,7 +44,7 @@ namespace Monopoly.Tasks
 
         public void HandleMoveToLocationTask(IPlayer player, int spaceNumber)
         {
-            //movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
+            movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
         }
 
         public void HandlePayBankerTask(int amount, IPlayer player)

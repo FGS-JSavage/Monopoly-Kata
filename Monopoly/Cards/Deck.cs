@@ -20,7 +20,7 @@ namespace Monopoly
             this.cards = new Queue<ICard>(cards);
         }
 
-        public ICard Draw()
+        public virtual ICard Draw()
         {
             return cards.Dequeue();
         }

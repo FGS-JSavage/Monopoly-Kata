@@ -15,7 +15,6 @@ namespace Monopoly.Tasks
             this.taskHandler = taskHandler;
         }
 
-
         public void Complete(IPlayer player)
         {
             taskHandler.MoveToClosest(player, PropertyGroup.Utility);
