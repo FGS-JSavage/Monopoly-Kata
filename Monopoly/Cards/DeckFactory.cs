@@ -12,7 +12,7 @@ namespace Monopoly
 {
     public interface IDeckFactory
     {
-        IDeck BuildCommuntiyChestDeck();
+        IDeck BuildCommunitiyChestDeck();
         IDeck BuildChanceDeck();
     }
 
@@ -25,7 +25,7 @@ namespace Monopoly
             this.taskHandler = taskHandler;
         }
 
-        public IDeck BuildCommuntiyChestDeck()
+        public IDeck BuildCommunitiyChestDeck()
         {
             var deck = new List<ICard>();
 
@@ -54,7 +54,7 @@ namespace Monopoly
             deck.Add(new Card("Advance To Go",                    new MoveToLocationTask(      0, taskHandler)));
             deck.Add(new Card("Bank Error In Your Favor",         new CollectFromBankerTask(  75, taskHandler)));
             deck.Add(new Card("Doctor's Fees",                    new PayBankerTask(          50, taskHandler)));
-            deck.Add(new Card("Get Out of Jail Card",             new GetOutOfJailTask(           taskHandler)));
+            deck.Add(new Card("Get Out of Jail Card",             new GetOutOfJailTask(           taskHandler))); // TODO Test
             deck.Add(new Card("Go Directly To Jail",              new GoDirectlyToJailTask(       taskHandler)));
             deck.Add(new Card("It Is Your Birthday",              new CollectFromAllTask(     10, taskHandler)));
             deck.Add(new Card("Opera Night",                      new CollectFromAllTask(     50, taskHandler)));
@@ -95,9 +95,14 @@ namespace Monopoly
             // Your building loan matures – collect $150 
             // You have won a crossword competition - collect $100
 
-            deck.Add(new Card("Advance to Go (Collect $200)", new MoveToLocationTask(0, taskHandler)));
-            deck.Add(new Card("Advance To Illinios Ave",      new MoveToLocationTask(24, taskHandler)));
-            deck.Add(new Card("Advance To Nearest Utility",   new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, taskHandler)));
+            deck.Add(new Card("Advance to Go (Collect $200)",  new MoveToLocationTask(0, taskHandler)));
+            deck.Add(new Card("Advance To Illinios Ave",       new MoveToLocationTask(24, taskHandler)));
+            deck.Add(new Card("Advance To Nearest Utility",    new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, taskHandler)));
+            deck.Add(new Card("Advance To Nearest Railroad",   new MoveToNearestPropertyGroupTask(PropertyGroup.Railroad, taskHandler)));
+            deck.Add(new Card("Advance to St. Charles Place",  new MoveToLocationTask(0, taskHandler)));
+            deck.Add(new Card("Bank pays you dividend of $50", new CollectFromBankerTask(50, taskHandler)));
+            deck.Add(new GetOutOfJailCard());
+            deck.Add(new Card("Go Back 3 Spaces",              new MoveDistanceTask(-3, taskHandler)));
             
 
             //deck.Add();

@@ -26,39 +26,41 @@ namespace MonopolyUnitTests
         private IDeckFactory deckFactory;
         private IRealtor realtor;
         private IPlayer player;
+        private IPlayer player2;
         private IJailer jailer;
         private Mock<Dice> mockDice;
-        private Mock<Deck> mockDeck;
+        private Mock<IDeck> mockDeck;
+        private Mock<IDeckFactory> mockDeckFactory;
+
 
         [SetUp]
         public void Init()
         {
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
 
-            mockDeck = fixture.Create<Mock<Deck>>();
+            mockDeck = fixture.Create<Mock<IDeck>>();
             mockDice = fixture.Create<Mock<Dice>>();
-            //mockRealtor = fixture.Create<Mock<Realtor>>();
+            mockDeckFactory = fixture.Create<Mock<IDeckFactory>>();
 
             IKernel ninject = new StandardKernel(new BindingsModule());
 
-            ninject.Rebind<IPlayer>().To<Player>().WithConstructorArgument(new GoLocation());
-            ninject.Rebind<IDice>().ToConstant(mockDice.Object);
-            //ninject.Rebind<IDeck>().ToConstant(mockDeck.Object);
-
-            //IDeckFactory deckFactory = ninject.Get<IDeckFactory>();
-
+            ninject.Rebind<IDice>().ToConstant(mockDice.Object).InSingletonScope();
+            ninject.Rebind<IDeckFactory>().ToConstant(mockDeckFactory.Object).InSingletonScope();
+            ninject.Rebind<ITaskHandler>().To<TaskHandler>().WithConstructorArgument(PlayerFactory.BuildPlayers(6)); // register six OTHER players
             
 
+            mockDeckFactory.Setup(x => x.BuildChanceDeck()).Returns(mockDeck.Object);
+            mockDeckFactory.Setup(x => x.BuildCommunitiyChestDeck()).Returns(mockDeck.Object);
+
+            IDeckFactory deckFactory = ninject.Get<IDeckFactory>();
+
             ILocationFactory d = ninject.Get<ILocationFactory>();
-            deckFactory = ninject.Get<IDeckFactory>();
-
-
 
             turnHandler = ninject.Get<ITurnHandler>();
             player = ninject.Get<IPlayer>();
+            player2 = ninject.Get<IPlayer>();
             realtor = ninject.Get<IRealtor>();
-            //realtor.AddDecks(mockDeck.Object, deckFactory.BuildCommuntiyChestDeck());
-            //ninject.Get<ILocationFactory>().InjectDecks(ninject.Get<IDeckFactory>().BuildChanceDeck(), ninject.Get<IDeckFactory>().BuildChanceDeck());
+            
             jailer = ninject.Get<IJailer>();
             taskHandler = ninject.Get<ITaskHandler>();
         }
@@ -70,7 +72,7 @@ namespace MonopolyUnitTests
         // ---------------  Release 5 ----------------------------------------------------
 
         [Test]
-        public void LandOnChest_DrawAdvanceToGo_PlayerLandsOnGoAndCollects200()
+        public void LandOnChest_DrawMoveToLocationTask_PlayerLandsOnGoAndCollects200()
         {
             double initialBalance = player.Balance;
             int landOnGoReward = 200;
@@ -80,17 +82,98 @@ namespace MonopolyUnitTests
 
             mockDeck.Setup(x => x.Draw()).Returns(new Card("Advance To Go", new MoveToLocationTask(0, taskHandler)));
 
-
-
             turnHandler.DoTurn(player);
 
-            //Assert.AreEqual(initialBalance + landOnGoReward, player.Balance);
+            Assert.AreEqual(initialBalance + landOnGoReward, player.Balance);
             Assert.True(player.PlayerLocation.GetType() == typeof(GoLocation));
         }
 
+        [Test]
+        public void LandOnChest_DrawCollectFromBanker_PlayerBalanceIsUpdatedCorrectly()
+        {
+            double initialBalance = player.Balance;
+            int amount = 50;
+
+            mockDice.Setup(x => x.Score).Returns(2);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("Bank Error In Your Favor", new CollectFromBankerTask(amount, taskHandler)));
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance + amount, player.Balance);
+        }
+
+        [Test]
+        public void LandOnChest_DrawPayBanker_PlayerBalanceIsUpdatedCorrectly()
+        {
+            double initialBalance = player.Balance;
+            int amount = 50;
+
+            mockDice.Setup(x => x.Score).Returns(2);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new PayBankerTask(amount, taskHandler)));
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance - amount, player.Balance);
+        }
+
+        [Test]
+        public void LandOnChest_DrawGoDirectlyTojail_PlayerBalanceAndLocationAreUpdatedCorrectly()
+        {
+            double initialBalance = player.Balance;
+            int amount = 50;
+
+            mockDice.Setup(x => x.Score).Returns(2);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new GoDirectlyToJailTask(taskHandler)));
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance, player.Balance);
+            Assert.True(player.PlayerLocation.GetType() == typeof(JailLocation));
+        }
 
 
+        [Test]
+        public void LandOnChest_DrawCollectFromAll_BalanceIsUpdatedCorrectly()
+        {
+            double initialBalance = player.Balance;
+            int amount = 10;
+            int numberOfPlayers = 6;
+
+            mockDice.Setup(x => x.Score).Returns(2);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new CollectFromAllTask(10, taskHandler)));
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance + amount * numberOfPlayers, player.Balance);
+        }
+
+        [Test]
+        public void LandOnChest_DrawMoveDistanceTask_BalanceIsUpdatedCorrectly()
+        {
+            double initialPosition = player.PlayerLocation.SpaceNumber;
+            int distance = 10;
+
+            mockDice.Setup(x => x.Score).Returns(2);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
 
 
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveDistanceTask(distance, taskHandler)));
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialPosition + distance , player.PlayerLocation.SpaceNumber);
+        }
+        
+
+    
     }
 }

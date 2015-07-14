@@ -27,6 +27,7 @@ namespace Monopoly.Ninject
             Bind<IBanker>().To<Banker>().InSingletonScope();
             Bind<IMovementHandler>().To<MovementHandler>();
             Bind<ITurnHandler>().To<TurnHandler>().InSingletonScope();
+            Bind<PlayerFactory>().To<PlayerFactory>().WithConstructorArgument(6);
             Bind<ILocationFactory>().To<LocationFactory>();
             Bind<IDeckFactory>().To<DeckFactory>();
             Bind<IJailer>().To<Jailer>().InSingletonScope();

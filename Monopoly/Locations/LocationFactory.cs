@@ -17,7 +17,7 @@ namespace Monopoly.Locations
         public LocationFactory()
         {
             //chanceDeck = deckFactory.BuildChanceDeck();
-            //chestDeck = deckFactory.BuildCommuntiyChestDeck();
+            //chestDeck = deckFactory.BuildCommunitiyChestDeck();
              //Nothing
         }
 
@@ -82,7 +82,7 @@ namespace Monopoly.Locations
             if (deckFactory != null)
             {
                 this.chanceDeck = deckFactory.BuildChanceDeck();
-                this.chestDeck = deckFactory.BuildCommuntiyChestDeck();
+                this.chestDeck = deckFactory.BuildCommunitiyChestDeck();
             }
         }
     }

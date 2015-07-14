@@ -26,7 +26,7 @@ namespace Monopoly
             this.banker = banker;
             this.movementHandler = movementHandler;
             this.dice = dice;
-            chestDeck = deckFactory.BuildCommuntiyChestDeck();
+            chestDeck = deckFactory.BuildCommunitiyChestDeck();
             chanceDeck = deckFactory.BuildChanceDeck();
         }
 
@@ -105,10 +105,9 @@ namespace Monopoly
             player.CompleteLandOnLocationTasks();
 
             
-            HandleSpecialCases(player);
-
-
-            //movementHandler.HandleLanding(player, distance);
+            HandleDrawCardCase(player);
+            
+            movementHandler.HandleLanding(player, distance);
 
             //if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
             //{
@@ -120,18 +119,21 @@ namespace Monopoly
             //}
         }
 
-        private void HandleSpecialCases(IPlayer player)
+        private void HandleDrawCardCase(IPlayer player)
         {
             if (player.PlayerLocation.Group == PropertyGroup.Chance)
             {
                 ICard card = chanceDeck.Draw();
                 card.Tasks.ForEach(x => x.Complete(player));
+                chanceDeck.Discard(card);
             }
 
             else if (player.PlayerLocation.Group == PropertyGroup.Chest)
             {
+
                 ICard card = chestDeck.Draw();
                 card.Tasks.ForEach(x => x.Complete(player));
+                chestDeck.Discard(card);
             }
         }
 

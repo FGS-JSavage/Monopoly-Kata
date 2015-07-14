@@ -39,7 +39,7 @@ namespace MonopolyUnitTests
 
             player = ninject.Get<IPlayer>();
 
-            //ninject.Get<ILocationFactory>().InjectDecks(ninject.Get<IDeckFactory>().BuildChanceDeck(), ninject.Get<IDeckFactory>().BuildCommuntiyChestDeck());
+            //ninject.Get<ILocationFactory>().InjectDecks(ninject.Get<IDeckFactory>().BuildChanceDeck(), ninject.Get<IDeckFactory>().BuildCommunitiyChestDeck());
         }
 
         // ---------------  Release 1 ----------------------------------------------------

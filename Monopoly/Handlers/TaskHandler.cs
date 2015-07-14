@@ -24,24 +24,19 @@ namespace Monopoly.Tasks
             this.realtor = realtor;
         }
 
-        public void HandleLandOnGoTask()
-        {
-            
-        }
-
         public void HandleCollectFromAllPlayersTask(IPlayer player, int amount)
         {
-            //players.ForEach(x => banker.Transfer(x, player, amount));
+            players.ForEach(x => banker.Transfer(x, player, amount));
         }
 
         public void HandleCollectFromBankerTask(IPlayer player, int amount)
         {
-            //banker.Payout(player, amount);
+            banker.Payout(player, amount);
         }
 
         public void HandleDrawChest(IPlayer player)
         {
-            
+            // TODO remove this method
         }
 
         public void HandleMoveToLocationTask(IPlayer player, int spaceNumber)
@@ -51,7 +46,7 @@ namespace Monopoly.Tasks
 
         public void HandlePayBankerTask(int amount, IPlayer player)
         {
-            //banker.Collect(player, amount);
+            banker.Collect(player, amount);
         }
 
         public void MoveToClosest(IPlayer player, PropertyGroup group)
@@ -61,7 +56,12 @@ namespace Monopoly.Tasks
 
         public void SendPlayerToJail(IPlayer player)
         {
-            // TODO
+            movementHandler.MovePlayerDirectlyToSpaceNumber(player, 30);
+        }
+
+        public void MoveDistance(int distance, IPlayer player)
+        {
+            movementHandler.MovePlayer(player, distance);
         }
     }
 }

@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Monopoly.Tasks
 {
-    public class CollectFromAllTask : IPlayerTask
+    public class MoveDistanceTask : IPlayerTask
     {
         private ITaskHandler taskHandler;
-        private int amount;
+        private int distance;
 
-        public CollectFromAllTask(int amount, ITaskHandler taskHandler)
+        public MoveDistanceTask(int distance, ITaskHandler taskHandler)
         {
+            this.distance = distance;
             this.taskHandler = taskHandler;
-            this.amount = amount;
         }
 
         public void Complete(IPlayer player)
         {
-            taskHandler.HandleCollectFromAllPlayersTask(player, amount);
+            taskHandler.MoveDistance(distance, player);
         }
     }
 }

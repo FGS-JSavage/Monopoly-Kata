@@ -40,7 +40,8 @@ namespace Monopoly
 
             if (nextLocation.SpaceNumber < player.PlayerLocation.SpaceNumber)
             {
-                nextLocation.AddOnLandTask(new LandOnGoTask());
+                //nextLocation.AddOnLandTask(new LandOnGoTask());
+                //player.Balance += 200;
             }
 
             MovePlayerToLocation(player, nextLocation);
