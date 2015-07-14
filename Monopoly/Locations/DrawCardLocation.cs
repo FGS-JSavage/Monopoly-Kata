@@ -9,17 +9,14 @@ namespace Monopoly.Locations
 {
     public class DrawCardLocation : Location
     {
-        private IDeck deck;
-
-        public DrawCardLocation(int spaceNumber, IDeck deck, PropertyGroup @group) : base(spaceNumber, @group)
+        public DrawCardLocation(int spaceNumber, PropertyGroup @group) : base(spaceNumber, @group)
         {
-            this.deck = deck;
+      
         }
 
         public void AddDeck(IDeck deck)
         {
-            this.deck = deck;
-            OnLandTasks.Add(new DrawCardTask(deck));
+            //OnLandTasks.Add(new DrawCardTask(deck));
         }
     }
 }

@@ -15,15 +15,19 @@ namespace Monopoly
         private IBanker  banker;
         private IMovementHandler movementHandler;
         private IDice dice;
+        private IDeck chanceDeck;
+        private IDeck chestDeck;
 
         //public TurnHandler(IRealtor realtor, IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice)
-        public TurnHandler(IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice)
+        public TurnHandler(IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice, IDeckFactory deckFactory)
         {
             //this.realtor = realtor;
             this.jailer = jailer;
             this.banker = banker;
             this.movementHandler = movementHandler;
             this.dice = dice;
+            chestDeck = deckFactory.BuildCommuntiyChestDeck();
+            chanceDeck = deckFactory.BuildChanceDeck();
         }
 
         public void DoTurn(IPlayer player)
@@ -100,7 +104,11 @@ namespace Monopoly
 
             player.CompleteLandOnLocationTasks();
 
-            movementHandler.HandleLanding(player, distance);
+            
+            HandleSpecialCases(player);
+
+
+            //movementHandler.HandleLanding(player, distance);
 
             //if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
             //{
@@ -110,6 +118,21 @@ namespace Monopoly
             //{
             //    realtor.ChargeRent(realtor.GetOwnerForSpace(player.PlayerLocation.SpaceNumber), player, distance);
             //}
+        }
+
+        private void HandleSpecialCases(IPlayer player)
+        {
+            if (player.PlayerLocation.Group == PropertyGroup.Chance)
+            {
+                ICard card = chanceDeck.Draw();
+                card.Tasks.ForEach(x => x.Complete(player));
+            }
+
+            else if (player.PlayerLocation.Group == PropertyGroup.Chest)
+            {
+                ICard card = chestDeck.Draw();
+                card.Tasks.ForEach(x => x.Complete(player));
+            }
         }
 
         public void PayJailFine(IPlayer player)

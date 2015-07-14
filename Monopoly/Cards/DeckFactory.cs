@@ -16,7 +16,6 @@ namespace Monopoly
         IDeck BuildChanceDeck();
     }
 
-
     public class DeckFactory : IDeckFactory
     {
         private ITaskHandler taskHandler;
