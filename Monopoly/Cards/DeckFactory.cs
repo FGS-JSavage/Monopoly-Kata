@@ -19,9 +19,9 @@ namespace Monopoly
 
     public class DeckFactory : IDeckFactory
     {
-        private TaskHandler taskHandler;
+        private ITaskHandler taskHandler;
 
-        public DeckFactory(TaskHandler taskHandler)
+        public DeckFactory(ITaskHandler taskHandler)
         {
             this.taskHandler = taskHandler;
         }

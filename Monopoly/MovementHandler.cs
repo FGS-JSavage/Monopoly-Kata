@@ -65,5 +65,21 @@ namespace Monopoly
             player.PlayerLocation = location;
             player.CompleteLandOnLocationTasks();
         }
+
+        public void HandleLanding(IPlayer player, int distance)
+        {
+            if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
+            {
+                realtor.MakePurchase(player, player.PlayerLocation.SpaceNumber);
+            }
+            else if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber)) // then it must be owned
+            {
+                realtor.ChargeRent(realtor.GetOwnerForSpace(player.PlayerLocation.SpaceNumber), player, distance);
+            }
+        }
+
+        public delegate void HandleMoveToClosestLocation(IPlayer player);
+
+
     }
 }

@@ -14,12 +14,12 @@ namespace Monopoly.Locations
         public DrawCardLocation(int spaceNumber, IDeck deck, PropertyGroup @group) : base(spaceNumber, @group)
         {
             this.deck = deck;
-            OnLandTasks.Add(new DrawCardTask(deck));
         }
 
         public void AddDeck(IDeck deck)
         {
             this.deck = deck;
+            OnLandTasks.Add(new DrawCardTask(deck));
         }
     }
 }

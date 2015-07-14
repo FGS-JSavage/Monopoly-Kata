@@ -37,7 +37,7 @@ namespace Monopoly
 
             IKernel ninject = new StandardKernel(new BindingsModule());
 
-            return new Game(ninject.Get<TurnHandler>(), PlayerFactory.BuildPlayers(names));
+            return new Game(ninject.Get<ITurnHandler>(), PlayerFactory.BuildPlayers(names));
         }
     }
 }

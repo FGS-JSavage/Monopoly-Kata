@@ -13,13 +13,15 @@ namespace Monopoly.Tasks
         private List<IPlayer> players;
         private IBanker banker;
         private IJailer jailer;
+        private IRealtor realtor;
 
-        public TaskHandler(IMovementHandler movementHandler, List<IPlayer> players, Banker banker, Jailer jailer)
+        public TaskHandler(List<IPlayer> players, IMovementHandler movementHandler, IBanker banker, IJailer jailer)
         {
             this.movementHandler = movementHandler;
             this.players = players;
             this.banker = banker;
             this.jailer = jailer;
+            this.realtor = realtor;
         }
 
         public void HandleLandOnGoTask()

@@ -10,9 +10,9 @@ namespace Monopoly
     {
         private const int DEFAULT_NUMBER_OF_PLAYERS = 6;
         private List<IPlayer> players;
-        private TurnHandler turnHandler;
+        private ITurnHandler turnHandler;
 
-        public Game(TurnHandler turnHandler, List<IPlayer> players)
+        public Game(ITurnHandler turnHandler, List<IPlayer> players)
         {
             this.players = players.OrderBy(elem => Guid.NewGuid()).ToList(); ;
             this.turnHandler = turnHandler;
@@ -42,7 +42,7 @@ namespace Monopoly
             return players;
         }
 
-        public TurnHandler GetBoard()
+        public ITurnHandler GetBoard()
         {
             return turnHandler;
         }

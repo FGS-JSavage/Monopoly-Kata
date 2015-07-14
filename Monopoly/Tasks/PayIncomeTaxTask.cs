@@ -13,6 +13,4 @@ namespace Monopoly.Tasks
             player.Balance -= player.Balance * 0.1 < 200 ? player.Balance * 0.1 : 200;
         }
     }
-
-
 }

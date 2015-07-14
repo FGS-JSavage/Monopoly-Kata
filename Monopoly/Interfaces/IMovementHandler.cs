@@ -12,5 +12,6 @@ namespace Monopoly
         void MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber);
         void MoveToClosest(IPlayer player, PropertyGroup desiredGroup);
         void MovePlayerToLocation(IPlayer player, ILocation location);
-    }
+        void HandleLanding(IPlayer player, int distance);
+    } 
 }

@@ -12,21 +12,24 @@ namespace MonopolyUnitTests
 {
     internal class RealtorUnitTests
     {
-        private TurnHandler turnHandler;
-        private Realtor realtor;
-        private Player player1;
-        private Player player2;
+        private ITurnHandler turnHandler;
+        private IRealtor realtor;
+        private IPlayer player1;
+        private IPlayer player2;
 
         [SetUp]
         public void Init()
         {
             IKernel ninject = new StandardKernel(new BindingsModule());
             
-            turnHandler = ninject.Get<TurnHandler>();
-            realtor = ninject.Get<Realtor>();
+            turnHandler = ninject.Get<ITurnHandler>();
+            realtor = ninject.Get<IRealtor>();
 
-            player1 = new Player(new GoLocation());
-            player2 = new Player(new GoLocation());
+            player1 = ninject.Get<IPlayer>();
+            player2 = ninject.Get<IPlayer>();
+
+            //player1 = new Player(new GoLocation());
+            //player2 = new Player(new GoLocation());
         }
 
         [Test]

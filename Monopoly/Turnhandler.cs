@@ -10,15 +10,16 @@ namespace Monopoly
 {
     public class TurnHandler : ITurnHandler
     {
-        private IRealtor realtor;
+        //private IRealtor realtor;
         private IJailer  jailer;
         private IBanker  banker;
         private IMovementHandler movementHandler;
         private IDice dice;
 
-        public TurnHandler(IRealtor realtor, IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice)
+        //public TurnHandler(IRealtor realtor, IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice)
+        public TurnHandler(IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice)
         {
-            this.realtor = realtor;
+            //this.realtor = realtor;
             this.jailer = jailer;
             this.banker = banker;
             this.movementHandler = movementHandler;
@@ -99,14 +100,16 @@ namespace Monopoly
 
             player.CompleteLandOnLocationTasks();
 
-            if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
-            {
-                realtor.MakePurchase(player, player.PlayerLocation.SpaceNumber);
-            }
-            else if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber)) // then it must be owned
-            {
-                realtor.ChargeRent(realtor.GetOwnerForSpace(player.PlayerLocation.SpaceNumber), player, distance);
-            }
+            movementHandler.HandleLanding(player, distance);
+
+            //if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
+            //{
+            //    realtor.MakePurchase(player, player.PlayerLocation.SpaceNumber);
+            //}
+            //else if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber)) // then it must be owned
+            //{
+            //    realtor.ChargeRent(realtor.GetOwnerForSpace(player.PlayerLocation.SpaceNumber), player, distance);
+            //}
         }
 
         public void PayJailFine(IPlayer player)
@@ -185,7 +188,8 @@ namespace Monopoly
 
         public IRealtor GetRealtor()
         {
-            return realtor;
+            //return realtor;
+            return null;
         }
 
         public IJailer GetJailer()

@@ -20,7 +20,7 @@ namespace MonopolyUnitTests
     {
         private IMovementHandler movementHandler;
         private IPlayer player;
-        private Mock<Realtor> mockRealtor;
+        private Mock<IRealtor> mockRealtor;
         //private IRealtor realtor;
 
         [SetUp]
@@ -28,7 +28,7 @@ namespace MonopolyUnitTests
         {
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
 
-            mockRealtor = fixture.Create<Mock<Realtor>>();
+            mockRealtor = fixture.Create<Mock<IRealtor>>();
 
             IKernel ninject = new StandardKernel(new BindingsModule());
 
