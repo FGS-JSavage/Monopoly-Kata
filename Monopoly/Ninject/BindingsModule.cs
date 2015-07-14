@@ -25,13 +25,13 @@ namespace Monopoly.Ninject
             // Fancy Singletons
             Bind<IDice>().To<Dice>();
             Bind<IBanker>().To<Banker>().InSingletonScope();
-            Bind<IMovementHandler>().To<MovementHandler>().InSingletonScope();
+            Bind<IMovementHandler>().To<MovementHandler>();
             Bind<ITurnHandler>().To<TurnHandler>().InSingletonScope();
-            Bind<ILocationFactory>().To<LocationFactory>().InSingletonScope();
-            Bind<IDeckFactory>().To<DeckFactory>().InSingletonScope();
+            Bind<ILocationFactory>().To<LocationFactory>();
+            Bind<IDeckFactory>().To<DeckFactory>();
             Bind<IJailer>().To<Jailer>().InSingletonScope();
             Bind<ITaskHandler>().To<TaskHandler>().InSingletonScope();
-            Bind<IRealtor>().To<Realtor>().InSingletonScope();
+            Bind<IRealtor>().To<Realtor>();
             Bind<IGame>().To<Game>();
             Bind<IDeck>().To<Deck>();
 

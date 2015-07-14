@@ -53,7 +53,7 @@ namespace MonopolyUnitTests
             turnHandler = ninject.Get<ITurnHandler>();
             player = ninject.Get<IPlayer>();
             realtor = ninject.Get<IRealtor>();
-            realtor.AddDecks(deckFactory.BuildChanceDeck(), deckFactory.BuildCommuntiyChestDeck());
+            //realtor.AddDecks(deckFactory.BuildChanceDeck(), deckFactory.BuildCommuntiyChestDeck());
             //ninject.Get<ILocationFactory>().InjectDecks(ninject.Get<IDeckFactory>().BuildChanceDeck(), ninject.Get<IDeckFactory>().BuildChanceDeck());
             jailer = ninject.Get<IJailer>();
             taskHandler = ninject.Get<ITaskHandler>();
@@ -75,6 +75,8 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
             mockDeck.Setup(x => x.Draw()).Returns(new Card("Advance To Go", new MoveToLocationTask(0, taskHandler)));
+
+
 
             turnHandler.DoTurn(player);
 

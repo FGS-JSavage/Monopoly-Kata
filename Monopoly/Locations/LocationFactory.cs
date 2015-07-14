@@ -13,10 +13,10 @@ namespace Monopoly.Locations
         public IDeck chanceDeck;
         public IDeck chestDeck;
 
-        public LocationFactory()
+        public LocationFactory(IDeckFactory deckFactory)
         {
-            //chanceDeck = deckFactory.BuildChanceDeck();
-            //chestDeck = deckFactory.BuildCommuntiyChestDeck();
+            chanceDeck = deckFactory.BuildChanceDeck();
+            chestDeck = deckFactory.BuildCommuntiyChestDeck();
              //Nothing
         }
 
