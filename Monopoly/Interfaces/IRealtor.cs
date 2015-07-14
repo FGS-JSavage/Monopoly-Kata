@@ -19,5 +19,6 @@ namespace Monopoly
         IPlayer GetOwnerForSpace(int spaceNumber);
         void AddProperties(Dictionary<int, ILocation> propertyList);
         ILocation GetClosest(int spaceNumber, PropertyGroup desiredGroup);
+        void AddDecks(IDeck chanceDeck, IDeck chestDeck);
     }
 }

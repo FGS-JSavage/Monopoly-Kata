@@ -138,6 +138,19 @@ namespace Monopoly
         {
             return new GoLocation();
         }
+
+        public void AddDecks(IDeck chanceDeck, IDeck chestDeck)
+        {
+            foreach (DrawCardLocation loc in propertyList.Values.Where(x => x.Group == PropertyGroup.Chance))
+            {
+                loc.AddDeck(chanceDeck);
+            }
+
+            foreach (DrawCardLocation loc in propertyList.Values.Where(x => x.Group == PropertyGroup.Chest))
+            {
+                loc.AddDeck(chestDeck);
+            }
+        }
     }
 
     public enum PropertyGroup

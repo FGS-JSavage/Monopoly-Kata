@@ -23,6 +23,7 @@ namespace MonopolyUnitTests
     {
         private ITurnHandler turnHandler;
         private ITaskHandler taskHandler;
+        private IDeckFactory deckFactory;
         private IRealtor realtor;
         private IPlayer player;
         private IJailer jailer;
@@ -45,11 +46,14 @@ namespace MonopolyUnitTests
             //ninject.Rebind<IDeck>().ToConstant(mockDeck.Object);
 
             ILocationFactory d = ninject.Get<ILocationFactory>();
+            deckFactory = ninject.Get<IDeckFactory>();
+
 
 
             turnHandler = ninject.Get<ITurnHandler>();
             player = ninject.Get<IPlayer>();
             realtor = ninject.Get<IRealtor>();
+            realtor.AddDecks(deckFactory.BuildChanceDeck(), deckFactory.BuildCommuntiyChestDeck());
             //ninject.Get<ILocationFactory>().InjectDecks(ninject.Get<IDeckFactory>().BuildChanceDeck(), ninject.Get<IDeckFactory>().BuildChanceDeck());
             jailer = ninject.Get<IJailer>();
             taskHandler = ninject.Get<ITaskHandler>();
