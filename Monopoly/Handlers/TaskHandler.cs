@@ -63,5 +63,14 @@ namespace Monopoly.Tasks
         {
             movementHandler.MovePlayer(player, distance);
         }
+
+        public void HandlePayAllOtherPlayers(IPlayer player, int amount)
+        {
+            players.ForEach(x =>
+            {
+                x.Balance += amount;
+                player.Balance -= amount;
+            });
+        }
     }
 }

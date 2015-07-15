@@ -10,5 +10,6 @@
         void MoveToClosest(IPlayer player, PropertyGroup group);
         void SendPlayerToJail(IPlayer player);
         void MoveDistance(int distance, IPlayer player);
+        void HandlePayAllOtherPlayers(IPlayer player, int amount);
     }
 }

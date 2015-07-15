@@ -29,9 +29,7 @@ namespace Monopoly
                 nextSpaceNumber -= NUMBER_OF_SPACES;
             }
           
-            
-
-            MovePlayerToLocation(player, realtor.LocationForSpaceNumber(nextSpaceNumber % 40));
+            MovePlayerToLocation(player, realtor.LocationForSpaceNumber(ChompToBoardSize(nextSpaceNumber)));
         }
 
         public void MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber)
@@ -46,11 +44,6 @@ namespace Monopoly
 
             MovePlayerToLocation(player, nextLocation);
             
-        }
-
-        public int ChompToBoardSize(int spaceNumber)
-        {
-            return spaceNumber % NUMBER_OF_SPACES;
         }
 
         public void MoveToClosest(IPlayer player, PropertyGroup desiredGroup)
@@ -79,8 +72,11 @@ namespace Monopoly
             }
         }
 
+        public int ChompToBoardSize(int spaceNumber)
+        {
+            return (spaceNumber + NUMBER_OF_SPACES) % NUMBER_OF_SPACES;
+        }
+
         public delegate void HandleMoveToClosestLocation(IPlayer player);
-
-
     }
 }

@@ -19,7 +19,6 @@ namespace MonopolyUnitTests
     class TurnHandlerTests
     {
         private ITurnHandler turnHandler;
-        //private Mock<Realtor> mockRealtor;
         private IRealtor realtor;
         private IPlayer player;
         private IJailer jailer;
@@ -267,8 +266,6 @@ namespace MonopolyUnitTests
         {
             mockDice.Setup(x => x.Score).Returns(2);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
-
-
         }
         
 

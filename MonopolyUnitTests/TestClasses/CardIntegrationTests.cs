@@ -26,12 +26,10 @@ namespace MonopolyUnitTests
         private IDeckFactory deckFactory;
         private IRealtor realtor;
         private IPlayer player;
-        private IPlayer player2;
         private IJailer jailer;
         private Mock<Dice> mockDice;
         private Mock<IDeck> mockDeck;
         private Mock<IDeckFactory> mockDeckFactory;
-
 
         [SetUp]
         public void Init()
@@ -58,9 +56,8 @@ namespace MonopolyUnitTests
 
             turnHandler = ninject.Get<ITurnHandler>();
             player = ninject.Get<IPlayer>();
-            player2 = ninject.Get<IPlayer>();
             realtor = ninject.Get<IRealtor>();
-            
+
             jailer = ninject.Get<IJailer>();
             taskHandler = ninject.Get<ITaskHandler>();
         }
@@ -157,9 +154,9 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void LandOnChest_DrawMoveDistanceTask_BalanceIsUpdatedCorrectly()
+        public void LandOnChest_DrawMoveDistanceTask_LocationIsUpdatedCorrectly()
         {
-            double initialPosition = player.PlayerLocation.SpaceNumber;
+            int expectedPosition = 12;
             int distance = 10;
 
             mockDice.Setup(x => x.Score).Returns(2);
@@ -170,10 +167,46 @@ namespace MonopolyUnitTests
 
             turnHandler.DoTurn(player);
 
-            Assert.AreEqual(initialPosition + distance , player.PlayerLocation.SpaceNumber);
+            Assert.AreEqual(expectedPosition, player.PlayerLocation.SpaceNumber);
         }
         
+        // TODO test Get Out of Jail Free Card
 
-    
+        [Test]
+        public void LandOnChest_DrawMoveBackThreeSpacesDistance_LocationIsUpdatedCorrectly()
+        {
+            int distance = -5;
+            int expectedPosition = 37;
+
+
+            mockDice.Setup(x => x.Score).Returns(2);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveDistanceTask(distance, taskHandler)));
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(expectedPosition, player.PlayerLocation.SpaceNumber);
+        }
+
+        [Test]
+        public void LandOnChest_DrawPayAllPlayers_BalanceIsUpdatedCorrectly()
+        {
+            double initialBalance = player.Balance;
+            int amount = 50;
+            int numberOfPlayers = 6;
+
+            mockDice.Setup(x => x.Score).Returns(2);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new PayAllOtherPlayersTask(amount, taskHandler)));
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance - amount * numberOfPlayers, player.Balance);
+        }
+
+
     }
 }

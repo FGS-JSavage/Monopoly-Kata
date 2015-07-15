@@ -4,26 +4,24 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Monopoly.Tasks;
 
 namespace Monopoly.Tasks
 {
     public class PayAllOtherPlayersTask : IPlayerTask
     {
-        private List<IPlayer> allPlayers;
+        private ITaskHandler taskHandler;
         private int amount;
 
-        public PayAllOtherPlayersTask(int amount, List<IPlayer> allPlayers)
+        public PayAllOtherPlayersTask(int amount, ITaskHandler taskHandler)
         {
             this.amount = amount;
-            this.allPlayers = allPlayers;
+            this.taskHandler = taskHandler;
         }
 
         public void Complete(IPlayer player)
         {
-            allPlayers.ForEach(x => {
-                x.Balance += amount;
-                player.Balance -= amount;
-            });
+            taskHandler.HandlePayAllOtherPlayers(player, amount);
         }
     }
 }

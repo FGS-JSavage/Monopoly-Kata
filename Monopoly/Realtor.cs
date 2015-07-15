@@ -98,7 +98,6 @@ namespace Monopoly
             return propertiesAlsoOwned;
         }
 
-
         public bool SpaceIsForSale(int spaceNumber)
         {
             return propertyList[spaceNumber] is RentableLocation && !SpaceIsOwned(spaceNumber);
