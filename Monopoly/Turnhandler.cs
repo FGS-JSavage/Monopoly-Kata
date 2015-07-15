@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Monopoly.Cards;
 using Monopoly.Locations;
 using Ninject;
 
@@ -10,24 +11,19 @@ namespace Monopoly
 {
     public class TurnHandler : ITurnHandler
     {
-        //private IRealtor realtor;
         private IJailer  jailer;
         private IBanker  banker;
         private IMovementHandler movementHandler;
         private IDice dice;
-        private IDeck chanceDeck;
-        private IDeck chestDeck;
+        private ICardHandler cardHandler;
 
-        //public TurnHandler(IRealtor realtor, IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice)
-        public TurnHandler(IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice, IDeckFactory deckFactory)
+        public TurnHandler(IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice, ICardHandler cardHandler)
         {
-            //this.realtor = realtor;
             this.jailer = jailer;
             this.banker = banker;
             this.movementHandler = movementHandler;
             this.dice = dice;
-            chestDeck = deckFactory.BuildCommunitiyChestDeck();
-            chanceDeck = deckFactory.BuildChanceDeck();
+            this.cardHandler = cardHandler;
         }
 
         public void DoTurn(IPlayer player)
@@ -71,15 +67,12 @@ namespace Monopoly
                 return;
             }
 
-            switch (player.PreferedJailStrategy)
+            switch (player.GetJailStrategy())
             {
                 case JailStrategy.UseGetOutOfJailCard:
-                    if (player.HasGetOutOfJailCard())
-                        HandleGetOutOfJailUsingCardStrategy(player);
-                    else
-                        goto default;
+                    HandleGetOutOfJailUsingCardStrategy(player);
                     break;
-                
+
                 case JailStrategy.Pay:
                     HandleGetOutOfJailByPaying(player);
                     break;
@@ -94,7 +87,6 @@ namespace Monopoly
         {
             player.CompleteExitLocationTasks();
 
-            //player.PlayerLocation = movementHandler.MovePlayer(player, distance);
             movementHandler.MovePlayer(player, distance);
 
             if (player.PlayerLocation.Group == PropertyGroup.Jail)
@@ -108,32 +100,28 @@ namespace Monopoly
             HandleDrawCardCase(player);
             
             movementHandler.HandleLanding(player, distance);
-
-            //if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
-            //{
-            //    realtor.MakePurchase(player, player.PlayerLocation.SpaceNumber);
-            //}
-            //else if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber)) // then it must be owned
-            //{
-            //    realtor.ChargeRent(realtor.GetOwnerForSpace(player.PlayerLocation.SpaceNumber), player, distance);
-            //}
         }
 
         private void HandleDrawCardCase(IPlayer player)
         {
             if (player.PlayerLocation.Group == PropertyGroup.Chance)
             {
-                ICard card = chanceDeck.Draw();
-                card.Tasks.ForEach(x => x.Complete(player));
-                chanceDeck.Discard(card);
+                ICard card = cardHandler.DrawChanceCard();
+
+                if (card.GetType() == typeof (GetOutOfJailCard))
+                {
+                    player.AddGetOutOfJailCard(card);
+                }
+                
+                CompleteCardTasks(player, card);
+                Discard(card);
             }
 
             else if (player.PlayerLocation.Group == PropertyGroup.Chest)
             {
-
-                ICard card = chestDeck.Draw();
+                ICard card = DrawChestCard();
                 card.Tasks.ForEach(x => x.Complete(player));
-                chestDeck.Discard(card);
+                Discard(card);
             }
         }
 
@@ -144,19 +132,14 @@ namespace Monopoly
 
         public void HandleGetOutOfJailUsingCardStrategy(IPlayer player)
         {
-            if (player.HasGetOutOfJailCard())
-            {
-                player.DecrementGetOutOfJailCard();
-                jailer.ReleasePlayerFromJail(player);
-                DoTurn(player);
-            }
+            cardHandler.Discard(player.SurrenderGetOutOfJailCard());
+           jailer.ReleasePlayerFromJail(player);
+           DoTurn(player);
         }
 
         public void MovePlayerDirectlyToSpace(IPlayer player, int spaceNumber)
         {
             player.CompleteExitLocationTasks();
-
-            //player.PlayerLocation = movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
 
             movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
 
@@ -170,12 +153,12 @@ namespace Monopoly
 
         public void HandleGetOutOfJailByRollingDoublesStrategy(IPlayer player, int distance, bool rolledDoubles)
         {
-            if (rolledDoubles) // Success
+            if (rolledDoubles) 
             {
                 ReleasePlayerFromJail(player);
                 DoTurn(player, distance, false);
             }
-            else // Failure
+            else 
             {
                 jailer.DecreaseSentence(player);
 
@@ -200,26 +183,36 @@ namespace Monopoly
             player.DoublesCount = 0;
         }
 
+        public void ReleasePlayerFromJailUsingCard(IPlayer player)
+        {
+            
+        }
+
+
         public void ReleasePlayerFromJail(IPlayer player)
         {
             jailer.ReleasePlayerFromJail(player);
             player.PlayerLocation = new JailVisitingLocation();
         }
 
-        public IMovementHandler GetLocationManager()
+        public ICard DrawChanceCard()
         {
-            return movementHandler;
+            return cardHandler.DrawChanceCard();
         }
 
-        public IRealtor GetRealtor()
+        public ICard DrawChestCard()
         {
-            //return realtor;
-            return null;
+            return cardHandler.DrawChestCard();
         }
 
-        public IJailer GetJailer()
+        public void Discard(ICard card)
         {
-            return jailer;
+            cardHandler.Discard(card);
+        }
+
+        public void CompleteCardTasks(IPlayer player, ICard card)
+        {
+            card.Tasks.ForEach(x => x.Complete(player));
         }
     }
 }

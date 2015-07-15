@@ -77,7 +77,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.Score).Returns(2);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("Advance To Go", new MoveToLocationTask(0, taskHandler)));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("Advance To Go", new MoveToLocationTask(0, taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
@@ -94,7 +94,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.Score).Returns(2);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("Bank Error In Your Favor", new CollectFromBankerTask(amount, taskHandler)));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("Bank Error In Your Favor", new CollectFromBankerTask(amount, taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
@@ -110,7 +110,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.Score).Returns(2);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new PayBankerTask(amount, taskHandler)));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new PayBankerTask(amount, taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
@@ -126,7 +126,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.Score).Returns(2);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new GoDirectlyToJailTask(taskHandler)));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new GoDirectlyToJailTask(taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
@@ -146,7 +146,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
             
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new CollectFromAllTask(10, taskHandler)));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new CollectFromAllTask(10, taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
@@ -163,7 +163,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveDistanceTask(distance, taskHandler)));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveDistanceTask(distance, taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
@@ -183,7 +183,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveDistanceTask(distance, taskHandler)));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveDistanceTask(distance, taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
@@ -200,12 +200,31 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.Score).Returns(2);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new PayAllOtherPlayersTask(amount, taskHandler)));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new PayAllOtherPlayersTask(amount, taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
             Assert.AreEqual(initialBalance - amount * numberOfPlayers, player.Balance);
         }
+
+        [Test]
+        public void LandOnChest_DrawGetOutOfJailFreeCard_GoToJail_UseGetOutOfJailFreeCard_PlayerIsNotInJail()
+        {
+            double initialBalance = player.Balance;
+            int amount = 50;
+            int numberOfPlayers = 6;
+
+            mockDice.Setup(x => x.Score).Returns(2);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new GetOutOfJailTask(taskHandler), DeckType.Chance));
+
+            turnHandler.DoTurn(player);
+
+            Assert.False(jailer.PlayerIsImprisoned(player));
+        }
+
+
 
 
     }

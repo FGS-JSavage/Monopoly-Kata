@@ -76,7 +76,5 @@ namespace Monopoly
         {
             return (spaceNumber + NUMBER_OF_SPACES) % NUMBER_OF_SPACES;
         }
-
-        public delegate void HandleMoveToClosestLocation(IPlayer player);
     }
 }

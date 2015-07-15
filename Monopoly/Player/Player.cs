@@ -17,12 +17,14 @@ namespace Monopoly
         public string Name      { get; set; }
         public int RoundsPlayed { get; set; }
 
-        public int GetOutOfJailCards = 0;
+        private Stack<ICard> getOutOfJailFreeCards;
 
         public JailStrategy PreferedJailStrategy { get; set; }
              
         public Player(ILocation playerLocation, int startingBalance = DEFAULT_STARTING_BALANCE)
-        {
+        { 
+            getOutOfJailFreeCards = new Stack<ICard>();
+
             PlayerLocation = playerLocation;
             Balance = startingBalance;
         }
@@ -37,19 +39,43 @@ namespace Monopoly
             PlayerLocation.GetOnExitTasks().ForEach(x => x.Complete(this));
         }
 
+        public void AddGetOutOfJailCard(ICard card)
+        {
+            getOutOfJailFreeCards.Push(card);
+        }
+
+        public ICard SurrenderGetOutOfJailCard()
+        {
+            return getOutOfJailFreeCards.Pop();
+        }
+
         public bool HasGetOutOfJailCard()
         {
-            return GetOutOfJailCards > 0;
+            return getOutOfJailFreeCards.Count > 0;
         }
 
-        public void DecrementGetOutOfJailCard()
+        public JailStrategy GetJailStrategy()
         {
-            GetOutOfJailCards--;
-        }
+            switch(PreferedJailStrategy)
+            {
+                case JailStrategy.UseGetOutOfJailCard:
+                    if (HasGetOutOfJailCard())
+                        return PreferedJailStrategy;
+                    goto default;
 
-        public void AddGetOutOfJailCard()
-        {
-            GetOutOfJailCards++;
+                case JailStrategy.Pay:
+                    return PreferedJailStrategy;
+
+                default: // Handles "case JailStrategy.RollDoubles:"
+                    return JailStrategy.RollDoubles;
+            }
         }
+    }
+
+    public enum JailStrategy
+    {
+        RollDoubles,
+        Pay,
+        UseGetOutOfJailCard
     }
 }

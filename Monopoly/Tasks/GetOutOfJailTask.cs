@@ -16,9 +16,7 @@ namespace Monopoly.Tasks
         }
         public void Complete(IPlayer player)
         {
-            // TODO 
-            //TurnHandler.ReleasePlayerFromJail(player);
-            //player.DecrementGetOutOfJailCard();
+            // Nothing to do here 
         }
     }
 }

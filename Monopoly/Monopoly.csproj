@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banker.cs" />
+    <Compile Include="CardHandler.cs" />
     <Compile Include="Interfaces\IMovementHandler.cs" />
     <Compile Include="Interfaces\IRealtor.cs" />
     <Compile Include="Interfaces\ITurnHandler.cs" />

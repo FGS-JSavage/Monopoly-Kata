@@ -10,5 +10,6 @@ namespace Monopoly
     {
         string Name { get; set; }
         List<IPlayerTask> Tasks { get; set; }
+        DeckType Type { get; set; }
     }
 }

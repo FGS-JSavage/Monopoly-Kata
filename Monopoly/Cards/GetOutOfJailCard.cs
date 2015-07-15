@@ -9,7 +9,7 @@ namespace Monopoly.Cards
 {
     public class GetOutOfJailCard : Card
     {
-        public GetOutOfJailCard(string name, IPlayerTask task) : base(name, task)
+        public GetOutOfJailCard(string name, IPlayerTask task, DeckType type) : base(name, task, type)
         {
             
         }   

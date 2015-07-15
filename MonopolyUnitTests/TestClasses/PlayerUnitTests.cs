@@ -1,5 +1,9 @@
 ﻿using NUnit.Framework;
 using Monopoly;
+using Monopoly.Tasks;
+using Moq;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.AutoMoq;
 
 namespace MonopolyUnitTests
 {
@@ -9,10 +13,15 @@ namespace MonopolyUnitTests
     {
         private IPlayer player;
         private ILocation startingLocation;
+        private Mock<Card> mockCard;
 
         [SetUp]
         public void Init()
         {
+            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+
+            mockCard = fixture.Create<Mock<Card>>();
+
             startingLocation = new GoLocation();
             player = new Player(startingLocation);
         }
@@ -26,7 +35,7 @@ namespace MonopolyUnitTests
         [Test]
         public void AddingAGetOutOfJailCardCorrectlyAdjustsCardBalance()
         {
-            player.AddGetOutOfJailCard();
+            player.AddGetOutOfJailCard(mockCard.Object);
 
             Assert.True(player.HasGetOutOfJailCard());
         }
@@ -34,9 +43,9 @@ namespace MonopolyUnitTests
         [Test]
         public void UsingAGetOutOfJailCard_DecrementsCardBalance()
         {
-            player.AddGetOutOfJailCard();
+            player.AddGetOutOfJailCard(mockCard.Object);
 
-            player.DecrementGetOutOfJailCard();
+            player.SurrenderGetOutOfJailCard();
 
             Assert.False(player.HasGetOutOfJailCard());
         }

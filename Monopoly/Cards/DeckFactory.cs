@@ -51,23 +51,23 @@ namespace Monopoly
             // Holiday Fund matures - Receive $100 
             
             
-            deck.Add(new Card("Advance To Go",                    new MoveToLocationTask(      0, taskHandler)));
-            deck.Add(new Card("Bank Error In Your Favor",         new CollectFromBankerTask(  75, taskHandler)));
-            deck.Add(new Card("Doctor's Fees",                    new PayBankerTask(          50, taskHandler)));
-            deck.Add(new Card("Get Out of Jail Card",             new GetOutOfJailTask(           taskHandler))); // TODO Test
-            deck.Add(new Card("Go Directly To Jail",              new GoDirectlyToJailTask(       taskHandler)));
-            deck.Add(new Card("It Is Your Birthday",              new CollectFromAllTask(     10, taskHandler)));
-            deck.Add(new Card("Opera Night",                      new CollectFromAllTask(     50, taskHandler)));
-            deck.Add(new Card("Income Tax Refund",                new CollectFromBankerTask(  20, taskHandler)));
-            deck.Add(new Card("Life Insurance Matures",           new CollectFromBankerTask( 100, taskHandler)));
-            deck.Add(new Card("Pay Hospital Fees",                new PayBankerTask(         100, taskHandler)));
-            deck.Add(new Card("Pay Hospital Fees",                new PayBankerTask(          50, taskHandler)));
-            deck.Add(new Card("Receive $25 Consultancy Fee",      new CollectFromBankerTask(  25, taskHandler)));
+            deck.Add(new Card("Advance To Go",                    new MoveToLocationTask(      0, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Bank Error In Your Favor",         new CollectFromBankerTask(  75, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Doctor's Fees",                    new PayBankerTask(          50, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Get Out of Jail Card",             new GetOutOfJailTask(           taskHandler), DeckType.Chest)); // TODO Test
+            deck.Add(new Card("Go Directly To Jail",              new GoDirectlyToJailTask(       taskHandler), DeckType.Chest));
+            deck.Add(new Card("It Is Your Birthday",              new CollectFromAllTask(     10, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Opera Night",                      new CollectFromAllTask(     50, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Income Tax Refund",                new CollectFromBankerTask(  20, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Life Insurance Matures",           new CollectFromBankerTask( 100, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Pay Hospital Fees",                new PayBankerTask(         100, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Pay Hospital Fees",                new PayBankerTask(          50, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Receive $25 Consultancy Fee",      new CollectFromBankerTask(  25, taskHandler), DeckType.Chest));
             // Street repairs, I don't have houses implemented though
-            deck.Add(new Card("You have won second prize in a beauty contest", new CollectFromBankerTask(10, taskHandler)));
-            deck.Add(new Card("You inherit $100",                 new CollectFromBankerTask( 100, taskHandler)));
-            deck.Add(new Card("From sale of stock you get $50",   new CollectFromBankerTask(  50, taskHandler)));
-            deck.Add(new Card("Holiday Fund matures",             new CollectFromBankerTask( 100, taskHandler)));
+            deck.Add(new Card("You have won second prize in a beauty contest", new CollectFromBankerTask(10, taskHandler), DeckType.Chest));
+            deck.Add(new Card("You inherit $100",                 new CollectFromBankerTask( 100, taskHandler), DeckType.Chest));
+            deck.Add(new Card("From sale of stock you get $50",   new CollectFromBankerTask(  50, taskHandler), DeckType.Chest));
+            deck.Add(new Card("Holiday Fund matures",             new CollectFromBankerTask( 100, taskHandler), DeckType.Chest));
 
             // TODO shuffle deck
  
@@ -95,22 +95,22 @@ namespace Monopoly
             // Your building loan matures – collect $150 
             // You have won a crossword competition - collect $100
 
-            deck.Add(new Card("Advance to Go (Collect $200)",         new MoveToLocationTask(      0, taskHandler)));
-            deck.Add(new Card("Advance To Illinios Ave",              new MoveToLocationTask(     24, taskHandler)));
-            deck.Add(new Card("Advance To Nearest Utility",           new MoveToNearestPropertyGroupTask(PropertyGroup.Utility,  taskHandler)));
-            deck.Add(new Card("Advance To Nearest Railroad",          new MoveToNearestPropertyGroupTask(PropertyGroup.Railroad, taskHandler)));
-            deck.Add(new Card("Advance to St. Charles Place",         new MoveToLocationTask(      0, taskHandler)));
-            deck.Add(new Card("Bank Pays you Dividend of $50",        new CollectFromBankerTask(  50, taskHandler)));
-            deck.Add(new GetOutOfJailCard("Get Out of Jail Free",     new GetOutOfJailTask(           taskHandler)));
-            deck.Add(new Card("Go Back 3 Spaces",                     new MoveDistanceTask(       -3, taskHandler)));
-            deck.Add(new Card("Go Directly To Jail",                  new GoDirectlyToJailTask(       taskHandler)));
+            deck.Add(new Card("Advance to Go (Collect $200)",         new MoveToLocationTask(      0, taskHandler), DeckType.Chance));
+            deck.Add(new Card("Advance To Illinios Ave",              new MoveToLocationTask(     24, taskHandler), DeckType.Chance));
+            deck.Add(new Card("Advance To Nearest Utility",           new MoveToNearestPropertyGroupTask(PropertyGroup.Utility,  taskHandler), DeckType.Chance));
+            deck.Add(new Card("Advance To Nearest Railroad",          new MoveToNearestPropertyGroupTask(PropertyGroup.Railroad, taskHandler), DeckType.Chance));
+            deck.Add(new Card("Advance to St. Charles Place",         new MoveToLocationTask(      0, taskHandler), DeckType.Chance));
+            deck.Add(new Card("Bank Pays you Dividend of $50",        new CollectFromBankerTask(  50, taskHandler), DeckType.Chance));
+            deck.Add(new GetOutOfJailCard("Get Out of Jail Free",     new GetOutOfJailTask(           taskHandler), DeckType.Chance));
+            deck.Add(new Card("Go Back 3 Spaces",                     new MoveDistanceTask(       -3, taskHandler), DeckType.Chance));
+            deck.Add(new Card("Go Directly To Jail",                  new GoDirectlyToJailTask(       taskHandler), DeckType.Chance));
             // Make general repairs on your property, Not implemented in this release
-            deck.Add(new Card("Pay Poor Tax of $15",                  new PayBankerTask(          15, taskHandler)));
-            deck.Add(new Card("Take a trip to Reading Railroad",      new MoveToLocationTask(      5, taskHandler))); // collect 200 for go
-            deck.Add(new Card("Take a Walk on the Boardwalk",         new MoveToLocationTask(     39, taskHandler)));
-            deck.Add(new Card("Elected Chairman of the Board",        new PayAllOtherPlayersTask( 50, taskHandler)));
-            deck.Add(new Card("Your Building Loan Matures",           new CollectFromBankerTask(  50, taskHandler)));
-            deck.Add(new Card("You Have Won a Crossword Competition", new CollectFromBankerTask( 100, taskHandler)));
+            deck.Add(new Card("Pay Poor Tax of $15",                  new PayBankerTask(          15, taskHandler), DeckType.Chance));
+            deck.Add(new Card("Take a trip to Reading Railroad",      new MoveToLocationTask(      5, taskHandler), DeckType.Chance)); // collect 200 for go
+            deck.Add(new Card("Take a Walk on the Boardwalk",         new MoveToLocationTask(     39, taskHandler), DeckType.Chance));
+            deck.Add(new Card("Elected Chairman of the Board",        new PayAllOtherPlayersTask( 50, taskHandler), DeckType.Chance));
+            deck.Add(new Card("Your Building Loan Matures",           new CollectFromBankerTask(  50, taskHandler), DeckType.Chance));
+            deck.Add(new Card("You Have Won a Crossword Competition", new CollectFromBankerTask( 100, taskHandler), DeckType.Chance));
 
 
             //deck.Add();
@@ -118,5 +118,11 @@ namespace Monopoly
 
             return new Deck(deck);
         }
+    }
+
+    public enum DeckType
+    {
+        Chance,
+        Chest
     }
 }

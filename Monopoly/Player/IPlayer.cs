@@ -19,10 +19,11 @@ namespace Monopoly
         void CompleteLandOnLocationTasks();
         void CompleteExitLocationTasks();
 
-        void DecrementGetOutOfJailCard();
+        ICard SurrenderGetOutOfJailCard();
         bool HasGetOutOfJailCard();
-        void AddGetOutOfJailCard();
+        void AddGetOutOfJailCard(ICard card);
 
         JailStrategy PreferedJailStrategy { get; set; }
+        JailStrategy GetJailStrategy();
     }
 }

@@ -16,8 +16,5 @@ namespace Monopoly
         void HandleGetOutOfJailByPaying(IPlayer player);
         void SendPlayerToJail(IPlayer player);
         void ReleasePlayerFromJail(IPlayer player);
-        IMovementHandler GetLocationManager();
-        IRealtor GetRealtor();
-        IJailer GetJailer();
     }
 }

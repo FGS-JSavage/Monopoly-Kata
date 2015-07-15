@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Monopoly;
+using Monopoly.Cards;
 using Monopoly.Locations;
 using Monopoly.Ninject;
 using Moq;
@@ -18,25 +19,24 @@ namespace MonopolyUnitTests
     [TestFixture]
     class TurnHandlerTests
     {
+        private IFixture fixture;
         private ITurnHandler turnHandler;
         private IRealtor realtor;
         private IPlayer player;
         private IJailer jailer;
         private Mock<Dice> mockDice;
 
+
         [SetUp]
         public void Init()
         {
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            fixture = new Fixture().Customize(new AutoMoqCustomization());
 
             mockDice = fixture.Create<Mock<Dice>>();
-            //mockRealtor = fixture.Create<Mock<Realtor>>();
 
             IKernel ninject = new StandardKernel(new BindingsModule());
 
-            ninject.Rebind<IPlayer>().To<Player>().WithConstructorArgument(new GoLocation());
             ninject.Rebind<IDice>().ToConstant(mockDice.Object);
-            //ninject.Get<ILocationFactory>().InjectDecks(ninject.Get<IDeckFactory>().BuildChanceDeck(), ninject.Get<IDeckFactory>().BuildChanceDeck());
 
             turnHandler = ninject.Get<ITurnHandler>();
             player = ninject.Get<IPlayer>();
@@ -262,13 +262,26 @@ namespace MonopolyUnitTests
         // ---------------  Release 5 ----------------------------------------------------
 
         [Test]
-        public void PlayerRollsNonDoubles_LandsOnCommunityChest_PlaysCardEffectHappensCardIsDiscardedToBottomOfDeck()
+        public void PlayerIsInJail_UsesGetOutOfJailCard_PlayerMovesAndCardIsReturnedToBottomOfStack()
         {
-            mockDice.Setup(x => x.Score).Returns(2);
+            int jailPosition = 10;
+            int rollDistance = 10;
+
+            mockDice.Setup(x => x.Score).Returns(rollDistance);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            var mockCard = fixture.Create<Mock<GetOutOfJailCard>>();
+            mockCard.Setup(x => x.Type).Returns(DeckType.Chance);
+
+            player.AddGetOutOfJailCard(mockCard.Object);
+            player.PreferedJailStrategy = JailStrategy.UseGetOutOfJailCard;
+
+            turnHandler.SendPlayerToJail(player);
+
+            turnHandler.DoTurn(player);
+
+            Assert.False(player.HasGetOutOfJailCard());
+            Assert.AreEqual(jailPosition + rollDistance, player.PlayerLocation.SpaceNumber);
         }
-        
-
-
     }
 }

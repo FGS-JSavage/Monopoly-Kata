@@ -34,11 +34,6 @@ namespace Monopoly.Tasks
             banker.Payout(player, amount);
         }
 
-        public void HandleDrawChest(IPlayer player)
-        {
-            // TODO remove this method
-        }
-
         public void HandleMoveToLocationTask(IPlayer player, int spaceNumber)
         {
             movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
@@ -51,7 +46,7 @@ namespace Monopoly.Tasks
 
         public void MoveToClosest(IPlayer player, PropertyGroup group)
         {
-            //movementHandler.MoveToClosest(player, group);
+            movementHandler.MoveToClosest(player, group);
         }
 
         public void SendPlayerToJail(IPlayer player)
@@ -71,6 +66,11 @@ namespace Monopoly.Tasks
                 x.Balance += amount;
                 player.Balance -= amount;
             });
+        }
+
+        public void GetOutOfJailTask(IPlayer player)
+        {
+            
         }
     }
 }

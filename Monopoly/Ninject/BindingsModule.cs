@@ -33,6 +33,7 @@ namespace Monopoly.Ninject
             Bind<IJailer>().To<Jailer>().InSingletonScope();
             Bind<ITaskHandler>().To<TaskHandler>().InSingletonScope();
             Bind<IRealtor>().To<Realtor>().InSingletonScope();
+            Bind<ICardHandler>().To<CardHandler>().InSingletonScope();
             Bind<IGame>().To<Game>();
             Bind<IDeck>().To<Deck>();
 

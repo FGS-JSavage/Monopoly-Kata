@@ -14,12 +14,4 @@ namespace Monopoly.Locations
             
         }
     }
-
-    public enum JailStrategy
-    {
-        RollDoubles,
-        Pay,
-        UseGetOutOfJailCard
-    }
-
 }

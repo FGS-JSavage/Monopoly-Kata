@@ -22,7 +22,7 @@ namespace Monopoly.Tasks
 
             if (card.Name == "Get Out of Jail Card")
             {
-                player.AddGetOutOfJailCard();
+                player.AddGetOutOfJailCard(card);
             }
             else
             {
