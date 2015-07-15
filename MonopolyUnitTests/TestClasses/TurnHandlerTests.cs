@@ -283,5 +283,7 @@ namespace MonopolyUnitTests
             Assert.False(player.HasGetOutOfJailCard());
             Assert.AreEqual(jailPosition + rollDistance, player.PlayerLocation.SpaceNumber);
         }
+
+
     }
 }

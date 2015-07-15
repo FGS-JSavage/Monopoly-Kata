@@ -214,5 +214,15 @@ namespace Monopoly
         {
             card.Tasks.ForEach(x => x.Complete(player));
         }
+
+        public void MoveToClosestRailroadAndBuy()
+        {
+            
+        }
+
+        public void MoveToClosestRailroad(IPlayer player)
+        {
+            movementHandler.MoveToClosest(player, PropertyGroup.Railroad);
+        }
     }
 }

@@ -10,8 +10,10 @@ namespace Monopoly
     {
         void MovePlayer(IPlayer player, int distance);
         void MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber);
-        void MoveToClosest(IPlayer player, PropertyGroup desiredGroup);
+        void MoveToClosestRailroad(IPlayer player, IDice dice);
+        void MoveToClosestUtility(IPlayer player);
         void MovePlayerToLocation(IPlayer player, ILocation location);
+        void MoveDirectlyToJail(IPlayer player);
         void HandleLanding(IPlayer player, int distance);
     } 
 }

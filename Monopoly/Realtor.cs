@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Practices.ObjectBuilder2;
 using Monopoly.Locations;
+using System;
 
 namespace Monopoly
 {
@@ -28,9 +29,15 @@ namespace Monopoly
 
         public void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue)
         {
-            var rentalRate = CalculateRent(renter.PlayerLocation.SpaceNumber, diceRollValue);
-            banker.Transfer(renter, owner, rentalRate);
+            ChargeRent(owner, renter, diceRollValue, 1);
         }
+
+        public void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue, int multiplier)
+        {
+            var rentalRate = CalculateRent(renter.PlayerLocation.SpaceNumber, diceRollValue);
+            banker.Transfer(renter, owner, rentalRate * multiplier);
+        }
+
 
         public virtual int CalculateRent(int spaceNumber, int diceRollValue)
         {
@@ -135,20 +142,9 @@ namespace Monopoly
 
         public ILocation GetClosest(int spaceNumber, PropertyGroup desiredGroup)
         {
-            return new GoLocation();
-        }
-
-        public void AddDecks(IDeck chanceDeck, IDeck chestDeck)
-        {
-            foreach (DrawCardLocation loc in propertyList.Values.Where(x => x.Group == PropertyGroup.Chance))
-            {
-                loc.AddDeck(chanceDeck);
-            }
-
-            foreach (DrawCardLocation loc in propertyList.Values.Where(x => x.Group == PropertyGroup.Chest))
-            {
-                loc.AddDeck(chestDeck);
-            }
+            return propertyList.Values.Where(x => x.Group == desiredGroup)
+                                        .OrderBy(y => Math.Abs(y.SpaceNumber - spaceNumber))
+                                        .First();
         }
     }
 

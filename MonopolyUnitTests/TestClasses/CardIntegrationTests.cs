@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace MonopolyUnitTests
         private Mock<Dice> mockDice;
         private Mock<IDeck> mockDeck;
         private Mock<IDeckFactory> mockDeckFactory;
+        private Mock<IPlayer> mockPlayer;
+
 
         [SetUp]
         public void Init()
@@ -39,6 +42,7 @@ namespace MonopolyUnitTests
             mockDeck = fixture.Create<Mock<IDeck>>();
             mockDice = fixture.Create<Mock<Dice>>();
             mockDeckFactory = fixture.Create<Mock<IDeckFactory>>();
+            mockPlayer = fixture.Create<Mock<IPlayer>>();
 
             IKernel ninject = new StandardKernel(new BindingsModule());
 
@@ -69,7 +73,7 @@ namespace MonopolyUnitTests
         // ---------------  Release 5 ----------------------------------------------------
 
         [Test]
-        public void LandOnChest_DrawMoveToLocationTask_PlayerLandsOnGoAndCollects200()
+        public void DrawMoveToLocationTask_PlayerLandsOnGoAndCollects200()
         {
             double initialBalance = player.Balance;
             int landOnGoReward = 200;
@@ -86,7 +90,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void LandOnChest_DrawCollectFromBanker_PlayerBalanceIsUpdatedCorrectly()
+        public void DrawCollectFromBanker_PlayerBalanceIsUpdatedCorrectly()
         {
             double initialBalance = player.Balance;
             int amount = 50;
@@ -102,7 +106,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void LandOnChest_DrawPayBanker_PlayerBalanceIsUpdatedCorrectly()
+        public void DrawPayBanker_PlayerBalanceIsUpdatedCorrectly()
         {
             double initialBalance = player.Balance;
             int amount = 50;
@@ -118,7 +122,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void LandOnChest_DrawGoDirectlyTojail_PlayerBalanceAndLocationAreUpdatedCorrectly()
+        public void DrawGoDirectlyTojail_PlayerBalanceAndLocationAreUpdatedCorrectly()
         {
             double initialBalance = player.Balance;
             int amount = 50;
@@ -136,7 +140,7 @@ namespace MonopolyUnitTests
 
 
         [Test]
-        public void LandOnChest_DrawCollectFromAll_BalanceIsUpdatedCorrectly()
+        public void DrawCollectFromAll_BalanceIsUpdatedCorrectly()
         {
             double initialBalance = player.Balance;
             int amount = 10;
@@ -154,7 +158,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void LandOnChest_DrawMoveDistanceTask_LocationIsUpdatedCorrectly()
+        public void DrawMoveDistanceTask_LocationIsUpdatedCorrectly()
         {
             int expectedPosition = 12;
             int distance = 10;
@@ -173,7 +177,7 @@ namespace MonopolyUnitTests
         // TODO test Get Out of Jail Free Card
 
         [Test]
-        public void LandOnChest_DrawMoveBackThreeSpacesDistance_LocationIsUpdatedCorrectly()
+        public void DrawMoveBackThreeSpacesDistance_LocationIsUpdatedCorrectly()
         {
             int distance = -5;
             int expectedPosition = 37;
@@ -191,7 +195,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void LandOnChest_DrawPayAllPlayers_BalanceIsUpdatedCorrectly()
+        public void DrawPayAllPlayers_BalanceIsUpdatedCorrectly()
         {
             double initialBalance = player.Balance;
             int amount = 50;
@@ -208,7 +212,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void LandOnChest_DrawGetOutOfJailFreeCard_GoToJail_UseGetOutOfJailFreeCard_PlayerIsNotInJail()
+        public void DrawGetOutOfJailFreeCard_GoToJail_UseGetOutOfJailFreeCard_PlayerIsNotInJail()
         {
             double initialBalance = player.Balance;
             int amount = 50;
@@ -224,7 +228,54 @@ namespace MonopolyUnitTests
             Assert.False(jailer.PlayerIsImprisoned(player));
         }
 
+        [Test]
+        [TestCase( 7, Result = 12)]
+        [TestCase(22, Result = 28)]
+        [TestCase(36, Result = 28)]
+        public int DrawMoveToClosestUtility_MovesPlayerToTheCorrectLocation(int chanceSpaceNumber)
+        {        
+            mockDice.Setup(x => x.Score).Returns(chanceSpaceNumber);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
 
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, taskHandler), DeckType.Chance));
+
+            turnHandler.DoTurn(player);
+
+            return player.PlayerLocation.SpaceNumber;
+        }
+
+        [Test]
+        [TestCase( 7, Result =  5)]
+        [TestCase(22, Result = 25)]
+        [TestCase(36, Result = 35)]
+        public int DrawMoveToClosestRailroad_MovesPlayerToTheCorrectLocation(int chanceSpaceNumber)
+        {
+            mockDice.Setup(x => x.Score).Returns(chanceSpaceNumber);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestPropertyGroupTask(PropertyGroup.Railroad, taskHandler), DeckType.Chance));
+
+            turnHandler.DoTurn(player);
+
+            return player.PlayerLocation.SpaceNumber;
+        }
+
+        [Test]
+        public void PlayerDrawsMoveToClosestUtility_UtilityIsOwned_PlayerRollsDiceAndIsCharged10xTheRollValue()
+        {
+            double inititialBalance = player.Balance;
+            int rollAmount = 10;
+            int utilitySpaceNumber = 12;
+
+            mockDice.Setup(x => x.Score).Returns(new Queue<int>(new[] { 2, rollAmount }).Dequeue);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, taskHandler), DeckType.Chance));
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(inititialBalance + 10 * rollAmount, player.Balance);
+        }
 
 
     }

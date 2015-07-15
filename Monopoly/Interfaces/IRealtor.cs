@@ -6,6 +6,7 @@ namespace Monopoly
     {
         void MakePurchase(IPlayer player, int spaceNumber);
         void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue);
+        void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue, int multiplier);
         int CalculateRent(int spaceNumber, int diceRollValue);
         bool SpaceIsOwned(int spaceNumber);
         bool IsWholeGroupOwned(PropertyGroup group);
@@ -19,6 +20,5 @@ namespace Monopoly
         IPlayer GetOwnerForSpace(int spaceNumber);
         void AddProperties(Dictionary<int, ILocation> propertyList);
         ILocation GetClosest(int spaceNumber, PropertyGroup desiredGroup);
-        void AddDecks(IDeck chanceDeck, IDeck chestDeck);
     }
 }
