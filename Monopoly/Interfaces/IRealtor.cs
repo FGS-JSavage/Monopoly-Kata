@@ -15,11 +15,10 @@ namespace Monopoly
         int CountOwnedPropertiesWithSameGroup(int spaceNumber);
         bool SpaceIsForSale(int spaceNumber);
         int GetPriceOfSpace(int spaceNumber);
-        int GetRentOfSpace(IPlayer player, int spaceNumber);
+        int GetRentOfSpace(int spaceNumber);
         void SetOwnerForSpace(IPlayer player, int spaceNumber);
         ILocation LocationForSpaceNumber(int spaceNumber);
         IPlayer GetOwnerForSpace(int spaceNumber);
-        void AddProperties(Dictionary<int, ILocation> propertyList);
         ILocation GetClosest(int spaceNumber, PropertyGroup desiredGroup);
     }
 }

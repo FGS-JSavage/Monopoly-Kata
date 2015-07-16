@@ -3,7 +3,7 @@ using Ninject;
 
 namespace Monopoly.Locations
 {
-    public interface ILocationFactory : IInitializable
+    public interface ILocationFactory
     {
         Dictionary<int, ILocation> BuildLocations();
     }

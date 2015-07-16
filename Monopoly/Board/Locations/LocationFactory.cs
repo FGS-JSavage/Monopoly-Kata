@@ -8,19 +8,6 @@ namespace Monopoly.Locations
     public class LocationFactory : ILocationFactory
     {
 
-        [Inject] public IDeckFactory deckFactory;
-
-        public IDeck chanceDeck;
-        public IDeck chestDeck;
-
-        //public LocationFactory(IDeckFactory deckFactory)
-        public LocationFactory()
-        {
-            //chanceDeck = deckFactory.BuildChanceDeck();
-            //chestDeck = deckFactory.BuildCommunitiyChestDeck();
-             //Nothing
-        }
-
         public Dictionary<int, ILocation> BuildLocations()
         {
             return new Dictionary<int, ILocation>()
@@ -66,16 +53,6 @@ namespace Monopoly.Locations
                 { 38, new LuxuryTaxLocation(                                           )}, 
                 { 39, new RentableLocation( 39, 50, 400,    PropertyGroup.DarkBlue     )},
             };
-        }
-
-        public void Initialize()
-        {
-
-            if (deckFactory != null)
-            {
-                this.chanceDeck = deckFactory.BuildChanceDeck();
-                this.chestDeck = deckFactory.BuildCommunitiyChestDeck();
-            }
         }
     }
 }

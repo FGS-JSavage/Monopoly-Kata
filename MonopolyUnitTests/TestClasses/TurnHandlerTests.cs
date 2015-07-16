@@ -92,7 +92,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void PlayerRollsDoubleslandingOnGoToJail_TurnIsOverAndBalanceIsUnchanged()
+        public void PlayerRollsDoublesLandingOnGoToJail_TurnIsOverAndBalanceIsUnchanged()
         {
             mockDice.Setup(x => x.Score).Returns(30);
             mockDice.Setup(x => x.WasDoubles).Returns(true);
@@ -167,6 +167,24 @@ namespace MonopolyUnitTests
             Assert.AreEqual(initialBalance - JailFee, player.Balance);
         }
 
+        [Test]
+        public void PlayerIsInJailWithNoGetOutFreeCard_PrefersToUseCardButDefaultsToRollDoubles_PlayerRollsDoubles_PlayerIsNotInAJailAndBalanceIsUnchanged()
+        {
+            double initialBalance = player.Balance;
+
+            mockDice.Setup(x => x.Score).Returns(10);
+            mockDice.Setup(x => x.WasDoubles).Returns(true);
+            player.PreferedJailStrategy = JailStrategy.UseGetOutOfJailCard;
+            turnHandler.SendPlayerToJail(player);
+
+            turnHandler.DoTurn(player);
+
+            mockDice.Setup(x => x.Score).Returns(0);
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(initialBalance, player.Balance);
+            Assert.False(jailer.PlayerIsImprisoned(player));
+        }
 
         [Test]
         public void PlayerIsInJail_PaysForFreedomRollsDoublesMoves_BalanceIsDecreasedBy50()

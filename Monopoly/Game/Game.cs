@@ -36,15 +36,5 @@ namespace Monopoly
                 player.RoundsPlayed++;
             }
         }
-
-        public List<IPlayer> Player()
-        {
-            return players;
-        }
-
-        public ITurnHandler GetBoard()
-        {
-            return turnHandler;
-        }
     }
 }

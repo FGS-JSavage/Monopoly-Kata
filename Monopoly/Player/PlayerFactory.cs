@@ -12,13 +12,15 @@ namespace Monopoly
         public static List<IPlayer> BuildPlayers(int count)
         {
             List<IPlayer> players = new List<IPlayer>();
+            Random random = new Random();
 
             for (int i = 0; i < count; i++)
             {
                 players.Add(new Player(new GoLocation()));
             }
 
-            return players;
+            return players.OrderBy(x => random.Next()).ToList();
+            //return players;
 
             // .OrderBy(a => Guid.NewGuid()).ToList();
         }
@@ -27,6 +29,7 @@ namespace Monopoly
         public static List<IPlayer> BuildPlayers(List<string> names)
         {
             List<IPlayer> players = new List<IPlayer>();
+            Random random = new Random();
 
             foreach (string name in names)
             {
@@ -35,15 +38,10 @@ namespace Monopoly
                 players.Add(player);
             }
 
-            return players;
+
+            return players.OrderBy(x => random.Next()).ToList();
 
             // .OrderBy(a => Guid.NewGuid()).ToList();
         }
-
-
-        public static List<IPlayer> ShufflePlayers(List<IPlayer> players)
-        {
-            return players.OrderBy(a => Guid.NewGuid()).ToList();
-        } 
     }
 }

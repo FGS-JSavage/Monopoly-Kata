@@ -13,10 +13,5 @@ namespace Monopoly.Locations
         {
       
         }
-
-        public void AddDeck(IDeck deck)
-        {
-            //OnLandTasks.Add(new DrawCardTask(deck));
-        }
     }
 }

@@ -55,32 +55,24 @@ namespace Monopoly
 
         public virtual void DoJailTurn(IPlayer player, int distance, bool rolledDoubles)
         {
-            if (jailer.GetRemainingSentence(player) == 0) // Force player to pay for release
-            {
-                banker.ChargePlayerToGetOutOfJail(player);
-            }
-            else
-            {
-                switch (player.GetJailStrategy())
-                {
-                    case JailStrategy.UseGetOutOfJailCard:
-                        ReleasePlayerFromJailUsingCard(player);
-                        break;
 
-                    case JailStrategy.Pay:
-                        HandleGetOutOfJailByPaying(player);
-                        break;
+            switch (player.GetJailStrategy())
+            {
+                case JailStrategy.UseGetOutOfJailCard:
+                    ReleasePlayerFromJailUsingCard(player);
+                    break;
+                case JailStrategy.Pay:
+                    HandleGetOutOfJailByPaying(player);
+                    break;
 
-                    default: // Handles "case JailStrategy.RollDoubles:"
-                        HandleGetOutOfJailByRollingDoublesStrategy(player, distance, rolledDoubles);
-                        break;
-                }
+                default: // Handles "case JailStrategy.RollDoubles:"
+                    HandleGetOutOfJailByRollingDoublesStrategy(player, distance, rolledDoubles);
+                    break;
             }
         }
 
         public void DoStandardTurn(IPlayer player, int distance, bool RolledDoubles)
         {
-
             movementHandler.MovePlayer(player, distance);
 
             if (player.PlayerLocation.Group == PropertyGroup.Jail)
@@ -118,22 +110,12 @@ namespace Monopoly
             }
         }
 
-        public void PayJailFine(IPlayer player)
-        {
-            banker.ChargePlayerToGetOutOfJail(player);
-        }
-
         public void ReleasePlayerFromJailUsingCard(IPlayer player)
         {
             cardHandler.Discard(player.SurrenderGetOutOfJailCard());
             jailer.ReleasePlayerFromJail(player);
             movementHandler.MovePlayerDirectlyToSpaceNumber(player, 10);
             DoTurn(player);
-        }
-
-        public void MovePlayerDirectlyToSpace(IPlayer player, int spaceNumber)
-        {
-            movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
         }
 
         public void HandleGetOutOfJailByRollingDoublesStrategy(IPlayer player, int distance, bool rolledDoubles)

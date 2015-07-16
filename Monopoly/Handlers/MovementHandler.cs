@@ -77,37 +77,11 @@ namespace Monopoly
             player.CompleteLandOnLocationTasks();
         }
 
-        public void MoveDirectlyToJail(IPlayer player)
-        {
-            MovePlayerToLocation(player, new JailLocation());
-        }
-
         public void HandlePurchasing(IPlayer player)
         {
             if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
             {
                 realtor.MakePurchase(player);
-            }
-        }
-
-        public void HandleRent(IPlayer player, int distance)
-        {
-            if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber)) // then it must be owned
-            {
-                realtor.ChargeRent(player, distance);
-            }
-        }
-
-        public void HandleLanding(IPlayer player, IDice dice, int multiplier)
-        {
-            if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
-            {
-                realtor.MakePurchase(player);
-            }
-            else if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber)) // then it must be owned
-            {
-                dice.Roll();
-                realtor.ChargeRent(player, dice.Score);
             }
         }
 

@@ -74,7 +74,7 @@ namespace Monopoly
             }
 
             // Real Estate Rent
-            return ( IsWholeGroupOwned(group) ? 2 : 1 ) * ((RentableLocation)propertyList[spaceNumber]).Rent;
+            return ( IsWholeGroupOwned(group) ? 2 : 1 ) * GetRentOfSpace(spaceNumber);
         }
 
         public bool SpaceIsOwned(int spaceNumber)
@@ -135,9 +135,9 @@ namespace Monopoly
             return ((RentableLocation)propertyList[spaceNumber]).Price;
         }
 
-        public int GetRentOfSpace(IPlayer player, int spaceNumber)
+        public int GetRentOfSpace(int spaceNumber)
         {
-            return ((IRentableLocation) propertyList[spaceNumber]).Rent;
+            return ((RentableLocation) propertyList[spaceNumber]).Rent;
         }
 
         public void SetOwnerForSpace(IPlayer player, int spaceNumber)
@@ -163,11 +163,6 @@ namespace Monopoly
         public IPlayer GetOwnerForSpace(int spaceNumber)
         {
             return ownersBySpaceNumber[spaceNumber];
-        }
-
-        public void AddProperties(Dictionary<int, ILocation> propertyList)
-        {
-            this.propertyList = propertyList;
         }
 
         public ILocation GetClosest(int spaceNumber, PropertyGroup desiredGroup)

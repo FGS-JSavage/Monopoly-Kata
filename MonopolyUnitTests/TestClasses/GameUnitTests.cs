@@ -36,12 +36,20 @@ namespace MonopolyUnitTests
             game = GameFactory.BuildGame(1);
 
             Assert.IsNull(game);
+
+            game = GameFactory.BuildGame(new List<string>() { "p1" });
+
+            Assert.IsNull(game);
         }
 
         [Test]
         public void CreateAGameWithMoreThan8PlayersFails()
         {
             game = GameFactory.BuildGame(9);
+
+            Assert.IsNull(game);
+
+            game = GameFactory.BuildGame(new List<string>() {"p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"});
 
             Assert.IsNull(game);
         }

@@ -27,9 +27,6 @@ namespace MonopolyUnitTests
 
             player1 = ninject.Get<IPlayer>();
             player2 = ninject.Get<IPlayer>();
-
-            //player1 = new Player(new GoLocation());
-            //player2 = new Player(new GoLocation());
         }
 
         [Test]
@@ -138,5 +135,26 @@ namespace MonopolyUnitTests
 
             Assert.AreEqual(50, realtor.CalculateRent(12, 5));
         }
+
+        [Test]
+        public void ChargeRentCorrectlyTransfersFundsBetweenRenterAndOwner()
+        {
+            var player1nitialBalance = player1.Balance;
+            var player2InitialBalance = player2.Balance;
+
+            var expectedRent = 2;
+            
+            realtor.SetOwnerForSpace(player1, 1);
+            player2.PlayerLocation = realtor.LocationForSpaceNumber(1);
+
+
+            realtor.ChargeRent(player2, It.IsAny<int>());
+
+            Assert.AreEqual(player1nitialBalance + expectedRent, player1.Balance);
+            Assert.AreEqual(player2InitialBalance - expectedRent, player2.Balance);
+        }
+
+
+
     }
 }

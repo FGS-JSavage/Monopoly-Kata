@@ -72,6 +72,7 @@ namespace MonopolyUnitTests
         // ---------------  Release 4 ----------------------------------------------------
         // ---------------  Release 5 ----------------------------------------------------
 
+
         [Test]
         public void DrawMoveToLocationTask_PlayerLandsOnGoAndCollects200()
         {
@@ -122,7 +123,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void DrawGoDirectlyTojail_PlayerBalanceAndLocationAreUpdatedCorrectly()
+        public void DrawGoDirectlyToJail_PlayerBalanceAndLocationAreUpdatedCorrectly()
         {
             double initialBalance = player.Balance;
             int amount = 50;
@@ -173,8 +174,6 @@ namespace MonopolyUnitTests
 
             Assert.AreEqual(expectedPosition, player.PlayerLocation.SpaceNumber);
         }
-        
-        // TODO test Get Out of Jail Free Card
 
         [Test]
         public void DrawMoveBackThreeSpacesDistance_LocationIsUpdatedCorrectly()
@@ -237,7 +236,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.Score).Returns(chanceSpaceNumber);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestUtilityTask(taskHandler), DeckType.Chance));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestUtilityTask(taskHandler), DeckType.Chest));
 
             turnHandler.DoTurn(player);
 
