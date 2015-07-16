@@ -20,11 +20,6 @@ namespace Monopoly
             Group = group;
         }
 
-        public void AddOnLandTask(IPlayerTask task)
-        {
-            OnLandTasks.Add(task);
-        }
-
         public List<IPlayerTask> GetOnLandTasks()
         {
             return OnLandTasks;

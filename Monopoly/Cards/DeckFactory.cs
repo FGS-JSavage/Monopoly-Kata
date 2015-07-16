@@ -97,9 +97,9 @@ namespace Monopoly
 
             deck.Add(new Card("Advance to Go (Collect $200)",         new MoveToLocationTask(      0, taskHandler), DeckType.Chance));
             deck.Add(new Card("Advance To Illinios Ave",              new MoveToLocationTask(     24, taskHandler), DeckType.Chance));
-            deck.Add(new Card("Advance To Nearest Utility",           new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, 2, taskHandler), DeckType.Chance));
-            deck.Add(new Card("Advance To Nearest Railroad",          new MoveToNearestPropertyGroupTask(PropertyGroup.Railroad,10, taskHandler), DeckType.Chance));
-            deck.Add(new Card("Advance To Nearest Railroad",          new MoveToNearestPropertyGroupTask(PropertyGroup.Railroad,10, taskHandler), DeckType.Chance)); // x2
+            deck.Add(new Card("Advance To Nearest Utility",           new MoveToNearestUtilityTask(   taskHandler), DeckType.Chance));
+            deck.Add(new Card("Advance To Nearest Railroad",          new MoveToNearestRailroadTask(  taskHandler), DeckType.Chance));
+            deck.Add(new Card("Advance To Nearest Railroad",          new MoveToNearestRailroadTask(  taskHandler), DeckType.Chance)); // x2
             deck.Add(new Card("Advance to St. Charles Place",         new MoveToLocationTask(      0, taskHandler), DeckType.Chance));
             deck.Add(new Card("Bank Pays you Dividend of $50",        new CollectFromBankerTask(  50, taskHandler), DeckType.Chance));
             deck.Add(new GetOutOfJailCard("Get Out of Jail Free",     new GetOutOfJailTask(           taskHandler), DeckType.Chance));

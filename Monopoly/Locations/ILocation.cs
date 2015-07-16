@@ -10,9 +10,7 @@ namespace Monopoly
     public interface ILocation
     {
         int SpaceNumber { get; set; }
-        void AddOnLandTask(IPlayerTask task);
         List<IPlayerTask> GetOnLandTasks();
-        List<IPlayerTask> GetOnExitTasks();
         PropertyGroup Group { get; set; }
     }
 }

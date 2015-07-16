@@ -237,7 +237,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.Score).Returns(chanceSpaceNumber);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, taskHandler), DeckType.Chance));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestUtilityTask(taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
@@ -253,7 +253,7 @@ namespace MonopolyUnitTests
             mockDice.Setup(x => x.Score).Returns(chanceSpaceNumber);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestPropertyGroupTask(PropertyGroup.Railroad, taskHandler), DeckType.Chance));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestRailroadTask(taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
@@ -267,14 +267,35 @@ namespace MonopolyUnitTests
             int rollAmount = 10;
             int utilitySpaceNumber = 12;
 
+            realtor.SetOwnerForSpace(mockPlayer.Object, utilitySpaceNumber);
+
             mockDice.Setup(x => x.Score).Returns(new Queue<int>(new[] { 2, rollAmount }).Dequeue);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestPropertyGroupTask(PropertyGroup.Utility, taskHandler), DeckType.Chance));
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestUtilityTask(taskHandler), DeckType.Chance));
 
             turnHandler.DoTurn(player);
 
-            Assert.AreEqual(inititialBalance + 10 * rollAmount, player.Balance);
+            Assert.AreEqual(inititialBalance - 10 * rollAmount, player.Balance);
+        }
+
+        [Test]
+        public void PlayerDrawsMoveToNearestRailroad_RailroadIsOwned_PlayerPaysDoubleRent()
+        {
+            double inititialBalance = player.Balance;
+            int railroadSpaceNumber = 5;
+            int normalRent = 25;
+
+            realtor.SetOwnerForSpace(mockPlayer.Object, railroadSpaceNumber);
+
+            mockDice.Setup(x => x.Score).Returns(2);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+
+            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new MoveToNearestRailroadTask(taskHandler), DeckType.Chance));
+
+            turnHandler.DoTurn(player);
+
+            Assert.AreEqual(inititialBalance - 2 * normalRent, player.Balance);
         }
 
 

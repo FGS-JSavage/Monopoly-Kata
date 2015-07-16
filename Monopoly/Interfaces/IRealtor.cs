@@ -4,9 +4,10 @@ namespace Monopoly
 {
     public interface IRealtor
     {
-        void MakePurchase(IPlayer player, int spaceNumber);
-        void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue);
-        void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue, int multiplier);
+        void MakePurchase(IPlayer player);
+        void ChargeRent(IPlayer renter, int diceRollValue);
+        void ChargeDoubleRailroadRent(IPlayer renter);
+        void ChargeTenTimesRollValueRent(IPlayer player, int rollValue);
         int CalculateRent(int spaceNumber, int diceRollValue);
         bool SpaceIsOwned(int spaceNumber);
         bool IsWholeGroupOwned(PropertyGroup group);

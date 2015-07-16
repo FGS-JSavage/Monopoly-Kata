@@ -10,7 +10,7 @@ namespace Monopoly
     public class Realtor : IRealtor
     {
         private Dictionary<int, IPlayer> ownersBySpaceNumber;
-        private Dictionary<int, ILocation> propertyList;      // Injected
+        private Dictionary<int, ILocation> propertyList;
         private IBanker banker;
         private ILocationFactory locationFactory;
 
@@ -21,23 +21,43 @@ namespace Monopoly
             propertyList = locationFactory.BuildLocations();
         }
 
-        public virtual void MakePurchase(IPlayer player, int spaceNumber)
+        public virtual void MakePurchase(IPlayer player)
         {
-            banker.Collect(player, GetPriceOfSpace(spaceNumber));
+            var spaceNumber = player.PlayerLocation.SpaceNumber;
+            var price = GetPriceOfSpace(spaceNumber);
+
+            Charge(player, price);
             SetOwnerForSpace(player, spaceNumber);
         }
 
-        public void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue)
+        public void ChargeRent(IPlayer renter, int diceRollValue)
         {
-            ChargeRent(owner, renter, diceRollValue, 1);
-        }
-
-        public void ChargeRent(IPlayer owner, IPlayer renter, int diceRollValue, int multiplier)
-        {
+            var owner = GetOwnerForSpace(renter.PlayerLocation.SpaceNumber);
             var rentalRate = CalculateRent(renter.PlayerLocation.SpaceNumber, diceRollValue);
-            banker.Transfer(renter, owner, rentalRate * multiplier);
+            Transfer(renter, owner, rentalRate);
         }
 
+        public void ChargeTenTimesRollValueRent(IPlayer renter, int rollValue)
+        {
+            Transfer(renter, GetOwnerForSpace(renter), 10 * rollValue);
+        }
+
+        public void ChargeDoubleRailroadRent(IPlayer renter)
+        {
+            var owner = GetOwnerForSpace(renter.PlayerLocation.SpaceNumber);
+            var rentalRate = 25 * CountOwnedPropertiesWithSameGroupAndOwner(renter.PlayerLocation.SpaceNumber);
+            Transfer(renter, owner, rentalRate * 2);
+        }
+
+        private void Transfer(IPlayer renter, IPlayer owner, int amount)
+        {
+            banker.Transfer(renter, owner, amount);
+        }
+
+        private void Charge(IPlayer player, int amount)
+        {
+            banker.Collect(player, amount);
+        }
 
         public virtual int CalculateRent(int spaceNumber, int diceRollValue)
         {
@@ -50,7 +70,7 @@ namespace Monopoly
 
             if (group == PropertyGroup.Utility) // Utility Rent
             {
-                return ( CountOwnedPropertiesWithSameGroup(spaceNumber) == 1 ? 4 : 10 ) * diceRollValue;
+                return (CountOwnedPropertiesWithSameGroup(spaceNumber) == 1 ? 4 : 10 ) * diceRollValue;
             }
 
             // Real Estate Rent
@@ -128,6 +148,16 @@ namespace Monopoly
         public ILocation LocationForSpaceNumber(int spaceNumber)
         {
             return propertyList[spaceNumber];
+        }
+
+        public IPlayer GetOwnerForSpace(IPlayer player)
+        {
+            return GetOwnerForSpace(player.PlayerLocation);
+        }
+
+        public IPlayer GetOwnerForSpace(ILocation location)
+        {
+            return GetOwnerForSpace(location.SpaceNumber);
         }
 
         public IPlayer GetOwnerForSpace(int spaceNumber)

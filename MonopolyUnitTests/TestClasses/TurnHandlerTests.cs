@@ -20,7 +20,7 @@ namespace MonopolyUnitTests
     class TurnHandlerTests
     {
         private IFixture fixture;
-        private ITurnHandler turnHandler;
+        private TurnHandler turnHandler;
         private IRealtor realtor;
         private IPlayer player;
         private IJailer jailer;
@@ -38,7 +38,7 @@ namespace MonopolyUnitTests
 
             ninject.Rebind<IDice>().ToConstant(mockDice.Object);
 
-            turnHandler = ninject.Get<ITurnHandler>();
+            turnHandler = ninject.Get<TurnHandler>();
             player = ninject.Get<IPlayer>();
             realtor = ninject.Get<IRealtor>();
             jailer = ninject.Get<IJailer>();
@@ -283,7 +283,5 @@ namespace MonopolyUnitTests
             Assert.False(player.HasGetOutOfJailCard());
             Assert.AreEqual(jailPosition + rollDistance, player.PlayerLocation.SpaceNumber);
         }
-
-
     }
 }

@@ -17,7 +17,6 @@ namespace Monopoly
         int RoundsPlayed            { get; set; }
 
         void CompleteLandOnLocationTasks();
-        void CompleteExitLocationTasks();
 
         ICard SurrenderGetOutOfJailCard();
         bool HasGetOutOfJailCard();

@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Monopoly.Tasks
 {
-    public class GoDirectlyToJailTask : IPlayerTask
+    public class MoveToNearestUtilityTask : IPlayerTask
     {
         private ITaskHandler taskHandler;
 
-        public GoDirectlyToJailTask(ITaskHandler taskHandler)
+        public MoveToNearestUtilityTask(ITaskHandler taskHandler)
         {
             this.taskHandler = taskHandler;
         }
-
         public void Complete(IPlayer player)
         {
-            taskHandler.HandleGoDirectlyToJail(player);
+            taskHandler.HandleMoveToNearestUtility(player);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Monopoly.Tasks
 
         public void Complete(IPlayer player)
         {
-            taskHandler.MoveDistance(distance, player);
+            taskHandler.HandleMoveDistance(distance, player);
         }
     }
 }

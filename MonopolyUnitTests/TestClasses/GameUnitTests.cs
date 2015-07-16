@@ -443,7 +443,7 @@ namespace MonopolyUnitTests
         //public void PlayerRollsToGetOutOfJail_RollsDoublesOnFirstTurn_MovesScoreOfRollAndStops()
         //{
         //    players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-        //    turnHandler.SendPlayerToJail(players[0]);
+        //    turnHandler.HandleGoDirectlyToJail(players[0]);
 
         //    turnHandler.DoTurn(players[0], 10, true);
 
@@ -454,7 +454,7 @@ namespace MonopolyUnitTests
         //public void PlayerRollsToGetOutOfJail_RollsDoublesOnSecondTurn_MovesScoreOfRollAndStops()
         //{
         //    players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-        //    turnHandler.SendPlayerToJail(players[0]);
+        //    turnHandler.HandleGoDirectlyToJail(players[0]);
 
         //    turnHandler.DoTurn(players[0], 10, false);
         //    turnHandler.DoTurn(players[0], 10, true);
@@ -466,7 +466,7 @@ namespace MonopolyUnitTests
         //public void PlayerRollsToGetOutOfJail_RollsDoublesOnThirdTurn_MovesScoreOfRollAndStops()
         //{
         //    players[0].PreferedJailStrategy = JailStrategy.RollDoubles;
-        //    turnHandler.SendPlayerToJail(players[0]);
+        //    turnHandler.HandleGoDirectlyToJail(players[0]);
 
         //    turnHandler.DoTurn(players[0], 10, false);
         //    turnHandler.DoTurn(players[0], 10, false);
@@ -482,7 +482,7 @@ namespace MonopolyUnitTests
 
         //    var initialBalance = players[0].Balance;
 
-        //    turnHandler.SendPlayerToJail(players[0]);
+        //    turnHandler.HandleGoDirectlyToJail(players[0]);
 
         //    turnHandler.DoTurn(players[0], 10, false);
         //    turnHandler.DoTurn(players[0], 10, false);

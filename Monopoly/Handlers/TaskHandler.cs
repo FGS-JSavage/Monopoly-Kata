@@ -1,9 +1,5 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Monopoly.Locations;
 
 namespace Monopoly.Tasks
 {
@@ -12,16 +8,14 @@ namespace Monopoly.Tasks
         private IMovementHandler movementHandler;
         private List<IPlayer> players;
         private IBanker banker;
-        private IJailer jailer;
-        private IRealtor realtor;
+        private IDice dice;
 
-        public TaskHandler(IRealtor realtor, List<IPlayer> players, IMovementHandler movementHandler, IBanker banker, IJailer jailer)
+        public TaskHandler(IRealtor realtor, List<IPlayer> players, IMovementHandler movementHandler, IBanker banker, IDice dice)
         {
             this.movementHandler = movementHandler;
             this.players = players;
             this.banker = banker;
-            this.jailer = jailer;
-            this.realtor = realtor;
+            this.dice = dice;
         }
 
         public void HandleCollectFromAllPlayersTask(IPlayer player, int amount)
@@ -44,17 +38,22 @@ namespace Monopoly.Tasks
             banker.Collect(player, amount);
         }
 
-        public void MoveToClosest(IPlayer player, PropertyGroup group)
+        public void HandleMoveToNearestRailroad(IPlayer player)
         {
-            movementHandler.MoveToClosest(player, group);
+            movementHandler.MoveToNearestRailroad(player);
         }
 
-        public void SendPlayerToJail(IPlayer player)
+        public void HandleMoveToNearestUtility(IPlayer player)
+        {
+            movementHandler.MoveToNearestUtility(player, dice);
+        }
+
+        public void HandleGoDirectlyToJail(IPlayer player)
         {
             movementHandler.MovePlayerDirectlyToSpaceNumber(player, 30);
         }
 
-        public void MoveDistance(int distance, IPlayer player)
+        public void HandleMoveDistance(int distance, IPlayer player)
         {
             movementHandler.MovePlayer(player, distance);
         }
@@ -66,11 +65,6 @@ namespace Monopoly.Tasks
                 x.Balance += amount;
                 player.Balance -= amount;
             });
-        }
-
-        public void GetOutOfJailTask(IPlayer player)
-        {
-            
         }
     }
 }

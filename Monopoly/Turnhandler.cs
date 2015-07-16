@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Monopoly.Cards;
+﻿using Monopoly.Cards;
 using Monopoly.Locations;
-using Ninject;
 
 namespace Monopoly
 {
@@ -64,28 +58,28 @@ namespace Monopoly
             if (jailer.GetRemainingSentence(player) == 0) // Force player to pay for release
             {
                 banker.ChargePlayerToGetOutOfJail(player);
-                return;
             }
-
-            switch (player.GetJailStrategy())
+            else
             {
-                case JailStrategy.UseGetOutOfJailCard:
-                    HandleGetOutOfJailUsingCardStrategy(player);
-                    break;
+                switch (player.GetJailStrategy())
+                {
+                    case JailStrategy.UseGetOutOfJailCard:
+                        ReleasePlayerFromJailUsingCard(player);
+                        break;
 
-                case JailStrategy.Pay:
-                    HandleGetOutOfJailByPaying(player);
-                    break;
+                    case JailStrategy.Pay:
+                        HandleGetOutOfJailByPaying(player);
+                        break;
 
-                default: // Handles "case JailStrategy.RollDoubles:"
-                    HandleGetOutOfJailByRollingDoublesStrategy(player, distance, rolledDoubles);
-                    break;
+                    default: // Handles "case JailStrategy.RollDoubles:"
+                        HandleGetOutOfJailByRollingDoublesStrategy(player, distance, rolledDoubles);
+                        break;
+                }
             }
         }
 
         public void DoStandardTurn(IPlayer player, int distance, bool RolledDoubles)
         {
-            player.CompleteExitLocationTasks();
 
             movementHandler.MovePlayer(player, distance);
 
@@ -95,11 +89,10 @@ namespace Monopoly
             }
 
             player.CompleteLandOnLocationTasks();
-
             
             HandleDrawCardCase(player);
             
-            movementHandler.HandleLanding(player, distance);
+            movementHandler.HandlePurchasing(player);
         }
 
         private void HandleDrawCardCase(IPlayer player)
@@ -130,25 +123,17 @@ namespace Monopoly
             banker.ChargePlayerToGetOutOfJail(player);
         }
 
-        public void HandleGetOutOfJailUsingCardStrategy(IPlayer player)
+        public void ReleasePlayerFromJailUsingCard(IPlayer player)
         {
             cardHandler.Discard(player.SurrenderGetOutOfJailCard());
-           jailer.ReleasePlayerFromJail(player);
-           DoTurn(player);
+            jailer.ReleasePlayerFromJail(player);
+            movementHandler.MovePlayerDirectlyToSpaceNumber(player, 10);
+            DoTurn(player);
         }
 
         public void MovePlayerDirectlyToSpace(IPlayer player, int spaceNumber)
         {
-            player.CompleteExitLocationTasks();
-
             movementHandler.MovePlayerDirectlyToSpaceNumber(player, spaceNumber);
-
-            player.CompleteLandOnLocationTasks();
-        }
-
-        public void MoveToClosest(IPlayer player, PropertyGroup destinationGroup)
-        {
-            movementHandler.MoveToClosest(player, destinationGroup);
         }
 
         public void HandleGetOutOfJailByRollingDoublesStrategy(IPlayer player, int distance, bool rolledDoubles)
@@ -183,12 +168,6 @@ namespace Monopoly
             player.DoublesCount = 0;
         }
 
-        public void ReleasePlayerFromJailUsingCard(IPlayer player)
-        {
-            
-        }
-
-
         public void ReleasePlayerFromJail(IPlayer player)
         {
             jailer.ReleasePlayerFromJail(player);
@@ -213,16 +192,6 @@ namespace Monopoly
         public void CompleteCardTasks(IPlayer player, ICard card)
         {
             card.Tasks.ForEach(x => x.Complete(player));
-        }
-
-        public void MoveToClosestRailroadAndBuy()
-        {
-            
-        }
-
-        public void MoveToClosestRailroad(IPlayer player)
-        {
-            movementHandler.MoveToClosest(player, PropertyGroup.Railroad);
         }
     }
 }

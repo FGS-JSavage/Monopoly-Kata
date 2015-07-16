@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Monopoly.Tasks
 {
-    public class GoDirectlyToJailTask : IPlayerTask
+    public class MoveToNearestRailroadTask : IPlayerTask
     {
         private ITaskHandler taskHandler;
 
-        public GoDirectlyToJailTask(ITaskHandler taskHandler)
+        public MoveToNearestRailroadTask(ITaskHandler taskHandler)
         {
             this.taskHandler = taskHandler;
         }
 
         public void Complete(IPlayer player)
         {
-            taskHandler.HandleGoDirectlyToJail(player);
+            taskHandler.HandleMoveToNearestRailroad(player);
         }
     }
 }

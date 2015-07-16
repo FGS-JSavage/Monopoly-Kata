@@ -34,11 +34,6 @@ namespace Monopoly
             PlayerLocation.GetOnLandTasks().ForEach(x => x.Complete(this));
         }
 
-        public void CompleteExitLocationTasks()
-        {
-            PlayerLocation.GetOnExitTasks().ForEach(x => x.Complete(this));
-        }
-
         public void AddGetOutOfJailCard(ICard card)
         {
             getOutOfJailFreeCards.Push(card);
