@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Monopoly.Locations;
+﻿using Monopoly.Board;
+using Monopoly.Board.Locations;
 
-namespace Monopoly
+namespace Monopoly.Handlers
 {
     public class MovementHandler : IMovementHandler
     {

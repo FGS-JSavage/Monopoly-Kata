@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Monopoly.Tasks;
+﻿using Monopoly.Tasks;
 
-namespace Monopoly.Locations
+namespace Monopoly.Board.Locations
 {
     public class IncomeTaxLocation : Location
     {

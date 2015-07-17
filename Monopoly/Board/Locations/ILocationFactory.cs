@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Ninject;
 
-namespace Monopoly.Locations
+namespace Monopoly.Board.Locations
 {
     public interface ILocationFactory
     {

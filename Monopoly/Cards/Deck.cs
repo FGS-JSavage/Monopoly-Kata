@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Monopoly
+namespace Monopoly.Cards
 {
     public interface IDeck
     {
@@ -29,6 +25,5 @@ namespace Monopoly
         {
             cards.Enqueue(card);
         }
-
     }
 }

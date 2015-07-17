@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Monopoly;
+﻿using Monopoly;
+using Monopoly.Board;
 using Monopoly.Cards;
-using Monopoly.Locations;
+using Monopoly.Handlers;
 using Monopoly.Ninject;
 using Moq;
 using Ninject;
@@ -123,8 +118,6 @@ namespace MonopolyUnitTests
         {
             mockDice.Setup(x => x.WasDoubles).Returns(true);
 
-            double startingBalance = player.Balance;
-
             for (int i = 0; i < 3; i++)
             {
                 turnHandler.DoTurn(player);
@@ -137,8 +130,6 @@ namespace MonopolyUnitTests
         public void RollDoubles2TimesInARow_PlayerIsNotInJail()
         {
             mockDice.Setup(x => x.WasDoubles).Returns(true);
-
-            double startingBalance = player.Balance;
 
             for (int i = 0; i < 2; i++)
             {

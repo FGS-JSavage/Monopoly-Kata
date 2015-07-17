@@ -1,13 +1,9 @@
-﻿using System;
-using System.CodeDom;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Monopoly;
-using Monopoly.Locations;
+using Monopoly.Board;
+using Monopoly.Board.Locations;
+using Monopoly.Cards;
+using Monopoly.Handlers;
 using Monopoly.Ninject;
 using Monopoly.Tasks;
 using Moq;
@@ -53,10 +49,6 @@ namespace MonopolyUnitTests
 
             mockDeckFactory.Setup(x => x.BuildChanceDeck()).Returns(mockDeck.Object);
             mockDeckFactory.Setup(x => x.BuildCommunitiyChestDeck()).Returns(mockDeck.Object);
-
-            IDeckFactory deckFactory = ninject.Get<IDeckFactory>();
-
-            ILocationFactory d = ninject.Get<ILocationFactory>();
 
             turnHandler = ninject.Get<ITurnHandler>();
             player = ninject.Get<IPlayer>();
@@ -211,7 +203,7 @@ namespace MonopolyUnitTests
         }
 
         [Test]
-        public void DrawGetOutOfJailFreeCard_GoToJail_UseGetOutOfJailFreeCard_PlayerIsNotInJail()
+        public void DrawChestGetOutOfJailFreeCardThenlandOnGoToJail_UseGetOutOfJailFreeCard_PlayerIsNotInJail()
         {
             double initialBalance = player.Balance;
             int amount = 50;
@@ -219,10 +211,46 @@ namespace MonopolyUnitTests
 
             mockDice.Setup(x => x.Score).Returns(2);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
+            player.PreferedJailStrategy = JailStrategy.UseGetOutOfJailCard;
 
-            mockDeck.Setup(x => x.Draw()).Returns(new Card("card name", new GetOutOfJailTask(taskHandler), DeckType.Chance));
+            mockDeck.Setup(x => x.Draw()).Returns(new GetOutOfJailCard("card name", new GetOutOfJailTask(taskHandler), DeckType.Chest));
 
-            turnHandler.DoTurn(player);
+            turnHandler.DoTurn(player); // Draw card
+
+            mockDice.Setup(x => x.Score).Returns(28);
+            turnHandler.DoTurn(player); // Land on Jail
+
+            Assert.IsTrue(jailer.PlayerIsImprisoned(player));
+            Assert.IsTrue(player.HasGetOutOfJailCard());
+
+
+            turnHandler.DoTurn(player); // Use Card to Get Out of jail
+
+            Assert.False(jailer.PlayerIsImprisoned(player));
+        }
+
+        [Test]
+        public void DrawChanceGetOutOfJailFreeCardThenlandOnGoToJail_UseGetOutOfJailFreeCard_PlayerIsNotInJail()
+        {
+            double initialBalance = player.Balance;
+            int amount = 50;
+            int numberOfPlayers = 6;
+
+            mockDice.Setup(x => x.Score).Returns(7);
+            mockDice.Setup(x => x.WasDoubles).Returns(false);
+            player.PreferedJailStrategy = JailStrategy.UseGetOutOfJailCard;
+
+            mockDeck.Setup(x => x.Draw()).Returns(new GetOutOfJailCard("card name", new GetOutOfJailTask(taskHandler), DeckType.Chance));
+
+            turnHandler.DoTurn(player); // Draw card
+            mockDice.Setup(x => x.Score).Returns(23);
+            turnHandler.DoTurn(player); // Land on Jail
+
+            Assert.IsTrue(jailer.PlayerIsImprisoned(player));
+            Assert.IsTrue(player.HasGetOutOfJailCard());
+
+
+            turnHandler.DoTurn(player); // Use Card to Get Out of jail
 
             Assert.False(jailer.PlayerIsImprisoned(player));
         }

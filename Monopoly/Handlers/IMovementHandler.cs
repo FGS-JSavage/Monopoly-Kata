@@ -1,5 +1,6 @@
-﻿
-namespace Monopoly
+﻿using Monopoly.Board;
+
+namespace Monopoly.Handlers
 {
     public interface IMovementHandler
     {

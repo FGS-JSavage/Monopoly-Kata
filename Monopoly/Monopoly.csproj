@@ -70,13 +70,13 @@
   <ItemGroup>
     <Compile Include="Banker.cs" />
     <Compile Include="Handlers\CardHandler.cs" />
-    <Compile Include="Interfaces\IMovementHandler.cs" />
-    <Compile Include="Interfaces\IRealtor.cs" />
-    <Compile Include="Interfaces\ITurnHandler.cs" />
+    <Compile Include="Handlers\IMovementHandler.cs" />
+    <Compile Include="Board\IRealtor.cs" />
+    <Compile Include="Handlers\ITurnHandler.cs" />
     <Compile Include="Board\Locations\ILocationFactory.cs" />
     <Compile Include="Handlers\MovementHandler.cs" />
     <Compile Include="Ninject\BindingsModule.cs" />
-    <Compile Include="Tasks\ITaskHandler.cs" />
+    <Compile Include="Handlers\ITaskHandler.cs" />
     <Compile Include="Handlers\TaskHandler.cs" />
     <Compile Include="Tasks\MoveDistanceTask.cs" />
     <Compile Include="Tasks\MoveToNearestUtilityTask.cs" />
@@ -85,9 +85,9 @@
     <Compile Include="Cards\Deck.cs" />
     <Compile Include="Cards\DeckFactory.cs" />
     <Compile Include="Cards\GetOutOfJailCard.cs" />
-    <Compile Include="Dice\Dice.cs" />
-    <Compile Include="Game\Game.cs" />
-    <Compile Include="Game\GameFactory.cs" />
+    <Compile Include="Board\Dice.cs" />
+    <Compile Include="MonopolyGame\Game.cs" />
+    <Compile Include="MonopolyGame\GameFactory.cs" />
     <Compile Include="Cards\ICard.cs" />
     <Compile Include="Board\Jailer.cs" />
     <Compile Include="Board\Locations\DrawCardLocation.cs" />
@@ -103,7 +103,7 @@
     <Compile Include="Tasks\IPlayerTask.cs" />
     <Compile Include="Tasks\LandOnGoTask.cs" />
     <Compile Include="Board\Locations\GoLocation.cs" />
-    <Compile Include="Game\IGame.cs" />
+    <Compile Include="MonopolyGame\IGame.cs" />
     <Compile Include="Board\Locations\ILocation.cs" />
     <Compile Include="Player\IPlayer.cs" />
     <Compile Include="Board\Locations\IRentableLocation.cs" />

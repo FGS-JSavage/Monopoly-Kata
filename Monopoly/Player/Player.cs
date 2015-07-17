@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Monopoly.Locations;
+﻿using System.Collections.Generic;
+using Monopoly.Board.Locations;
+using Monopoly.Cards;
 
 namespace Monopoly
 {

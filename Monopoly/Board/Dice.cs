@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Unity.InterceptionExtension;
-using Moq.Protected;
 
-namespace Monopoly
+namespace Monopoly.Board
 {
     public interface IDice
     {

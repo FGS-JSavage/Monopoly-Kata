@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Monopoly.Cards;
 
-namespace Monopoly
+namespace Monopoly.Handlers
 {
     public interface ICardHandler
     {

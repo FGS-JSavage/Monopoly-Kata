@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Ninject;
+﻿using System.Collections.Generic;
 
-namespace Monopoly.Locations
+namespace Monopoly.Board.Locations
 {
     public class LocationFactory : ILocationFactory
     {

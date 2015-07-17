@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Monopoly.Tasks;
 
-namespace Monopoly
+namespace Monopoly.Cards
 {
     public class Card : ICard
     {

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Unity.Configuration;
-using Monopoly.Locations;
+﻿using System.Collections.Generic;
+using Monopoly.Handlers;
 using Monopoly.Ninject;
-using Monopoly.Tasks;
 using Ninject;
 
-namespace Monopoly
+namespace Monopoly.MonopolyGame
 {
     public class GameFactory
     {

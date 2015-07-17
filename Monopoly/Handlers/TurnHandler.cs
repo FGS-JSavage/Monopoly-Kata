@@ -1,7 +1,8 @@
-﻿using Monopoly.Cards;
-using Monopoly.Locations;
+﻿using Monopoly.Board;
+using Monopoly.Board.Locations;
+using Monopoly.Cards;
 
-namespace Monopoly
+namespace Monopoly.Handlers
 {
     public class TurnHandler : ITurnHandler
     {
@@ -34,7 +35,6 @@ namespace Monopoly
                 return;
             }
 
-            // Doubles tracking logic
             if (rolledDoubles)
             {
                 player.DoublesCount++;
@@ -44,7 +44,7 @@ namespace Monopoly
                 player.DoublesCount = 0;
             }
 
-            if (player.DoublesCount == 3) // Rolled 3 doubles. Send player directly to Jail
+            if (player.DoublesCount == 3) 
             {
                 SendPlayerToJail(player);
                 return; 
@@ -105,6 +105,11 @@ namespace Monopoly
             else if (player.PlayerLocation.Group == PropertyGroup.Chest)
             {
                 ICard card = DrawChestCard();
+
+                if (card.GetType() == typeof(GetOutOfJailCard))
+                {
+                    player.AddGetOutOfJailCard(card);
+                }
                 card.Tasks.ForEach(x => x.Complete(player));
                 Discard(card);
             }
@@ -154,11 +159,6 @@ namespace Monopoly
         {
             jailer.ReleasePlayerFromJail(player);
             player.PlayerLocation = new JailVisitingLocation();
-        }
-
-        public ICard DrawChanceCard()
-        {
-            return cardHandler.DrawChanceCard();
         }
 
         public ICard DrawChestCard()

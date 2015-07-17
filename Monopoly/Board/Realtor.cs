@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using Microsoft.Practices.ObjectBuilder2;
-using Monopoly.Locations;
 using System;
+using Monopoly.Board.Locations;
 
-namespace Monopoly
+namespace Monopoly.Board
 {
     public class Realtor : IRealtor
     {

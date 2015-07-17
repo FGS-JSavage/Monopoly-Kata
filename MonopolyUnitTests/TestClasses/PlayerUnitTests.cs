@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Monopoly;
-using Monopoly.Tasks;
+using Monopoly.Board.Locations;
+using Monopoly.Cards;
 using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;

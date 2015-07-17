@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Monopoly
+namespace Monopoly.MonopolyGame
 {
     public class Game : IGame
     {
-        private const int DEFAULT_NUMBER_OF_PLAYERS = 6;
         private List<IPlayer> players;
         private ITurnHandler turnHandler;
+        private Random random = new Random();
 
         public Game(ITurnHandler turnHandler, List<IPlayer> players)
         {
-            this.players = players.OrderBy(elem => Guid.NewGuid()).ToList(); ;
+            this.players = players.OrderBy(x => random.Next()).ToList(); ;
             this.turnHandler = turnHandler;
         }
 

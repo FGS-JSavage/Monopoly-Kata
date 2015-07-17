@@ -113,14 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TestClasses\BankerUnitTests.cs" />
-    <Compile Include="TestClasses\CardHandlerTests.cs" />
     <Compile Include="TestClasses\CardIntegrationTests.cs" />
     <Compile Include="TestClasses\DeckUnitTests.cs" />
     <Compile Include="TestClasses\DiceUnitTests.cs" />
     <Compile Include="TestClasses\GameUnitTests.cs" />
     <Compile Include="LocalAddin.cs" />
     <Compile Include="TestClasses\MovementHandlerUnitTests.cs" />
-    <Compile Include="TestClasses\NunitNinjectTest.cs" />
     <Compile Include="TestClasses\PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestClasses\RealtorUnitTests.cs" />

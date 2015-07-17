@@ -1,7 +1,8 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Monopoly.Board;
+using Monopoly.Tasks;
 
-namespace Monopoly.Tasks
+namespace Monopoly.Handlers
 {
     public class TaskHandler : ITaskHandler
     {

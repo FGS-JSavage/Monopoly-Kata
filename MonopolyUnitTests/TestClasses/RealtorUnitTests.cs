@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using Autofac.Extras.Moq;
-using Monopoly;
+﻿using Monopoly;
+using Monopoly.Board;
 using Monopoly.Ninject;
 using Moq;
 using Ninject;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
 
 namespace MonopolyUnitTests
 {

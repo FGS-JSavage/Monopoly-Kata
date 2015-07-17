@@ -1,6 +1,7 @@
-using System.Collections.Generic;
 
-namespace Monopoly
+using Monopoly.Board.Locations;
+
+namespace Monopoly.Board
 {
     public interface IRealtor
     {

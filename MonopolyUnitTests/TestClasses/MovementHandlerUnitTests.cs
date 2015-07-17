@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Monopoly;
-using Monopoly.Locations;
+﻿using Monopoly;
+using Monopoly.Board;
+using Monopoly.Handlers;
 using Monopoly.Ninject;
 using Ninject;
 using Moq;
@@ -21,7 +16,6 @@ namespace MonopolyUnitTests
         private IMovementHandler movementHandler;
         private IPlayer player;
         private Mock<IRealtor> mockRealtor;
-        //private IRealtor realtor;
 
         [SetUp]
         public void Init()
@@ -32,14 +26,9 @@ namespace MonopolyUnitTests
 
             IKernel ninject = new StandardKernel(new BindingsModule());
 
-            //ninject.Rebind<IRealtor>().ToConstant(mockRealtor.Object);
-            //realtor = ninject.Get<IRealtor>();
-
             movementHandler = ninject.Get<IMovementHandler>();
 
             player = ninject.Get<IPlayer>();
-
-            //ninject.Get<ILocationFactory>().InjectDecks(ninject.Get<IDeckFactory>().BuildChanceDeck(), ninject.Get<IDeckFactory>().BuildCommunitiyChestDeck());
         }
 
         // ---------------  Release 1 ----------------------------------------------------
@@ -113,10 +102,6 @@ namespace MonopolyUnitTests
             Assert.AreEqual(initialBalance + 400, player.Balance);
         }
 
-        // skipped first jail test
-
-        // skipped second jail test
-
         [Test]
         [TestCase(1800, Result = 1620.0)]
         [TestCase(2200, Result = 2000.0)]
@@ -124,9 +109,7 @@ namespace MonopolyUnitTests
         [TestCase(2000, Result = 1800.0)]
         public double Land_On_Income_Tax_Charges_Correctly(int startingBalance)
         {
-            // Income tax is space # 4
-
-            player.Balance = startingBalance; // set initial balance
+            player.Balance = startingBalance; 
 
             movementHandler.MovePlayer(player, 4);
 
@@ -141,9 +124,9 @@ namespace MonopolyUnitTests
         public double Landing_On_Luxury_Tax_Decreases_Balance_By_75(int startingBalance)
         {
 
-            player.Balance = startingBalance; // set initial balance
+            player.Balance = startingBalance; 
 
-            movementHandler.MovePlayer(player, 38); // move to income tax
+            movementHandler.MovePlayer(player, 38);
 
             return player.Balance;
         }
@@ -159,14 +142,6 @@ namespace MonopolyUnitTests
         }
 
         // ---------------  Release 4 ----------------------------------------------------
-
-
-
-
-
-
-
-
         // ---------------  Release 5 ----------------------------------------------------
 
         [Test]
@@ -177,10 +152,6 @@ namespace MonopolyUnitTests
             movementHandler.MovePlayer(player, 10);
 
             Assert.AreEqual(initialBalance, player.Balance);
-
-            //TODO dumb test
         }
-
-
     }
 }
