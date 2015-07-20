@@ -68,16 +68,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Banker.cs" />
+    <Compile Include="Board\Banker.cs" />
+    <Compile Include="Board\IDice.cs" />
+    <Compile Include="Board\IJailer.cs" />
+    <Compile Include="Cards\IDeck.cs" />
+    <Compile Include="Cards\IDeckFactory.cs" />
     <Compile Include="Handlers\CardHandler.cs" />
+    <Compile Include="Handlers\ICardHandler.cs" />
     <Compile Include="Handlers\IMovementHandler.cs" />
     <Compile Include="Board\IRealtor.cs" />
     <Compile Include="Handlers\ITurnHandler.cs" />
     <Compile Include="Board\Locations\ILocationFactory.cs" />
     <Compile Include="Handlers\MovementHandler.cs" />
+    <Compile Include="Board\IBanker.cs" />
     <Compile Include="Ninject\BindingsModule.cs" />
     <Compile Include="Handlers\ITaskHandler.cs" />
     <Compile Include="Handlers\TaskHandler.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Tasks\MoveDistanceTask.cs" />
     <Compile Include="Tasks\MoveToNearestUtilityTask.cs" />
     <Compile Include="Handlers\TurnHandler.cs" />
@@ -111,7 +118,6 @@
     <Compile Include="Board\Locations\Location.cs" />
     <Compile Include="Board\Locations\LocationFactory.cs" />
     <Compile Include="Player\Player.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\MoveToLocationTask.cs" />
     <Compile Include="Tasks\MoveToNearestRailroadTask.cs" />

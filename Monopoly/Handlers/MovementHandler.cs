@@ -23,8 +23,10 @@ namespace Monopoly.Handlers
 
                 nextSpaceNumber -= NUMBER_OF_SPACES;
             }
-          
+
             MovePlayerToLocation(player, realtor.LocationForSpaceNumber(ChompToBoardSize(nextSpaceNumber)));
+
+            HandleNormalLanding(player, distance);
         }
 
         public void MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber)
@@ -79,6 +81,18 @@ namespace Monopoly.Handlers
             {
                 realtor.MakePurchase(player);
             }
+        }
+
+        public void HandleNormalLanding(IPlayer player, int distance)
+        {
+            if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
+            {
+                realtor.MakePurchase(player);
+            }
+            else if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber))
+            {
+                realtor.ChargeRent(player, distance);
+            }            
         }
 
         public int ChompToBoardSize(int spaceNumber)

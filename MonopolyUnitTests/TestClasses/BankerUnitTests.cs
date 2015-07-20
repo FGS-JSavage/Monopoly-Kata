@@ -1,21 +1,28 @@
-﻿using Autofac.Extras.Moq;
+﻿using System;
+using Autofac.Extras.Moq;
 using Monopoly;
+using Monopoly.Board;
 using NUnit.Framework;
 
-namespace MonopolyUnitTests
+namespace MonopolyUnitTests.TestClasses
 {
     [TestFixture]
-    class BankerUnitTests
+    class BankerUnitTests : IDisposable
     {
         private Banker banker;
-        AutoMock mocker;
+        private AutoMock mocker;
 
         [SetUp]
         public void Init()
         {
             mocker = AutoMock.GetLoose();
-
             banker = mocker.Create<Banker>();
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            mocker.Dispose();
         }
 
         [Test]
@@ -23,7 +30,7 @@ namespace MonopolyUnitTests
         {
             Player player = mocker.Create<Player>();
 
-            int transferAmount = 20;
+            var transferAmount = 20;
             var playerInitialBalance = player.Balance;
 
             banker.Payout(player, transferAmount);
@@ -36,7 +43,7 @@ namespace MonopolyUnitTests
         {
             Player player = mocker.Create<Player>();
 
-            int transferAmount = 20;
+            var transferAmount = 20;
             var playerInitialBalance = player.Balance;
 
             banker.Collect(player, transferAmount);
@@ -50,7 +57,7 @@ namespace MonopolyUnitTests
             Player payer =     mocker.Create<Player>();
             Player recipient = mocker.Create<Player>();
             
-            int transferAmount = 20;
+            var transferAmount = 20;
             var payerInitialBalance = payer.Balance;
             var recipientoInitialBalance = recipient.Balance;
 

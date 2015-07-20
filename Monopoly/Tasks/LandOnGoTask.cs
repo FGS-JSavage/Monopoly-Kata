@@ -3,9 +3,11 @@ namespace Monopoly.Tasks
 {
     public class LandOnGoTask : IPlayerTask
     {
+        private const int LAND_ON_GO_REWARD = 200;
+
         public void Complete(IPlayer player)
         {
-            player.Balance += 200;
+            player.Balance += LAND_ON_GO_REWARD;
         }
     }
 }

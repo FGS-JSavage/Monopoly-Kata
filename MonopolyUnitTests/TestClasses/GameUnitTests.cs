@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Monopoly;
 using Monopoly.MonopolyGame;
@@ -21,6 +22,12 @@ namespace MonopolyUnitTests
             game = ninject.Get<Game>();
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            ninject.Dispose();
+        }
+
         // ---------------  Release 1 ----------------------------------------------------
 
         [Test]
@@ -30,7 +37,7 @@ namespace MonopolyUnitTests
 
             Assert.IsNull(game);
 
-            game = GameFactory.BuildGame(new List<string>() { "p1" });
+            game = GameFactory.BuildGame("p1");
 
             Assert.IsNull(game);
         }
@@ -42,7 +49,7 @@ namespace MonopolyUnitTests
 
             Assert.IsNull(game);
 
-            game = GameFactory.BuildGame(new List<string>() {"p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"});
+            game = GameFactory.BuildGame("p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9");
 
             Assert.IsNull(game);
         }
@@ -50,7 +57,8 @@ namespace MonopolyUnitTests
         [Test]
         public void CreateGame_PlayersShouldBeInRandomOrder()
         {
-            List<string> names = new List<string>() {"amy", "bill"};
+
+            string[] names = new string[] {"amy", "bill"};
 
             game = GameFactory.BuildGame(names);
 

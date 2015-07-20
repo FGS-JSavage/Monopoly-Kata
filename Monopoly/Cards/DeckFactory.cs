@@ -9,12 +9,6 @@ using Monopoly.Tasks;
 
 namespace Monopoly.Cards
 {
-    public interface IDeckFactory
-    {
-        IDeck BuildCommunitiyChestDeck();
-        IDeck BuildChanceDeck();
-    }
-
     public class DeckFactory : IDeckFactory
     {
         Random random; 

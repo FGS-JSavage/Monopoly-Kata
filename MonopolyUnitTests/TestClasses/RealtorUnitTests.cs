@@ -9,17 +9,15 @@ namespace MonopolyUnitTests
 {
     internal class RealtorUnitTests
     {
-        private ITurnHandler turnHandler;
         private IRealtor realtor;
-        private IPlayer player1;
-        private IPlayer player2;
+        private IPlayer  player1;
+        private IPlayer  player2;
 
         [SetUp]
         public void Init()
         {
             IKernel ninject = new StandardKernel(new BindingsModule());
-            
-            turnHandler = ninject.Get<ITurnHandler>();
+
             realtor = ninject.Get<IRealtor>();
 
             player1 = ninject.Get<IPlayer>();
@@ -150,8 +148,5 @@ namespace MonopolyUnitTests
             Assert.AreEqual(player1nitialBalance + expectedRent, player1.Balance);
             Assert.AreEqual(player2InitialBalance - expectedRent, player2.Balance);
         }
-
-
-
     }
 }

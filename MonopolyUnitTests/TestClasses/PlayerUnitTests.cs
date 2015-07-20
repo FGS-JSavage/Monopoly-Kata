@@ -1,12 +1,12 @@
-﻿using NUnit.Framework;
-using Monopoly;
+﻿using Monopoly;
 using Monopoly.Board.Locations;
 using Monopoly.Cards;
 using Moq;
+using NUnit.Framework;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 
-namespace MonopolyUnitTests
+namespace MonopolyUnitTests.TestClasses
 {
 
     [TestFixture]

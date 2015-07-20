@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Monopoly.Handlers;
 using Monopoly.Ninject;
 using Ninject;
@@ -22,16 +23,16 @@ namespace Monopoly.MonopolyGame
             return new Game(ninject.Get<TurnHandler>(), PlayerFactory.BuildPlayers(numberOfPlayers));
         }
 
-        public static Game BuildGame(List<string> names)
+        public static Game BuildGame(params string[] names)
         {
-            if (names.Count < 2 || names.Count > 8)
+            if (names.Length < 2 || names.Length > 8)
             {
                 return null;
             }
 
             IKernel ninject = new StandardKernel(new BindingsModule());
 
-            return new Game(ninject.Get<ITurnHandler>(), PlayerFactory.BuildPlayers(names));
+            return new Game(ninject.Get<ITurnHandler>(), PlayerFactory.BuildPlayers(names.ToList()));
         }
     }
 }

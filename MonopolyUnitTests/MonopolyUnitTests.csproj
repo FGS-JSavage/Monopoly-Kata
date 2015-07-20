@@ -122,7 +122,7 @@
     <Compile Include="TestClasses\PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestClasses\RealtorUnitTests.cs" />
-    <Compile Include="TestClasses\TurnHandlerTests.cs" />
+    <Compile Include="TestClasses\TurnHandlerIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Monopoly\Monopoly.csproj">

@@ -6,8 +6,8 @@ namespace Monopoly.Handlers
 {
     public class TurnHandler : ITurnHandler
     {
-        private IJailer  jailer;
-        private IBanker  banker;
+        private IJailer jailer;
+        private IBanker banker;
         private IMovementHandler movementHandler;
         private IDice dice;
         private ICardHandler cardHandler;
