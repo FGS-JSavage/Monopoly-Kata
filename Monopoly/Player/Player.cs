@@ -57,19 +57,7 @@ namespace Monopoly
 
         public JailStrategy GetJailStrategy()
         {
-            switch(PreferedJailStrategy)
-            {
-                case JailStrategy.UseGetOutOfJailCard:
-                    if (HasGetOutOfJailCard())
-                        return PreferedJailStrategy;
-                    goto default;
-
-                case JailStrategy.Pay:
-                    return PreferedJailStrategy;
-
-                default: // Handles "case JailStrategy.RollDoubles:"
-                    return JailStrategy.RollDoubles;
-            }
+            return !HasGetOutOfJailCard() && PreferedJailStrategy == JailStrategy.UseGetOutOfJailCard ? JailStrategy.RollDoubles : PreferedJailStrategy;
         }
     }
 
