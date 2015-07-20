@@ -20,7 +20,6 @@ namespace MonopolyUnitTests
     {
         private ITurnHandler turnHandler;
         private ITaskHandler taskHandler;
-        private IDeckFactory deckFactory;
         private IRealtor realtor;
         private IPlayer player;
         private IJailer jailer;
@@ -118,7 +117,6 @@ namespace MonopolyUnitTests
         public void DrawGoDirectlyToJail_PlayerBalanceAndLocationAreUpdatedCorrectly()
         {
             double initialBalance = player.Balance;
-            int amount = 50;
 
             mockDice.Setup(x => x.Score).Returns(2);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
@@ -206,8 +204,6 @@ namespace MonopolyUnitTests
         public void DrawChestGetOutOfJailFreeCardThenlandOnGoToJail_UseGetOutOfJailFreeCard_PlayerIsNotInJail()
         {
             double initialBalance = player.Balance;
-            int amount = 50;
-            int numberOfPlayers = 6;
 
             mockDice.Setup(x => x.Score).Returns(2);
             mockDice.Setup(x => x.WasDoubles).Returns(false);
@@ -233,8 +229,6 @@ namespace MonopolyUnitTests
         public void DrawChanceGetOutOfJailFreeCardThenlandOnGoToJail_UseGetOutOfJailFreeCard_PlayerIsNotInJail()
         {
             double initialBalance = player.Balance;
-            int amount = 50;
-            int numberOfPlayers = 6;
 
             mockDice.Setup(x => x.Score).Returns(7);
             mockDice.Setup(x => x.WasDoubles).Returns(false);

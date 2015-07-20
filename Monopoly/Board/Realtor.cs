@@ -12,7 +12,6 @@ namespace Monopoly.Board
         private Dictionary<int, IPlayer> ownersBySpaceNumber;
         private Dictionary<int, ILocation> propertyList;
         private IBanker banker;
-        private ILocationFactory locationFactory;
 
         public Realtor(IBanker banker, ILocationFactory locationFactory)
         {
