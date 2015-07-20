@@ -7,6 +7,8 @@ namespace Monopoly.Board
 {
     public class Realtor : IRealtor
     {
+        private const int RAILROAD_RENT_PER = 25;
+
         private Dictionary<int, IPlayer> ownersBySpaceNumber;
         private Dictionary<int, ILocation> propertyList;
         private IBanker banker;
@@ -43,7 +45,7 @@ namespace Monopoly.Board
         public void ChargeDoubleRailroadRent(IPlayer renter)
         {
             var owner = GetOwnerForSpace(renter.PlayerLocation.SpaceNumber);
-            var rentalRate = 25 * CountOwnedPropertiesWithSameGroupAndOwner(renter.PlayerLocation.SpaceNumber);
+            var rentalRate = RAILROAD_RENT_PER * CountOwnedPropertiesWithSameGroupAndOwner(renter.PlayerLocation.SpaceNumber);
             Transfer(renter, owner, rentalRate * 2);
         }
 
@@ -63,7 +65,7 @@ namespace Monopoly.Board
 
             if (group == PropertyGroup.Railroad) // Railroad Rent
             {
-                return 25 * CountOwnedPropertiesWithSameGroupAndOwner(spaceNumber);
+                return RAILROAD_RENT_PER * CountOwnedPropertiesWithSameGroupAndOwner(spaceNumber);
             }
 
             if (group == PropertyGroup.Utility) // Utility Rent
