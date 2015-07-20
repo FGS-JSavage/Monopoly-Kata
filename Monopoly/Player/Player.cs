@@ -10,12 +10,11 @@ namespace Monopoly
        
         public virtual ILocation PlayerLocation { get; set; }
         public double Balance   { get; set; }
-        public int DoublesCount { get; set; }
         public string Name      { get; set; }
         public int RoundsPlayed { get; set; }
+        private int DoublesCount { get; set; }
 
         private Stack<ICard> getOutOfJailFreeCards;
-
         public JailStrategy PreferedJailStrategy { get; set; }
              
         public Player(ILocation playerLocation, int startingBalance = DEFAULT_STARTING_BALANCE)
@@ -34,6 +33,16 @@ namespace Monopoly
         public void AddGetOutOfJailCard(ICard card)
         {
             getOutOfJailFreeCards.Push(card);
+        }
+
+        public void TrackDoublesRolled(bool rolledDoubles)
+        {
+            DoublesCount = rolledDoubles ? ++DoublesCount : 0;
+        }
+
+        public bool DidRollDoublesThrice()
+        {
+            return DoublesCount >= 3;
         }
 
         public ICard SurrenderGetOutOfJailCard()

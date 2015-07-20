@@ -34,17 +34,10 @@ namespace Monopoly.Handlers
                 DoJailTurn(player, distance, rolledDoubles);
                 return;
             }
+            
+            player.TrackDoublesRolled(rolledDoubles);
 
-            if (rolledDoubles)
-            {
-                player.DoublesCount++;
-            }
-            else
-            {
-                player.DoublesCount = 0;
-            }
-
-            if (player.DoublesCount == 3) 
+            if (player.DidRollDoublesThrice()) 
             {
                 SendPlayerToJail(player);
                 return; 
@@ -152,7 +145,7 @@ namespace Monopoly.Handlers
         {
             player.PlayerLocation = new JailLocation();
             jailer.Imprison(player);
-            player.DoublesCount = 0;
+            player.TrackDoublesRolled(false);
         }
 
         public void ReleasePlayerFromJail(IPlayer player)
