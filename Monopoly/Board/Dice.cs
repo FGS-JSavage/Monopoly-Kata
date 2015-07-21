@@ -6,11 +6,9 @@ namespace Monopoly.Board
     {
         protected int dieOneScore;
         protected int dieTwoScore;
-    
 
         public virtual int Score       { get { return dieOneScore + dieTwoScore; } }
         public virtual bool WasDoubles { get { return dieOneScore == dieTwoScore; } }
-
 
         public void Roll()
         {
@@ -28,7 +26,5 @@ namespace Monopoly.Board
                 return random.Next(sides) + 1;
             }
         }
-
-        
     }
 }
