@@ -118,6 +118,7 @@
     <Compile Include="BoardTests\LocationTests\JailVisitingLocationUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\LocationFactoryUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\LocationUnitTests.cs" />
+    <Compile Include="BoardTests\LocationTests\LuxuryTaxLocationUnitTests.cs" />
     <Compile Include="TestClasses\CardIntegrationTests.cs" />
     <Compile Include="TestClasses\DeckUnitTests.cs" />
     <Compile Include="TestClasses\DiceUnitTests.cs" />
