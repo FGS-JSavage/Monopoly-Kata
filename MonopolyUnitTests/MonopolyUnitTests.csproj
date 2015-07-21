@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardTests\BankerUnitTests.cs" />
+    <Compile Include="BoardTests\LocationTests\IncomeTaxLocationTaskUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\LocationFactoryUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\LocationUnitTests.cs" />
     <Compile Include="TestClasses\CardIntegrationTests.cs" />
