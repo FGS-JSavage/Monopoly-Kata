@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="BoardTests\BankerUnitTests.cs" />
     <Compile Include="BoardTests\DiceUnitTests.cs" />
+    <Compile Include="BoardTests\JailerUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\IncomeTaxLocationUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\JailLocationUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\JailVisitingLocationUnitTests.cs" />
@@ -123,7 +124,6 @@
     <Compile Include="BoardTests\LocationTests\RentableLocationUnitTests.cs" />
     <Compile Include="TestClasses\CardIntegrationTests.cs" />
     <Compile Include="TestClasses\DeckUnitTests.cs" />
-    <Compile Include="TestClasses\DiceUnitTests.cs" />
     <Compile Include="TestClasses\GameUnitTests.cs" />
     <Compile Include="LocalAddin.cs" />
     <Compile Include="BoardTests\LocationTests\GoLocationUnitTests.cs" />
