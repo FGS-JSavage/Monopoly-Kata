@@ -115,6 +115,7 @@
     <Compile Include="BoardTests\BankerUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\IncomeTaxLocationUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\JailLocationUnitTests.cs" />
+    <Compile Include="BoardTests\LocationTests\JailVisitingLocationUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\LocationFactoryUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\LocationUnitTests.cs" />
     <Compile Include="TestClasses\CardIntegrationTests.cs" />

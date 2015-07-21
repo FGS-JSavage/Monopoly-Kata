@@ -27,7 +27,7 @@ namespace MonopolyUnitTests.BoardTests.LocationTests
         }
 
         [Test]
-        public void JailLocationInitializesWithCorrectTasks()
+        public void JailLocationInitializesWithNoTasks()
         {
             Assert.True(jailLocation.GetOnLandTasks().Count == 0);
         }
