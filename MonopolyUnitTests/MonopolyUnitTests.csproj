@@ -130,7 +130,7 @@
     <Compile Include="TestClasses\MovementHandlerUnitTests.cs" />
     <Compile Include="TestClasses\PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestClasses\RealtorUnitTests.cs" />
+    <Compile Include="BoardTests\RealtorUnitTests.cs" />
     <Compile Include="TestClasses\TurnHandlerIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>

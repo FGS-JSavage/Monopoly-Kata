@@ -81,7 +81,7 @@ namespace Monopoly.Board
             return ownersBySpaceNumber.ContainsKey(spaceNumber);
         }
 
-        public bool IsWholeGroupOwned(PropertyGroup group)
+        private bool IsWholeGroupOwned(PropertyGroup group)
         {
             bool AllAreOwned = true;
             foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
@@ -91,7 +91,7 @@ namespace Monopoly.Board
             return AllAreOwned;
         }
 
-        public int CountOwnedPropertiesWithSameGroupAndOwner(int spaceNumber)
+        private int CountOwnedPropertiesWithSameGroupAndOwner(int spaceNumber)
         {
             var group = propertyList[spaceNumber].Group;
             var owner = GetOwnerForSpace(spaceNumber);
@@ -108,7 +108,7 @@ namespace Monopoly.Board
             return propertiesAlsoOwnedBySamePlayer;
         }
 
-        public int CountOwnedPropertiesWithSameGroup(int spaceNumber)
+        private int CountOwnedPropertiesWithSameGroup(int spaceNumber)
         {
             var group = propertyList[spaceNumber].Group;
 
@@ -168,6 +168,7 @@ namespace Monopoly.Board
         {
             return propertyList.Values.Where(x => x.Group == desiredGroup)
                                         .OrderBy(y => Math.Abs(y.SpaceNumber - spaceNumber))
+                                        .ThenByDescending(x => x.SpaceNumber)
                                         .First();
         }
     }
