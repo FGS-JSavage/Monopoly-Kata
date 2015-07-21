@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Monopoly.Board;
+﻿using Monopoly.Board;
 using Monopoly.Board.Locations;
 using Monopoly.Tasks;
 using NUnit.Framework;
 
-namespace MonopolyUnitTests.TestClasses
+namespace MonopolyUnitTests.BoardTests.LocationTests
 {
     [TestFixture]
     class GoLocationUnitTests
