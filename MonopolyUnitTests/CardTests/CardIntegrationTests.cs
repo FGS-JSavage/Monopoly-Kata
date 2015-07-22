@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Monopoly;
 using Monopoly.Board;
 using Monopoly.Board.Locations;
@@ -16,8 +17,10 @@ using Ploeh.AutoFixture.AutoMoq;
 namespace MonopolyUnitTests.CardTests
 {
     [TestFixture]
-    class CardIntegrationTests
+    class CardIntegrationTests : IDisposable
     {
+        private IKernel ninject;
+
         private ITurnHandler turnHandler;
         private ITaskHandler taskHandler;
         private IRealtor realtor;
@@ -39,7 +42,7 @@ namespace MonopolyUnitTests.CardTests
             mockDeckFactory = fixture.Create<Mock<IDeckFactory>>();
             mockPlayer = fixture.Create<Mock<IPlayer>>();
 
-            IKernel ninject = new StandardKernel(new BindingsModule());
+            ninject = new StandardKernel(new BindingsModule());
 
             ninject.Rebind<IDice>().ToConstant(mockDice.Object).InSingletonScope();
             ninject.Rebind<IDeckFactory>().ToConstant(mockDeckFactory.Object).InSingletonScope();
@@ -55,6 +58,12 @@ namespace MonopolyUnitTests.CardTests
 
             jailer = ninject.Get<IJailer>();
             taskHandler = ninject.Get<ITaskHandler>();
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            ninject.Dispose();
         }
 
         // ---------------  Release 1 ----------------------------------------------------
@@ -318,7 +327,5 @@ namespace MonopolyUnitTests.CardTests
 
             Assert.AreEqual(inititialBalance - 2 * normalRent, player.Balance);
         }
-
-
     }
 }
