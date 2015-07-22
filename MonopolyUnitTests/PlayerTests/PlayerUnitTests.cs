@@ -1,6 +1,7 @@
 ﻿using Monopoly;
 using Monopoly.Board.Locations;
 using Monopoly.Cards;
+using Monopoly.Player;
 using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;

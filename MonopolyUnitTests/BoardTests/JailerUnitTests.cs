@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Monopoly.Board;
+using Monopoly.Player;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;

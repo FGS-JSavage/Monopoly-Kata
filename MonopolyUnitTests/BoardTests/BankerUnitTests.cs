@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac.Extras.Moq;
 using Monopoly.Board;
+using Monopoly.Player;
 using NUnit.Framework;
 
 namespace MonopolyUnitTests.BoardTests

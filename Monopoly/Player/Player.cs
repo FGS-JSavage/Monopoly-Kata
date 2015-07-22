@@ -2,13 +2,13 @@
 using Monopoly.Board.Locations;
 using Monopoly.Cards;
 
-namespace Monopoly
+namespace Monopoly.Player
 {
     public class Player : IPlayer
     {
         private const int DEFAULT_STARTING_BALANCE = 0;
        
-        public virtual ILocation PlayerLocation { get; set; }
+        public ILocation PlayerLocation { get; set; }
         public double Balance   { get; set; }
         public string Name      { get; set; }
         public int RoundsPlayed { get; set; }

@@ -6,6 +6,7 @@ using Monopoly.Board.Locations;
 using Monopoly.Cards;
 using Monopoly.Handlers;
 using Monopoly.Ninject;
+using Monopoly.Player;
 using Monopoly.Tasks;
 using Moq;
 using Ninject;

@@ -1,6 +1,7 @@
 ﻿using Monopoly.Board;
 using Monopoly.Board.Locations;
 using Monopoly.Cards;
+using Monopoly.Player;
 
 namespace Monopoly.Handlers
 {
