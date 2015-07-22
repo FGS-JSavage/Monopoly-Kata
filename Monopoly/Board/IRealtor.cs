@@ -1,5 +1,6 @@
 
 using Monopoly.Board.Locations;
+using Monopoly.Player;
 
 namespace Monopoly.Board
 {

@@ -2,6 +2,7 @@
 using Monopoly;
 using Monopoly.Handlers;
 using Monopoly.Ninject;
+using Monopoly.Player;
 using Ninject;
 using NUnit.Framework;
 

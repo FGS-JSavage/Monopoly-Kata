@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Monopoly.Player;
 
 namespace Monopoly.Board
 {

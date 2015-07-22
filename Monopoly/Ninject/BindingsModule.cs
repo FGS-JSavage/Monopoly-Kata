@@ -3,6 +3,7 @@ using Monopoly.Board.Locations;
 using Monopoly.Cards;
 using Monopoly.MonopolyGame;
 using Monopoly.Handlers;
+using Monopoly.Player;
 using Monopoly.Tasks;
 using Ninject.Modules;
 

@@ -1,4 +1,6 @@
-﻿namespace Monopoly.Tasks
+﻿using Monopoly.Player;
+
+namespace Monopoly.Tasks
 {
     public interface ITaskHandler
     {

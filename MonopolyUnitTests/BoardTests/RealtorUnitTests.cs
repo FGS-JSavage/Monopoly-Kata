@@ -1,6 +1,7 @@
 ﻿using System;
 using Monopoly.Board;
 using Monopoly.Ninject;
+using Monopoly.Player;
 using Moq;
 using Ninject;
 using NUnit.Framework;

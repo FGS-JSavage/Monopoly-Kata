@@ -1,4 +1,6 @@
-﻿namespace Monopoly.Board
+﻿using Monopoly.Player;
+
+namespace Monopoly.Board
 {
     public class Banker : IBanker
     {

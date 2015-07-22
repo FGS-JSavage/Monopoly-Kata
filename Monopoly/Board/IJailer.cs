@@ -1,3 +1,5 @@
+using Monopoly.Player;
+
 namespace Monopoly.Board
 {
     public interface IJailer

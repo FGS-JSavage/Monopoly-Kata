@@ -8,6 +8,8 @@ namespace Monopoly.MonopolyGame
 {
     public class GameFactory
     {
+        IKernel ninject;
+
         public Game BuildGame(int numberOfPlayers)
         {
             if (numberOfPlayers < 2 || numberOfPlayers > 8)
@@ -18,7 +20,7 @@ namespace Monopoly.MonopolyGame
             List<IPlayer> players = PlayerFactory.BuildPlayers(numberOfPlayers);
 
 
-            IKernel ninject = new StandardKernel(new BindingsModule());
+            ninject = new StandardKernel(new BindingsModule());
 
             return new Game(ninject.Get<TurnHandler>(), PlayerFactory.BuildPlayers(numberOfPlayers));
         }
