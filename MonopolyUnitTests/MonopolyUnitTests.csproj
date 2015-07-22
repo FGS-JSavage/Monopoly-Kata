@@ -131,6 +131,7 @@
     <Compile Include="LocalAddin.cs" />
     <Compile Include="BoardTests\LocationTests\GoLocationUnitTests.cs" />
     <Compile Include="HandlerTests\MovementHandlerIntegrationTests.cs" />
+    <Compile Include="MonopolyGameTests\GameUnitTests.cs" />
     <Compile Include="PlayerTests\PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BoardTests\RealtorUnitTests.cs" />
