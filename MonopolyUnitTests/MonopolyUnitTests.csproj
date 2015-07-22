@@ -123,7 +123,8 @@
     <Compile Include="BoardTests\LocationTests\LuxuryTaxLocationUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\RentableLocationUnitTests.cs" />
     <Compile Include="CardTests\DeckFactoryUnitTests.cs" />
-    <Compile Include="TestClasses\CardIntegrationTests.cs" />
+    <Compile Include="CardTests\CardIntegrationTests.cs" />
+    <Compile Include="HandlerTests\CardHandlerUnitTests.cs" />
     <Compile Include="TestClasses\DeckUnitTests.cs" />
     <Compile Include="TestClasses\GameUnitTests.cs" />
     <Compile Include="LocalAddin.cs" />

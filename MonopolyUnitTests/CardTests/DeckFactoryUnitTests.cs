@@ -57,5 +57,7 @@ namespace MonopolyUnitTests.CardTests
 
             Assert.AreEqual(expectedChestCardCount, cardCount);
         }
+
+
     }
 }
