@@ -1,13 +1,12 @@
 ﻿using System;
 using Monopoly;
 using Monopoly.Board;
-using Monopoly.Board.Locations;
 using Monopoly.Ninject;
 using Moq;
 using Ninject;
 using NUnit.Framework;
 
-namespace MonopolyUnitTests
+namespace MonopolyUnitTests.BoardTests
 {
     class RealtorUnitTests
     {

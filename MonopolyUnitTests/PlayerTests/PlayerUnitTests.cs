@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 
-namespace MonopolyUnitTests.TestClasses
+namespace MonopolyUnitTests.PlayerTests
 {
 
     [TestFixture]

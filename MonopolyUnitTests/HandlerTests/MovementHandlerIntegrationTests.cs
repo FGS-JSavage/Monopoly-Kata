@@ -1,29 +1,20 @@
 ﻿using Monopoly;
-using Monopoly.Board;
 using Monopoly.Handlers;
 using Monopoly.Ninject;
 using Ninject;
-using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
 
-namespace MonopolyUnitTests
+namespace MonopolyUnitTests.HandlerTests
 {
     [TestFixture]
     class MovementHandlerUnitTests
     {
         private IMovementHandler movementHandler;
         private IPlayer player;
-        private Mock<IRealtor> mockRealtor;
 
         [SetUp]
         public void Init()
         {
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
-
-            mockRealtor = fixture.Create<Mock<IRealtor>>();
-
             IKernel ninject = new StandardKernel(new BindingsModule());
 
             movementHandler = ninject.Get<IMovementHandler>();

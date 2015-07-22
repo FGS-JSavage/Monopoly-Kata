@@ -1,7 +1,6 @@
 ﻿
 using Monopoly.Board;
 using Monopoly.Board.Locations;
-using Monopoly.Tasks;
 using NUnit.Framework;
 
 namespace MonopolyUnitTests.BoardTests.LocationTests

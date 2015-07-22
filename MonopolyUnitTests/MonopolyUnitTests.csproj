@@ -126,15 +126,15 @@
     <Compile Include="CardTests\DeckFactoryUnitTests.cs" />
     <Compile Include="CardTests\CardIntegrationTests.cs" />
     <Compile Include="HandlerTests\CardHandlerUnitTests.cs" />
-    <Compile Include="TestClasses\DeckUnitTests.cs" />
-    <Compile Include="TestClasses\GameUnitTests.cs" />
+    <Compile Include="CardTests\DeckUnitTests.cs" />
+    <Compile Include="MonopolyGameTests\GameFactoryUnitTests.cs" />
     <Compile Include="LocalAddin.cs" />
     <Compile Include="BoardTests\LocationTests\GoLocationUnitTests.cs" />
-    <Compile Include="TestClasses\MovementHandlerUnitTests.cs" />
-    <Compile Include="TestClasses\PlayerUnitTests.cs" />
+    <Compile Include="HandlerTests\MovementHandlerIntegrationTests.cs" />
+    <Compile Include="PlayerTests\PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BoardTests\RealtorUnitTests.cs" />
-    <Compile Include="TestClasses\TurnHandlerIntegrationTests.cs" />
+    <Compile Include="HandlerTests\TurnHandlerIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Monopoly\Monopoly.csproj">

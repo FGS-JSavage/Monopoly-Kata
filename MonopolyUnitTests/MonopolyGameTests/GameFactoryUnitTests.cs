@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework;
-using Monopoly;
+﻿using Monopoly;
 using Monopoly.MonopolyGame;
 using Monopoly.Ninject;
 using Ninject;
+using NUnit.Framework;
 
-namespace MonopolyUnitTests
+namespace MonopolyUnitTests.MonopolyGameTests
 {
     [TestFixture]
-    class GameUnitTests
+    class GameFactoryUnitTests
     {
         private IKernel ninject;
         private Game game;

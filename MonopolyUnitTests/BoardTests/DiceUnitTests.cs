@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Monopoly.Board;
-using Monopoly.Ninject;
-using Ninject;
 using NUnit.Framework;
 
 namespace MonopolyUnitTests.BoardTests

@@ -1,5 +1,4 @@
-﻿using System;
-using Monopoly.Board;
+﻿using Monopoly.Board;
 using Monopoly.Board.Locations;
 using NUnit.Framework;
 
