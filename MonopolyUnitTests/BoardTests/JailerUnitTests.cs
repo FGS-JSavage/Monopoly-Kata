@@ -1,5 +1,4 @@
 ﻿using Moq;
-using Monopoly;
 using Monopoly.Board;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
@@ -68,5 +67,6 @@ namespace MonopolyUnitTests.BoardTests
 
             Assert.False(jailer.PlayerIsImprisoned(mockPlayer.Object));
         }
+
     }
 }

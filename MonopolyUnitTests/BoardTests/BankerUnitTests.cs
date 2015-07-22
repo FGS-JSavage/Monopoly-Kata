@@ -1,6 +1,5 @@
 ﻿using System;
 using Autofac.Extras.Moq;
-using Monopoly;
 using Monopoly.Board;
 using NUnit.Framework;
 
