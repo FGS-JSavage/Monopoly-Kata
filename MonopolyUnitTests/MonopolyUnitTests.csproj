@@ -122,6 +122,7 @@
     <Compile Include="BoardTests\LocationTests\LocationUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\LuxuryTaxLocationUnitTests.cs" />
     <Compile Include="BoardTests\LocationTests\RentableLocationUnitTests.cs" />
+    <Compile Include="CardTests\CardUnitTests.cs" />
     <Compile Include="CardTests\DeckFactoryUnitTests.cs" />
     <Compile Include="CardTests\CardIntegrationTests.cs" />
     <Compile Include="HandlerTests\CardHandlerUnitTests.cs" />
