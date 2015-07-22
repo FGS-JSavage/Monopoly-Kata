@@ -1,4 +1,5 @@
-﻿using Monopoly;
+﻿using System;
+using Monopoly;
 using Monopoly.Board;
 using Monopoly.Cards;
 using Monopoly.Handlers;
@@ -12,8 +13,9 @@ using Ploeh.AutoFixture.AutoMoq;
 namespace MonopolyUnitTests.HandlerTests
 {
     [TestFixture]
-    class TurnHandlerTests
+    class TurnHandlerTests : IDisposable
     {
+        private IKernel ninject;
         private IFixture fixture;
         private TurnHandler turnHandler;
         private IRealtor realtor;
@@ -30,7 +32,7 @@ namespace MonopolyUnitTests.HandlerTests
 
             mockDice = fixture.Create<Mock<Dice>>();
 
-            IKernel ninject = new StandardKernel(new BindingsModule());
+            ninject = new StandardKernel(new BindingsModule());
 
             ninject.Rebind<IDice>().ToConstant(mockDice.Object);
 
@@ -39,6 +41,12 @@ namespace MonopolyUnitTests.HandlerTests
             player2 = ninject.Get<IPlayer>();
             realtor = ninject.Get<IRealtor>();
             jailer = ninject.Get<IJailer>();
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            ninject.Dispose();
         }
 
         // ---------------  Release 3 ----------------------------------------------------

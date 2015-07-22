@@ -1,4 +1,5 @@
-﻿using Monopoly;
+﻿using System;
+using Monopoly;
 using Monopoly.Handlers;
 using Monopoly.Ninject;
 using Ninject;
@@ -7,19 +8,26 @@ using NUnit.Framework;
 namespace MonopolyUnitTests.HandlerTests
 {
     [TestFixture]
-    class MovementHandlerUnitTests
+    class MovementHandlerUnitTests : IDisposable
     {
+        private IKernel ninject;
         private IMovementHandler movementHandler;
         private IPlayer player;
 
         [SetUp]
         public void Init()
         {
-            IKernel ninject = new StandardKernel(new BindingsModule());
+            ninject = new StandardKernel(new BindingsModule());
 
             movementHandler = ninject.Get<IMovementHandler>();
 
             player = ninject.Get<IPlayer>();
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            ninject.Dispose();
         }
 
         // ---------------  Release 1 ----------------------------------------------------
