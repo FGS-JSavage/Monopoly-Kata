@@ -13,7 +13,7 @@ namespace Monopoly.Cards
 
         public virtual ICard Draw()
         {
-            return cards.Dequeue();
+            return cards.Count > 0 ? cards.Dequeue() : null;
         }
 
         public void Discard(ICard card)
