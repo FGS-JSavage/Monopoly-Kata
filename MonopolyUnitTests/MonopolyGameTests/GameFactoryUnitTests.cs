@@ -1,7 +1,5 @@
 ﻿using Monopoly;
 using Monopoly.MonopolyGame;
-using Monopoly.Ninject;
-using Ninject;
 using NUnit.Framework;
 
 namespace MonopolyUnitTests.MonopolyGameTests
@@ -9,21 +7,13 @@ namespace MonopolyUnitTests.MonopolyGameTests
     [TestFixture]
     class GameFactoryUnitTests
     {
-        private IKernel ninject;
         private Game game;
-
+        private GameFactory gameFactory;
 
         [SetUp]
         public void Init()
         {
-            ninject = new StandardKernel(new BindingsModule());
-            game = ninject.Get<Game>();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            ninject.Dispose();
+            gameFactory = new GameFactory();
         }
 
         // ---------------  Release 1 ----------------------------------------------------
@@ -31,11 +21,11 @@ namespace MonopolyUnitTests.MonopolyGameTests
         [Test]
         public void CreateAGameWithLessThan2PlayersFails()
         {
-            game = GameFactory.BuildGame(1);
+            game = gameFactory.BuildGame(1);
 
             Assert.IsNull(game);
 
-            game = GameFactory.BuildGame("p1");
+            game = gameFactory.BuildGame("p1");
 
             Assert.IsNull(game);
         }
@@ -43,11 +33,11 @@ namespace MonopolyUnitTests.MonopolyGameTests
         [Test]
         public void CreateAGameWithMoreThan8PlayersFails()
         {
-            game = GameFactory.BuildGame(9);
+            game = gameFactory.BuildGame(9);
 
             Assert.IsNull(game);
 
-            game = GameFactory.BuildGame("p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9");
+            game = gameFactory.BuildGame("p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9");
 
             Assert.IsNull(game);
         }
@@ -58,7 +48,7 @@ namespace MonopolyUnitTests.MonopolyGameTests
 
             string[] names = new string[] {"amy", "bill"};
 
-            game = GameFactory.BuildGame(names);
+            game = gameFactory.BuildGame(names);
 
             string nameOfFirstRoller = null;
             string nameOfLastRoundsFirstRoller = null;
@@ -69,7 +59,7 @@ namespace MonopolyUnitTests.MonopolyGameTests
             {
                 nameOfLastRoundsFirstRoller = nameOfFirstRoller;
 
-                game = GameFactory.BuildGame(names);
+                game = gameFactory.BuildGame(names);
 
                 nameOfFirstRoller = game.GetPlayers()[0].Name;
 
@@ -82,7 +72,7 @@ namespace MonopolyUnitTests.MonopolyGameTests
         [Test]
         public void Play20Rounds_EveryPlayerShouldHaveTaken20Turns()
         {
-            game = GameFactory.BuildGame(5);
+            game = gameFactory.BuildGame(5);
 
             for (int i = 0; i < 20; i++)
             {

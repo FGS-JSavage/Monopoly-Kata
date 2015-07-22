@@ -8,7 +8,7 @@ namespace Monopoly.MonopolyGame
 {
     public class GameFactory
     {
-        public static Game BuildGame(int numberOfPlayers)
+        public Game BuildGame(int numberOfPlayers)
         {
             if (numberOfPlayers < 2 || numberOfPlayers > 8)
             {
@@ -23,7 +23,7 @@ namespace Monopoly.MonopolyGame
             return new Game(ninject.Get<TurnHandler>(), PlayerFactory.BuildPlayers(numberOfPlayers));
         }
 
-        public static Game BuildGame(params string[] names)
+        public Game BuildGame(params string[] names)
         {
             if (names.Length < 2 || names.Length > 8)
             {
