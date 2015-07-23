@@ -8,6 +8,7 @@ namespace Monopoly.Handlers
     {
         private IRealtor realtor;
         private const int NUMBER_OF_SPACES = 40;
+        private const int PASSING_GO_REWARD = 200;
 
         public MovementHandler(IRealtor realtor)
         {
@@ -18,9 +19,9 @@ namespace Monopoly.Handlers
         {
             int nextSpaceNumber = player.PlayerLocation.SpaceNumber + distance;
 
-            while (nextSpaceNumber > 40) // Handles Flying over go
+            while (nextSpaceNumber > NUMBER_OF_SPACES) // Handles Flying over go
             {
-                player.Balance += 200;
+                player.Balance += PASSING_GO_REWARD;
 
                 nextSpaceNumber -= NUMBER_OF_SPACES;
             }
