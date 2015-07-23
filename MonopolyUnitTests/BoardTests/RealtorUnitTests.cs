@@ -1,5 +1,4 @@
 ﻿using System;
-using Monopoly;
 using Monopoly.Board;
 using Monopoly.Ninject;
 using Moq;

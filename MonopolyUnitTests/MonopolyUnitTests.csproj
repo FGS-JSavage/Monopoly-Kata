@@ -127,6 +127,7 @@
     <Compile Include="CardTests\CardIntegrationTests.cs" />
     <Compile Include="HandlerTests\CardHandlerUnitTests.cs" />
     <Compile Include="CardTests\DeckUnitTests.cs" />
+    <Compile Include="HandlerTests\MovementHandlerUntiTests.cs" />
     <Compile Include="MonopolyGameTests\GameFactoryUnitTests.cs" />
     <Compile Include="LocalAddin.cs" />
     <Compile Include="BoardTests\LocationTests\GoLocationUnitTests.cs" />

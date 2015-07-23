@@ -9,6 +9,7 @@ using Monopoly.Tasks;
 using Moq;
 using Ninject;
 using NUnit.Framework;
+using NUnit.Util.ProjectConverters;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 
