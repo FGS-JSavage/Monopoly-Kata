@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Monopoly.Handlers;
 using Monopoly.Ninject;
@@ -7,9 +8,14 @@ using Ninject;
 
 namespace Monopoly.MonopolyGame
 {
-    public class GameFactory
+    public class GameFactory : IDisposable
     {
         IKernel ninject;
+
+        public GameFactory()
+        {
+            ninject = new StandardKernel(new BindingsModule());
+        }
 
         public Game BuildGame(int numberOfPlayers)
         {
@@ -19,9 +25,6 @@ namespace Monopoly.MonopolyGame
             }
 
             List<IPlayer> players = PlayerFactory.BuildPlayers(numberOfPlayers);
-
-
-            ninject = new StandardKernel(new BindingsModule());
 
             return new Game(ninject.Get<TurnHandler>(), PlayerFactory.BuildPlayers(numberOfPlayers));
         }
@@ -33,9 +36,12 @@ namespace Monopoly.MonopolyGame
                 return null;
             }
 
-            IKernel ninject = new StandardKernel(new BindingsModule());
-
             return new Game(ninject.Get<ITurnHandler>(), PlayerFactory.BuildPlayers(names.ToList()));
+        }
+
+        public void Dispose()
+        {
+            ninject.Dispose();
         }
     }
 }
