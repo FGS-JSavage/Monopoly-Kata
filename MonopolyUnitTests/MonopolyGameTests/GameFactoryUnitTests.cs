@@ -1,5 +1,6 @@
 ﻿using Monopoly;
 using Monopoly.MonopolyGame;
+using Monopoly.Player;
 using NUnit.Framework;
 
 namespace MonopolyUnitTests.MonopolyGameTests

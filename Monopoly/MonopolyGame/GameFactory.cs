@@ -2,6 +2,7 @@
 using System.Linq;
 using Monopoly.Handlers;
 using Monopoly.Ninject;
+using Monopoly.Player;
 using Ninject;
 
 namespace Monopoly.MonopolyGame
