@@ -8,8 +8,9 @@ using NUnit.Framework;
 
 namespace MonopolyUnitTests.BoardTests
 {
-    class RealtorUnitTests
+    class RealtorUnitTests : IDisposable
     {
+        private IKernel ninject;
         private IRealtor realtor;
         private IPlayer  player1;
         private IPlayer  player2;
@@ -17,11 +18,17 @@ namespace MonopolyUnitTests.BoardTests
         [SetUp]
         public void Init()
         {
-            IKernel ninject = new StandardKernel(new BindingsModule());
+            ninject = new StandardKernel(new BindingsModule());
 
             realtor = ninject.Get<IRealtor>();
             player1 = ninject.Get<IPlayer>();
             player2 = ninject.Get<IPlayer>();
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            ninject.Dispose();
         }
 
         [Test]

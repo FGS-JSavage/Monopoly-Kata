@@ -1,5 +1,4 @@
-﻿using Monopoly;
-using Monopoly.Board.Locations;
+﻿using Monopoly.Board.Locations;
 using Monopoly.Cards;
 using Monopoly.Player;
 using Moq;

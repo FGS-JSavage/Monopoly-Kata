@@ -1,5 +1,4 @@
-﻿using Monopoly;
-using Monopoly.MonopolyGame;
+﻿using Monopoly.MonopolyGame;
 using Monopoly.Player;
 using NUnit.Framework;
 
