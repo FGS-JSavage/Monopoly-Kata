@@ -1,5 +1,6 @@
 ﻿using Monopoly.Board;
 using Monopoly.Board.Locations;
+using Monopoly.Player;
 
 namespace Monopoly.Handlers
 {
@@ -7,6 +8,7 @@ namespace Monopoly.Handlers
     {
         private IRealtor realtor;
         private const int NUMBER_OF_SPACES = 40;
+        private const int PASSING_GO_REWARD = 200;
 
         public MovementHandler(IRealtor realtor)
         {
@@ -17,14 +19,16 @@ namespace Monopoly.Handlers
         {
             int nextSpaceNumber = player.PlayerLocation.SpaceNumber + distance;
 
-            while (nextSpaceNumber > 40) // Handles Flying over go
+            while (nextSpaceNumber > NUMBER_OF_SPACES) // Handles Flying over go
             {
-                player.Balance += 200;
+                player.Balance += PASSING_GO_REWARD;
 
                 nextSpaceNumber -= NUMBER_OF_SPACES;
             }
-          
+
             MovePlayerToLocation(player, realtor.LocationForSpaceNumber(ChompToBoardSize(nextSpaceNumber)));
+
+            HandleNormalLanding(player, distance);
         }
 
         public void MovePlayerDirectlyToSpaceNumber(IPlayer player, int spaceNumber)
@@ -79,6 +83,18 @@ namespace Monopoly.Handlers
             {
                 realtor.MakePurchase(player);
             }
+        }
+
+        public void HandleNormalLanding(IPlayer player, int distance)
+        {
+            if (realtor.SpaceIsForSale(player.PlayerLocation.SpaceNumber))
+            {
+                realtor.MakePurchase(player);
+            }
+            else if (realtor.SpaceIsOwned(player.PlayerLocation.SpaceNumber))
+            {
+                realtor.ChargeRent(player, distance);
+            }            
         }
 
         public int ChompToBoardSize(int spaceNumber)

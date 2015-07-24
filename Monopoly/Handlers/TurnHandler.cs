@@ -1,18 +1,20 @@
 ﻿using Monopoly.Board;
 using Monopoly.Board.Locations;
 using Monopoly.Cards;
+using Monopoly.Player;
 
 namespace Monopoly.Handlers
 {
     public class TurnHandler : ITurnHandler
     {
-        private IJailer  jailer;
-        private IBanker  banker;
-        private IMovementHandler movementHandler;
-        private IDice dice;
-        private ICardHandler cardHandler;
+        private readonly IBanker banker;
+        private readonly ICardHandler cardHandler;
+        private readonly IDice dice;
+        private readonly IJailer jailer;
+        private readonly IMovementHandler movementHandler;
 
-        public TurnHandler(IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice, ICardHandler cardHandler)
+        public TurnHandler(IJailer jailer, IBanker banker, IMovementHandler movementHandler, IDice dice,
+            ICardHandler cardHandler)
         {
             this.jailer = jailer;
             this.banker = banker;
@@ -35,19 +37,12 @@ namespace Monopoly.Handlers
                 return;
             }
 
-            if (rolledDoubles)
-            {
-                player.DoublesCount++;
-            }
-            else
-            {
-                player.DoublesCount = 0;
-            }
+            player.TrackDoublesRolled(rolledDoubles);
 
-            if (player.DoublesCount == 3) 
+            if (player.DidRollDoublesThrice())
             {
                 SendPlayerToJail(player);
-                return; 
+                return;
             }
 
             DoStandardTurn(player, distance, rolledDoubles);
@@ -55,7 +50,6 @@ namespace Monopoly.Handlers
 
         public virtual void DoJailTurn(IPlayer player, int distance, bool rolledDoubles)
         {
-
             switch (player.GetJailStrategy())
             {
                 case JailStrategy.UseGetOutOfJailCard:
@@ -81,9 +75,9 @@ namespace Monopoly.Handlers
             }
 
             player.CompleteLandOnLocationTasks();
-            
+
             HandleDrawCardCase(player);
-            
+
             movementHandler.HandlePurchasing(player);
         }
 
@@ -91,26 +85,32 @@ namespace Monopoly.Handlers
         {
             if (player.PlayerLocation.Group == PropertyGroup.Chance)
             {
-                ICard card = cardHandler.DrawChanceCard();
+                var card = cardHandler.DrawChanceCard();
 
                 if (card.GetType() == typeof (GetOutOfJailCard))
                 {
                     player.AddGetOutOfJailCard(card);
                 }
-                
+
                 CompleteCardTasks(player, card);
                 Discard(card);
             }
 
             else if (player.PlayerLocation.Group == PropertyGroup.Chest)
             {
-                ICard card = DrawChestCard();
+                ProcessCard(player, DrawChestCard());
+            }
+        }
 
-                if (card.GetType() == typeof(GetOutOfJailCard))
-                {
-                    player.AddGetOutOfJailCard(card);
-                }
-                card.Tasks.ForEach(x => x.Complete(player));
+        public void ProcessCard(IPlayer player, ICard card)
+        {
+            if (card.GetType() == typeof (GetOutOfJailCard))
+            {
+                player.AddGetOutOfJailCard(card);
+            }
+            else
+            {
+                CompleteCardTasks(player, card);
                 Discard(card);
             }
         }
@@ -125,12 +125,12 @@ namespace Monopoly.Handlers
 
         public void HandleGetOutOfJailByRollingDoublesStrategy(IPlayer player, int distance, bool rolledDoubles)
         {
-            if (rolledDoubles) 
+            if (rolledDoubles)
             {
                 ReleasePlayerFromJail(player);
                 DoTurn(player, distance, false);
             }
-            else 
+            else
             {
                 jailer.DecreaseSentence(player);
 
@@ -152,7 +152,7 @@ namespace Monopoly.Handlers
         {
             player.PlayerLocation = new JailLocation();
             jailer.Imprison(player);
-            player.DoublesCount = 0;
+            player.TrackDoublesRolled(false);
         }
 
         public void ReleasePlayerFromJail(IPlayer player)

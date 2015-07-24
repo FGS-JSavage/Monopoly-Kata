@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Monopoly.Board.Locations;
+using Monopoly.Player;
 
 namespace Monopoly
 {
@@ -14,7 +15,7 @@ namespace Monopoly
 
             for (int i = 0; i < count; i++)
             {
-                players.Add(new Player(new GoLocation()));
+                players.Add(new Player.Player(new GoLocation()));
             }
 
             return players.OrderBy(x => Guid.NewGuid()).ToList();
@@ -27,7 +28,7 @@ namespace Monopoly
 
             foreach (string name in names)
             {
-                IPlayer player = new Player(new GoLocation());
+                IPlayer player = new Player.Player(new GoLocation());
                 player.Name = name;
                 players.Add(player);
             }

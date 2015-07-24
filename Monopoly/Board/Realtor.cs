@@ -2,15 +2,17 @@
 using System.Linq;
 using System;
 using Monopoly.Board.Locations;
+using Monopoly.Player;
 
 namespace Monopoly.Board
 {
     public class Realtor : IRealtor
     {
+        private const int RAILROAD_RENT_PER = 25;
+
         private Dictionary<int, IPlayer> ownersBySpaceNumber;
         private Dictionary<int, ILocation> propertyList;
         private IBanker banker;
-        private ILocationFactory locationFactory;
 
         public Realtor(IBanker banker, ILocationFactory locationFactory)
         {
@@ -43,7 +45,7 @@ namespace Monopoly.Board
         public void ChargeDoubleRailroadRent(IPlayer renter)
         {
             var owner = GetOwnerForSpace(renter.PlayerLocation.SpaceNumber);
-            var rentalRate = 25 * CountOwnedPropertiesWithSameGroupAndOwner(renter.PlayerLocation.SpaceNumber);
+            var rentalRate = RAILROAD_RENT_PER * CountOwnedPropertiesWithSameGroupAndOwner(renter.PlayerLocation.SpaceNumber);
             Transfer(renter, owner, rentalRate * 2);
         }
 
@@ -63,7 +65,7 @@ namespace Monopoly.Board
 
             if (group == PropertyGroup.Railroad) // Railroad Rent
             {
-                return 25 * CountOwnedPropertiesWithSameGroupAndOwner(spaceNumber);
+                return RAILROAD_RENT_PER * CountOwnedPropertiesWithSameGroupAndOwner(spaceNumber);
             }
 
             if (group == PropertyGroup.Utility) // Utility Rent
@@ -80,7 +82,7 @@ namespace Monopoly.Board
             return ownersBySpaceNumber.ContainsKey(spaceNumber);
         }
 
-        public bool IsWholeGroupOwned(PropertyGroup group)
+        private bool IsWholeGroupOwned(PropertyGroup group)
         {
             bool AllAreOwned = true;
             foreach (ILocation i in propertyList.Values.Where(j => j is RentableLocation && j.Group == group))
@@ -90,7 +92,7 @@ namespace Monopoly.Board
             return AllAreOwned;
         }
 
-        public int CountOwnedPropertiesWithSameGroupAndOwner(int spaceNumber)
+        private int CountOwnedPropertiesWithSameGroupAndOwner(int spaceNumber)
         {
             var group = propertyList[spaceNumber].Group;
             var owner = GetOwnerForSpace(spaceNumber);
@@ -107,7 +109,7 @@ namespace Monopoly.Board
             return propertiesAlsoOwnedBySamePlayer;
         }
 
-        public int CountOwnedPropertiesWithSameGroup(int spaceNumber)
+        private int CountOwnedPropertiesWithSameGroup(int spaceNumber)
         {
             var group = propertyList[spaceNumber].Group;
 
@@ -167,6 +169,7 @@ namespace Monopoly.Board
         {
             return propertyList.Values.Where(x => x.Group == desiredGroup)
                                         .OrderBy(y => Math.Abs(y.SpaceNumber - spaceNumber))
+                                        .ThenByDescending(x => x.SpaceNumber)
                                         .First();
         }
     }

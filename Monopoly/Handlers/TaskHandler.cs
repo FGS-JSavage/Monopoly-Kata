@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Monopoly.Board;
+using Monopoly.Player;
 using Monopoly.Tasks;
 
 namespace Monopoly.Handlers

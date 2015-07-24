@@ -1,4 +1,5 @@
 ﻿using Monopoly.Board;
+using Monopoly.Player;
 
 namespace Monopoly.Handlers
 {
@@ -9,5 +10,5 @@ namespace Monopoly.Handlers
         void MoveToNearestRailroad(IPlayer player);
         void MoveToNearestUtility(IPlayer player, IDice dice);
         void HandlePurchasing(IPlayer player);
-    } 
+    }
 }

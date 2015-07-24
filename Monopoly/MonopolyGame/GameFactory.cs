@@ -1,13 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Monopoly.Handlers;
 using Monopoly.Ninject;
+using Monopoly.Player;
 using Ninject;
 
 namespace Monopoly.MonopolyGame
 {
-    public class GameFactory
+    public class GameFactory : IDisposable
     {
-        public static Game BuildGame(int numberOfPlayers)
+        IKernel ninject;
+
+        public GameFactory()
+        {
+            ninject = new StandardKernel(new BindingsModule());
+        }
+
+        public Game BuildGame(int numberOfPlayers)
         {
             if (numberOfPlayers < 2 || numberOfPlayers > 8)
             {
@@ -16,22 +26,22 @@ namespace Monopoly.MonopolyGame
 
             List<IPlayer> players = PlayerFactory.BuildPlayers(numberOfPlayers);
 
-
-            IKernel ninject = new StandardKernel(new BindingsModule());
-
             return new Game(ninject.Get<TurnHandler>(), PlayerFactory.BuildPlayers(numberOfPlayers));
         }
 
-        public static Game BuildGame(List<string> names)
+        public Game BuildGame(params string[] names)
         {
-            if (names.Count < 2 || names.Count > 8)
+            if (names.Length < 2 || names.Length > 8)
             {
                 return null;
             }
 
-            IKernel ninject = new StandardKernel(new BindingsModule());
+            return new Game(ninject.Get<ITurnHandler>(), PlayerFactory.BuildPlayers(names.ToList()));
+        }
 
-            return new Game(ninject.Get<ITurnHandler>(), PlayerFactory.BuildPlayers(names));
+        public void Dispose()
+        {
+            ninject.Dispose();
         }
     }
 }

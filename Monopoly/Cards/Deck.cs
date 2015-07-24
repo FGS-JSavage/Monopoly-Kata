@@ -2,11 +2,6 @@
 
 namespace Monopoly.Cards
 {
-    public interface IDeck
-    {
-        ICard Draw();
-        void Discard(ICard card);
-    }
     public class Deck : IDeck
     {
         private Queue<ICard> cards; 
@@ -18,7 +13,7 @@ namespace Monopoly.Cards
 
         public virtual ICard Draw()
         {
-            return cards.Dequeue();
+            return cards.Count > 0 ? cards.Dequeue() : null;
         }
 
         public void Discard(ICard card)

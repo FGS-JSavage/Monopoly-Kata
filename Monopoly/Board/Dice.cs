@@ -2,22 +2,13 @@
 
 namespace Monopoly.Board
 {
-    public interface IDice
-    {
-        int Score { get; }
-        bool WasDoubles { get; }
-        void Roll();
-    }
-
     public class Dice : IDice
     {
         protected int dieOneScore;
         protected int dieTwoScore;
-    
 
         public virtual int Score       { get { return dieOneScore + dieTwoScore; } }
         public virtual bool WasDoubles { get { return dieOneScore == dieTwoScore; } }
-
 
         public void Roll()
         {
@@ -35,7 +26,5 @@ namespace Monopoly.Board
                 return random.Next(sides) + 1;
             }
         }
-
-        
     }
 }

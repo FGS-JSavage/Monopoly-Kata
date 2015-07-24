@@ -1,4 +1,6 @@
 ﻿
+using Monopoly.Player;
+
 namespace Monopoly.Tasks
 {
     public class PayIncomeTaxTask : IPlayerTask

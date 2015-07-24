@@ -2,20 +2,19 @@
 using Monopoly.Board.Locations;
 using Monopoly.Cards;
 
-namespace Monopoly
+namespace Monopoly.Player
 {
     public class Player : IPlayer
     {
         private const int DEFAULT_STARTING_BALANCE = 0;
        
-        public virtual ILocation PlayerLocation { get; set; }
+        public ILocation PlayerLocation { get; set; }
         public double Balance   { get; set; }
-        public int DoublesCount { get; set; }
         public string Name      { get; set; }
         public int RoundsPlayed { get; set; }
+        private int DoublesCount { get; set; }
 
         private Stack<ICard> getOutOfJailFreeCards;
-
         public JailStrategy PreferedJailStrategy { get; set; }
              
         public Player(ILocation playerLocation, int startingBalance = DEFAULT_STARTING_BALANCE)
@@ -36,6 +35,16 @@ namespace Monopoly
             getOutOfJailFreeCards.Push(card);
         }
 
+        public void TrackDoublesRolled(bool rolledDoubles)
+        {
+            DoublesCount = rolledDoubles ? ++DoublesCount : 0;
+        }
+
+        public bool DidRollDoublesThrice()
+        {
+            return DoublesCount >= 3;
+        }
+
         public ICard SurrenderGetOutOfJailCard()
         {
             return getOutOfJailFreeCards.Pop();
@@ -48,19 +57,7 @@ namespace Monopoly
 
         public JailStrategy GetJailStrategy()
         {
-            switch(PreferedJailStrategy)
-            {
-                case JailStrategy.UseGetOutOfJailCard:
-                    if (HasGetOutOfJailCard())
-                        return PreferedJailStrategy;
-                    goto default;
-
-                case JailStrategy.Pay:
-                    return PreferedJailStrategy;
-
-                default: // Handles "case JailStrategy.RollDoubles:"
-                    return JailStrategy.RollDoubles;
-            }
+            return !HasGetOutOfJailCard() && PreferedJailStrategy == JailStrategy.UseGetOutOfJailCard ? JailStrategy.RollDoubles : PreferedJailStrategy;
         }
     }
 

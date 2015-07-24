@@ -2,13 +2,6 @@
 
 namespace Monopoly.Handlers
 {
-    public interface ICardHandler
-    {
-        ICard DrawChanceCard();
-        ICard DrawChestCard();
-        void Discard(ICard card);
-    }
-
     public class CardHandler : ICardHandler
     {
         private IDeck chanceDeck;

@@ -1,4 +1,6 @@
 ﻿
+using Monopoly.Player;
+
 namespace Monopoly.Board.Locations
 {
     public class JailLocation : Location

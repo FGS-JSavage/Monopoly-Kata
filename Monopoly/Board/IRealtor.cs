@@ -1,5 +1,6 @@
 
 using Monopoly.Board.Locations;
+using Monopoly.Player;
 
 namespace Monopoly.Board
 {
@@ -11,9 +12,6 @@ namespace Monopoly.Board
         void ChargeTenTimesRollValueRent(IPlayer player, int rollValue);
         int CalculateRent(int spaceNumber, int diceRollValue);
         bool SpaceIsOwned(int spaceNumber);
-        bool IsWholeGroupOwned(PropertyGroup group);
-        int CountOwnedPropertiesWithSameGroupAndOwner(int spaceNumber);
-        int CountOwnedPropertiesWithSameGroup(int spaceNumber);
         bool SpaceIsForSale(int spaceNumber);
         int GetPriceOfSpace(int spaceNumber);
         int GetRentOfSpace(int spaceNumber);

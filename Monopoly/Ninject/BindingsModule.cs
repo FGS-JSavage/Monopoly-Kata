@@ -3,6 +3,7 @@ using Monopoly.Board.Locations;
 using Monopoly.Cards;
 using Monopoly.MonopolyGame;
 using Monopoly.Handlers;
+using Monopoly.Player;
 using Monopoly.Tasks;
 using Ninject.Modules;
 
@@ -12,7 +13,7 @@ namespace Monopoly.Ninject
     {
         public override void Load()
         {
-            Bind<IPlayer>().To<Player>();
+            Bind<IPlayer>().To<Player.Player>();
             Bind<ILocation>().To<GoLocation>();
             Bind<IMovementHandler>().To<MovementHandler>();
             Bind<IDice>().To<Dice>();
