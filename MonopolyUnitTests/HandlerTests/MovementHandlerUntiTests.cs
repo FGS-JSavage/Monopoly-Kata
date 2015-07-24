@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Monopoly.Handlers;
 using Monopoly.Ninject;
 using Ninject;
@@ -11,7 +7,7 @@ using NUnit.Framework;
 namespace MonopolyUnitTests.HandlerTests
 {
     [TestFixture]
-    class MovementHandlerUntiTests
+    class MovementHandlerUntiTests : IDisposable
     {
         private IKernel ninject;
 
@@ -20,9 +16,15 @@ namespace MonopolyUnitTests.HandlerTests
         [SetUp]
         public void Init()
         {
-            IKernel ninject = new StandardKernel(new BindingsModule());
+            ninject = new StandardKernel(new BindingsModule());
 
             movementHandler = ninject.Get<MovementHandler>();
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            ninject.Dispose();
         }
 
         [Test]
